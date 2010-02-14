@@ -6,25 +6,10 @@ import java.util.List;
  *
  * @author dew - Grupo 04
  */
-public class Medico extends Usuario {
+public class Medico extends Persona {
 
-    private Integer medicoId;
     private String nroColegiatura;
     private List<Especialidad> especialidades;
-
-    /**
-     * @return the medicoId
-     */
-    public Integer getMedicoId() {
-        return medicoId;
-    }
-
-    /**
-     * @param medicoId the medicoId to set
-     */
-    public void setMedicoId(Integer medicoId) {
-        this.medicoId = medicoId;
-    }
 
     /**
      * @return the nroColegiatura

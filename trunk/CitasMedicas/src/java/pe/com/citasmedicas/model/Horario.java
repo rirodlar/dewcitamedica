@@ -13,6 +13,7 @@ public class Horario {
     private Date fechaFin;
     private Medico medico;
     private Especialidad especialidad;
+    private Cita cita;
 
     /**
      * @return the horarioId
@@ -82,6 +83,20 @@ public class Horario {
      */
     public void setEspecialidad(Especialidad especialidad) {
         this.especialidad = especialidad;
+    }
+
+    /**
+     * @return the cita
+     */
+    public Cita getCita() {
+        return cita;
+    }
+
+    /**
+     * @param cita the cita to set
+     */
+    public void setCita(Cita cita) {
+        this.cita = cita;
     }
 }
 

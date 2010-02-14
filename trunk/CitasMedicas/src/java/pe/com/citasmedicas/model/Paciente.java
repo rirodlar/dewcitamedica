@@ -1,30 +1,13 @@
 package pe.com.citasmedicas.model;
 
-import java.util.Date;
-
 /**
  *
  * @author dew - Grupo 04
  */
-public class Paciente extends Usuario{
+public class Paciente extends Persona{
 
-    private Integer pacienteId;
     private Double peso;
-    private Double estatura;
-
-    /**
-     * @return the pacienteId
-     */
-    public Integer getPacienteId() {
-        return pacienteId;
-    }
-
-    /**
-     * @param pacienteId the pacienteId to set
-     */
-    public void setPacienteId(Integer pacienteId) {
-        this.pacienteId = pacienteId;
-    }
+    private Integer estatura;
 
     /**
      * @return the peso
@@ -43,14 +26,14 @@ public class Paciente extends Usuario{
     /**
      * @return the estatura
      */
-    public Double getEstatura() {
+    public Integer getEstatura() {
         return estatura;
     }
 
     /**
      * @param estatura the estatura to set
      */
-    public void setEstatura(Double estatura) {
+    public void setEstatura(Integer estatura) {
         this.estatura = estatura;
     }
 }
