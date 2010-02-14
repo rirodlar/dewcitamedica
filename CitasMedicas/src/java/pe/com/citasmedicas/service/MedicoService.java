@@ -2,10 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pe.com.citasmedicas.service;
 
+import java.util.List;
 import pe.com.citasmedicas.dao.MedicoDao;
+import pe.com.citasmedicas.model.Especialidad;
+import pe.com.citasmedicas.model.Medico;
 
 /**
  *
@@ -15,7 +17,25 @@ public class MedicoService {
 
     private MedicoDao medicoDao;
 
-    public MedicoService(){
+    public MedicoService() {
         medicoDao = new MedicoDao();
+    }
+
+    /**
+     * Obtiene un médico por su id
+     * @param Integer medicoId
+     * @return Medico
+     */
+    public Medico getMedicoPorId(Integer medicoId) {
+        return medicoDao.getMedicoPorId(medicoId);
+    }
+
+    /**
+     * Obtiene todas los médicos de una especialidad específica
+     * @param Especialidad especialidad
+     * @return List<Medico>
+     */
+    public List<Medico> getMedicosPorEspecialidad(Especialidad especialidad) {
+        return medicoDao.getMedicosPorEspecialidad(especialidad);
     }
 }
