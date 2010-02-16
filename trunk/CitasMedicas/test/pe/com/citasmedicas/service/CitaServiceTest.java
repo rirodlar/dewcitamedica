@@ -14,7 +14,7 @@ import pe.com.citasmedicas.model.Cita;
 public class CitaServiceTest {
 
     @Test
-    public void testCitaDao(){
+    public void testCitaDao() {
         CargaData.inicializar();
 
         CitaService citaService = new CitaService();
@@ -40,17 +40,19 @@ public class CitaServiceTest {
         Assert.assertEquals(cita.getMedico().getPersonaId().intValue(), 1000000);
         Assert.assertEquals(cita.getPaciente().getPersonaId().intValue(), 1000008);
 
-        try{
+        try {
             cita = citaService.insertarCita(pacienteService.getPacientePorId(new Integer(1000009)),
                     medicoService.getMedicoPorId(new Integer(1000005)),
                     horarioService.getHorarioPorId(new Integer(1000055)),
                     "RESERVADO", null);
-            Assert.assertEquals(cita.getCitaId().intValue(), 1000004);
-            Assert.assertEquals((citaService.getCitasPorMedicoFecha(medicoService.getMedicoPorId(new Integer(1000005)),
-                cal.getTime())).size(), 2);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
+        Assert.assertEquals((citaService.getCitasPorMedicoFecha(medicoService.getMedicoPorId(new Integer(1000005)),
+                cal.getTime())).size(), 2);
+        Assert.assertEquals(CargaData.CITAS.size(), 5);
 
+        citaService.eliminarCita(cita);
+        Assert.assertEquals(CargaData.CITAS.size(), 4);
     }
 }

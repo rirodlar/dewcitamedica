@@ -81,7 +81,7 @@ public class CitaDao {
     }
 
     /**
-     * Graba una cita
+     * Ingresa una cita
      * @param Paciente paciente
      * @param Medico medico
      * @param Horario horario
@@ -99,5 +99,28 @@ public class CitaDao {
         cita.setDiagnostico(diagnostico);
         CargaData.CITAS.add(cita);
         return cita;
+    }
+
+     /**
+     * Elimina una cita
+     * @param Cita cita
+     * @return boolean
+     */
+    public boolean eliminarCita(Cita cita) {
+        if(cita == null)
+            return false;
+        CargaData.CITAS.remove(cita);
+        return true;
+    }
+
+     /**
+     * Actualiza una cita
+     * @param Cita cita
+     * @return boolean
+     */
+    public boolean actualizaCita(Cita cita) {
+        if(cita == null)
+            return false;
+        return true;
     }
 }

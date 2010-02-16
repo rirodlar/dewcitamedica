@@ -15,5 +15,8 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <form id="formPrueba" name="formPrueba" method="post" action="ReservaCitaServlet">
+            <input name="btnEnviar" type="submit" value="Probrar Recerva de Citas" />
+        </form>
     </body>
 </html>
