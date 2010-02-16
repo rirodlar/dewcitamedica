@@ -49,7 +49,7 @@ public class CitaService {
     }
 
     /**
-     * Graba una cita
+     * Ingresa una cita
      * @param Paciente paciente
      * @param Medico medico
      * @param Horario horario
@@ -64,5 +64,23 @@ public class CitaService {
             throw new Exception("Ya existe una cita para ese horario.");
         }
         return citaDao.insertarCita(paciente, medico, horario, estado, diagnostico);
+    }
+
+     /**
+     * Elimina una cita
+     * @param Cita cita
+     * @return boolean
+     */
+    public boolean eliminarCita(Cita cita) {
+        return citaDao.eliminarCita(cita);
+    }
+
+     /**
+     * Actualiza una cita
+     * @param Cita cita
+     * @return boolean
+     */
+    public boolean actualizaCita(Cita cita) {
+        return citaDao.actualizaCita(cita);
     }
 }

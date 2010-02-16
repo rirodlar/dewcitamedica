@@ -5,8 +5,8 @@
         <description>Inicializa la data de prueba</description>
     </listener>
     <servlet>
-        <servlet-name>CitaServlet</servlet-name>
-        <servlet-class>pe.com.citasmedicas.controller.CitaServlet</servlet-class>
+        <servlet-name>ReservaCitaServlet</servlet-name>
+        <servlet-class>pe.com.citasmedicas.controller.ReservaCitaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HorarioServlet</servlet-name>
@@ -17,8 +17,8 @@
         <servlet-class>pe.com.citasmedicas.controller.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CitaServlet</servlet-name>
-        <url-pattern>/CitaServlet</url-pattern>
+        <servlet-name>ReservaCitaServlet</servlet-name>
+        <url-pattern>/ReservaCitaServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HorarioServlet</servlet-name>
@@ -29,11 +29,9 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
-        </welcome-file-list>
+    </welcome-file-list>
     </web-app>
