@@ -11,11 +11,12 @@ import java.util.List;
  */
 public class CargaData {
 
-    public static List<Especialidad> ESPECIALIDADES = new ArrayList<Especialidad>();
-    public static List<Medico> MEDICOS = new ArrayList<Medico>();
-    public static List<Paciente> PACIENTES = new ArrayList<Paciente>();
-    public static List<Horario> HORARIOS = new ArrayList<Horario>();
-    public static List<Cita> CITAS = new ArrayList<Cita>();
+    public static List<Especialidad> ESPECIALIDADES = null;
+    public static List<Medico> MEDICOS = null;
+    public static List<Paciente> PACIENTES = null;
+    public static List<Horario> HORARIOS = null;
+    public static List<Cita> CITAS = null;
+    public static List<Usuario> USUARIOS = null;
 
     public static void inicializar() {
         ESPECIALIDADES = new ArrayList<Especialidad>();
@@ -23,6 +24,7 @@ public class CargaData {
         PACIENTES = new ArrayList<Paciente>();
         HORARIOS = new ArrayList<Horario>();
         CITAS = new ArrayList<Cita>();
+        USUARIOS = new ArrayList<Usuario>();
 
         // Especialidades
         Especialidad cardiologia = new Especialidad();
@@ -187,6 +189,85 @@ public class CargaData {
         anaTalavera.setPeso(new Double(58.2));
         PACIENTES.add(anaTalavera);
 
+        // Usuarios
+        Usuario usuario = new Usuario();
+
+        usuario.setUsuarioId(new Integer(1000000));
+        usuario.setUsername("jorgeCasana");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(jorgeCasana);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000001));
+        usuario = new Usuario();
+        usuario.setUsername("jaimeEspinoza");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(jaimeEspinoza);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000002));
+        usuario = new Usuario();
+        usuario.setUsername("miguelSanchez");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(miguelSanchez);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000003));
+        usuario = new Usuario();
+        usuario.setUsername("joseCaravedo");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(joseCaravedo);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000004));
+        usuario = new Usuario();
+        usuario.setUsername("eduardoBarriga");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(eduardoBarriga);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000005));
+        usuario = new Usuario();
+        usuario.setUsername("fernandoSalazar");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(fernandoSalazar);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000006));
+        usuario = new Usuario();
+        usuario.setUsername("albertoFranco");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(albertoFranco);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000007));
+        usuario = new Usuario();
+        usuario.setUsername("sandraFranco");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(sandraFranco);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000008));
+        usuario = new Usuario();
+        usuario.setUsername("juanMatzumura");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(juanMatzumura);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000009));
+        usuario = new Usuario();
+        usuario.setUsername("carolinaChang");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(carolinaChang);
+        USUARIOS.add(usuario);
+
+        usuario.setUsuarioId(new Integer(1000010));
+        usuario = new Usuario();
+        usuario.setUsername("anaTalavera");
+        usuario.setPassword("desarrolloweb");
+        usuario.setPersona(anaTalavera);
+        USUARIOS.add(usuario);
+        
         // Horarios
         // Cardiología - Casana Bejarano, Jorge - Lunes de 09:00 - 11:00
         Horario horario00 = new Horario();
