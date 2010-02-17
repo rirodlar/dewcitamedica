@@ -1,0 +1,80 @@
+#cboServicio, #cboTipoCarne , #cboTipoCorte{
+  font-family: Verdana;
+  font-size: 8pt;
+  width: 200px;
+}
+
+#cboMes{
+  font-family: Verdana;
+  font-size: 8pt;
+  width: 150px;
+}
+
+body.Conf{
+  background-color: rgb(248,238,213);
+}
+
+table.Calendar{
+  border: 1px solid;
+  /*border-color: #fff #000 #000 #fff;*/
+  font-size: 11px;
+  cursor: default;
+  background: Window;
+  color: WindowText;
+  font-family: tahoma,verdana,sans-serif;
+}
+
+tr.Title{
+  font-weight: bold;
+  padding: 1px;
+  border: 1px solid #000;
+  background: ActiveCaption;
+  color: CaptionText;
+  text-align: center;
+  font-size: 11px;
+  font-family: tahoma,verdana,sans-serif;
+}
+
+td.DayNames{
+  border-bottom: 1px solid ButtonShadow;
+  padding: 2px;
+  text-align: center;
+  background: ButtonFace;
+  color: #f00;
+  width: 100px;
+}
+
+td.DayParam{
+  font-family: Verdana;
+  font-size: 8pt;
+}
+
+td.Day{
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid;
+  height: 100px;
+  width: 100px;
+  color: ActiveCaption;
+  cursor:hand;
+}
+
+td.DisabledDay{
+  text-align: left;
+  vertical-align: top;
+  height: 100px;
+  width: 100px;
+  background-color: rgb(199,199,199);
+}
+
+#tblProgramacion, #tblFrecuencia{
+  font-size: 11px;
+  color: WindowText;
+  font-family: tahoma,verdana,sans-serif;
+  width: 590px;
+}
+
+td.Head{
+  background-color: rgb(194,194,149);
+  text-align: center;
+}
