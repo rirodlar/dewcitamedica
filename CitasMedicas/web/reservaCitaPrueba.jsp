@@ -6,6 +6,8 @@
     <title>Medical Theme Css Template</title>
 </head>
 <body class="principal">
+    <form method="post" action="ReservaCitaServlet">
+    <INPUT id="__ARGUMENT" name="__ARGUMENT" type="HIDDEN"/>
     <div id="main_container">
         <div id="profundidad">&nbsp;Reserva de Citas</div>
         <div id="contenido">
@@ -29,49 +31,49 @@
                                 <td class="x4x" align="center">
                                     <c:forEach var="lunes" items="${horarioLunes}">
                                         <c:if test="${atencion.horaInicio == lunes.horaInicio && atencion.minutoInicio == lunes.minutoInicio}">
-                                            <input type="radio" name="radio" id="radio" value="radio" />
+                                            <input type="radio" name="radio" id="${lunes.horarioId}" value="radio" />
                                         </c:if>
                                     </c:forEach>
                                 </td>
                                 <td class="x4x" align="center">
                                     <c:forEach var="martes" items="${horarioMartes}">
                                         <c:if test="${atencion.horaInicio == martes.horaInicio && atencion.minutoInicio == martes.minutoInicio}">
-                                            <input type="radio" name="radio" id="radio" value="radio" />
+                                            <input type="radio" name="radio" id="${martes.horarioId}" value="radio" />
                                         </c:if>
                                     </c:forEach>
                                 </td>
                                 <td class="x4x" align="center">
                                     <c:forEach var="miercoles" items="${horarioMiercoles}">
                                         <c:if test="${atencion.horaInicio == miercoles.horaInicio && atencion.minutoInicio == miercoles.minutoInicio}">
-                                            <input type="radio" name="radio" id="radio" value="radio" />
+                                            <input type="radio" name="radio" id="${miercoles.horarioId}" value="radio" />
                                         </c:if>
                                     </c:forEach>
                                 </td>
                                 <td class="x4x" align="center">
                                     <c:forEach var="jueves" items="${horarioJueves}">
                                         <c:if test="${atencion.horaInicio == jueves.horaInicio && atencion.minutoInicio == jueves.minutoInicio}">
-                                            <input type="radio" name="radio" id="radio" value="radio" />
+                                            <input type="radio" name="radio" id="${jueves.horarioId}" value="radio" />
                                         </c:if>
                                     </c:forEach>
                                 </td>
                                 <td class="x4x" align="center">
                                     <c:forEach var="viernes" items="${horarioViernes}">
                                         <c:if test="${atencion.horaInicio == viernes.horaInicio && atencion.minutoInicio == viernes.minutoInicio}">
-                                            <input type="radio" name="radio" id="radio" value="radio" />
+                                            <input type="radio" name="radio" id="${viernes.horarioId}" value="radio" />
                                         </c:if>
                                     </c:forEach>
                                 </td>
                                 <td class="x4x" align="center">
                                     <c:forEach var="sabado" items="${horarioSabado}">
                                         <c:if test="${atencion.horaInicio == sabado.horaInicio && atencion.minutoInicio == sabado.minutoInicio}">
-                                            <input type="radio" name="radio" id="radio" value="radio" />
+                                            <input type="radio" name="radio" id="${sabado.horarioId}" value="radio" />
                                         </c:if>
                                     </c:forEach>
                                 </td>
                                 <td class="x4x" align="center">
                                     <c:forEach var="domingo" items="${horarioDomingo}">
                                         <c:if test="${atencion.horaInicio == domingo.horaInicio && atencion.minutoInicio == domingo.minutoInicio}">
-                                            <input type="radio" name="radio" id="radio" value="radio" />
+                                            <input type="radio" name="radio" id="${domingo.horarioId}" value="radio" />
                                         </c:if>
                                     </c:forEach>
                                 </td>
@@ -85,5 +87,7 @@
             </div>
         </div>
     </div>
+        <input type="submit" value="Reservar">
+    </form>
 </body>
 </html>

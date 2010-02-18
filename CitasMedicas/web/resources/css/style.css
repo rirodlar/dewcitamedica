@@ -230,7 +230,7 @@ padding:10px 10px 0 0;
 }
 #contenido {
 width:870px;
-height: 400px;
+height: 500px;
 margin: auto;
 padding: 15px 15px 15px 15px;
 }
@@ -265,6 +265,16 @@ padding:125px 0px 0 10px;
 .x4x {
 	FONT-SIZE: x-small; BORDER-RIGHT: #c9cbd3 1px solid; BORDER-TOP: #c9cbd3 1px solid; BORDER-LEFT: #c9cbd3 1px solid; BORDER-BOTTOM: #c9cbd3 1px solid; BACKGROUND-COLOR: #f2f2f5
 }
+.x4xf {
+	FONT-SIZE: x-small; BORDER-RIGHT: #c9cbd3 1px solid; BORDER-TOP: hidden; BORDER-LEFT: #c9cbd3 1px solid; BORDER-BOTTOM: #c9cbd3 1px solid; BACKGROUND-COLOR: #f2f2f5
+}
+div#scroll {
+	height:280px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	direction:rtl;
+	direction:ltr;
+}
 /*Botones*/
 .x7g {
 	BORDER-RIGHT: #7b8194 1px solid; PADDING-RIGHT: 8px; BACKGROUND-POSITION: left top; BORDER-TOP: #a5a9b6 1px solid; PADDING-LEFT: 8px; FONT-WEIGHT: bold; MARGIN: 1px; OVERFLOW: visible; BORDER-LEFT: #a5a9b6 1px solid; height: 21px; CURSOR: hand; COLOR: #586073; BORDER-BOTTOM: #7b8194 1px solid; BACKGROUND-REPEAT: repeat-x; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #c9e5ec; TEXT-ALIGN: center; font-size:11px;
@@ -291,4 +301,48 @@ color:#E24601;font-size:16px;FONT-FAMILY: Arial, Helvetica, sans-serif;FONT-WEIG
 /*Margenes*/
 .x7q {
 	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; WIDTH: 100%; PADDING-TOP: 0px
+}
+/*Barras*/
+.x1i {
+	BORDER-RIGHT: #c9cbd3 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #c9cbd3 1px solid; PADDING-LEFT: 2px; FONT-SIZE: x-small; PADDING-BOTTOM: 1px; BORDER-LEFT: #c9cbd3 1px solid; PADDING-TOP: 1px; BORDER-BOTTOM: #c9cbd3 0px solid; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #edf6ff
+}
+/*Loguin*/
+#main_loguin{
+width:800px;
+height:auto;
+margin-left:auto;
+margin-right:auto;
+margin-top: 100px;
+}
+.loguin_bg{
+width:792px;
+height:240px;
+clear:both;
+padding-top:50px;
+border:solid;
+border-color:#CFE0F1;
+background-color:#FFFFFF;
+background:url(../img/box_loguin_bg.gif) repeat-x ;
+}
+#footer_loguin{
+width:800px;
+height:25px;
+font-size:12px;
+font-weight:bold;
+text-align:center;
+float:left;
+}
+.title_login{
+width:291px;
+height:210px;
+padding: 0px 300px 0px 0px;
+background:url(../img/login_title.png) no-repeat;
+margin:auto;
+}
+.form_login{
+padding: 60px 0px 0px 230px;
+margin:auto;
+}
+.x2o {
+	FONT-SIZE: x-small; COLOR: #C40000; FONT-FAMILY: Arial, Helvetica, sans-serif;
 }
