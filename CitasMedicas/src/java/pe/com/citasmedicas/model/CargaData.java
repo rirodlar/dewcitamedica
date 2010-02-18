@@ -2,7 +2,6 @@ package pe.com.citasmedicas.model;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class CargaData {
     public static List<Horario> HORARIOS = null;
     public static List<Cita> CITAS = null;
     public static List<Usuario> USUARIOS = null;
-    public static List<Calendar[]> HORARIO_ATENCION = null;
+    public static List<Horario> HORARIO_ATENCION = null;
 
     public static void inicializar() {
         ESPECIALIDADES = new ArrayList<Especialidad>();
@@ -27,7 +26,7 @@ public class CargaData {
         HORARIOS = new ArrayList<Horario>();
         CITAS = new ArrayList<Cita>();
         USUARIOS = new ArrayList<Usuario>();
-        HORARIO_ATENCION = new ArrayList<Calendar[]>();
+        HORARIO_ATENCION = new ArrayList<Horario>();
 
         // Especialidades
         Especialidad cardiologia = new Especialidad();
@@ -884,29 +883,34 @@ public class CargaData {
         horario47.setCita(cita);
 
         // Horarios disponibles
+        Calendar calAux = new GregorianCalendar();
         Calendar[] atencion = new Calendar[2];
         cal.set(Calendar.HOUR_OF_DAY, 8);
-        atencion[0] = cal;
+        calAux.setTimeInMillis(cal.getTimeInMillis());
+        atencion[0] = calAux;
+        //System.out.println("Inicio: " + calAux.get(Calendar.HOUR_OF_DAY) + ":" + calAux.get(Calendar.MINUTE));
         while(cal.get(Calendar.HOUR_OF_DAY) < 21){
             cal.add(Calendar.MINUTE, 30);
-            atencion[1] = cal;
-            HORARIO_ATENCION.add(atencion);
+            calAux = new GregorianCalendar();
+            calAux.setTimeInMillis(cal.getTimeInMillis());
+            atencion[1] = calAux;
+            //System.out.println("Fin: " + calAux.get(Calendar.HOUR_OF_DAY) + ":" + calAux.get(Calendar.MINUTE));
+            Horario horario = new Horario();
+            horario.setFechaInicio(atencion[0].getTime());
+            horario.setFechaFin(atencion[1].getTime());
+            HORARIO_ATENCION.add(horario);
             atencion = new Calendar[2];
-            atencion[0] = cal;
+            calAux = new GregorianCalendar();
+            calAux.setTimeInMillis(cal.getTimeInMillis());
+            atencion[0] = calAux;
+            //System.out.println("Inicio: " + calAux.get(Calendar.HOUR_OF_DAY) + ":" + calAux.get(Calendar.MINUTE));
         }
     }
 
     public static void main(String arg[]){
         CargaData.inicializar();
-
         for(int i = 0; i < HORARIO_ATENCION.size(); i++){
-            Calendar[] horario = HORARIO_ATENCION.get(i);
-
-            Calendar c = horario[0];
-            String s = String.format("%1$th:%1$tm", c);
-
-
-            System.out.println(s);
+            System.out.println(HORARIO_ATENCION.get(i).getRango());
         }
     }
 }

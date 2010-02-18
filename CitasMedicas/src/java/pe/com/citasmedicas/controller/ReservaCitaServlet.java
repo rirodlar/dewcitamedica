@@ -148,6 +148,14 @@ public class ReservaCitaServlet extends HttpServlet {
         Medico medico = medicoService.getMedicoPorId(medicoId);
 
         Calendar cal = new GregorianCalendar();
+        String fecha = "05/05/2010"; // obtener fecha desde el jsp
+        System.out.println(fecha.substring(6));
+        System.out.println(fecha.substring(3,5));
+        System.out.println(fecha.substring(0,2));
+        cal.set(Calendar.YEAR, Integer.parseInt(fecha.substring(6)));
+        cal.set(Calendar.MONTH, Integer.parseInt(fecha.substring(3,5))-1);
+        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fecha.substring(0,2)));
+
         if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
         } else {
