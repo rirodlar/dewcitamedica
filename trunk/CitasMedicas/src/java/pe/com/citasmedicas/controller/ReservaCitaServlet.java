@@ -210,8 +210,10 @@ public class ReservaCitaServlet extends HttpServlet {
             for(Cita cita : citas){
                 String citaPendiente = "";
                 Formatter formatter = new Formatter(Locale.getDefault());
-                formatter.format("", cita.getHorario().getFechaInicio());
-
+                formatter.format("%1$tm %1$te,%1$tY", cita.getHorario().getFechaInicio());
+                citaPendiente = formatter.toString() + " : " + cita.getHorario().getEspecialidad().getNombre() + " - "
+                        + cita.getHorario().getMedico().getNombreCompleto();
+                citasPendientes.add(citaPendiente);
             }
         }
     }
