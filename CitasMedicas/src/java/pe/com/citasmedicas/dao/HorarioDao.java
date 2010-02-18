@@ -62,6 +62,7 @@ public class HorarioDao {
     }
 
     public List<Horario> getHorarioAtencion(){
-        return CargaData.HORARIO_ATENCION;
+        List<Horario> horarioAtencion = (List<Horario>)((ArrayList<Horario>)CargaData.HORARIO_ATENCION).clone();
+        return horarioAtencion;
     }
 }
