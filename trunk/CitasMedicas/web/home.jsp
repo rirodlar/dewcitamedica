@@ -26,7 +26,7 @@
                 <ul>
                     <li><a class="current" href="#" title="">Inicio</a></li>
                     <li><a href="#" title="">Nosotros</a></li>
-                    <li><a href="prc/reservar_cita.jsp" title="">Servicios</a></li>
+                    <li><a href="ReservaCitaServlet" title="">Servicios</a></li>
                     <li><a href="#" title="">Cont&aacute;ctenos</a></li>
                 </ul>
             </div>
