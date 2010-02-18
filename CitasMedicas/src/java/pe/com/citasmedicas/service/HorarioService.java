@@ -42,4 +42,8 @@ public class HorarioService {
     public List<Horario> getHorariosPorEspecMedicoFecha(Especialidad especialidad, Medico medico, Date fecha) {
         return horarioDao.getHorariosPorEspecMedicoFecha(especialidad, medico, fecha);
     }
+
+    public List<Horario> getHorarioAtencion() {
+        return horarioDao.getHorarioAtencion();
+    }
 }

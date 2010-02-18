@@ -11,6 +11,7 @@ import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Paciente;
+import pe.com.citasmedicas.model.Persona;
 
 /**
  *
@@ -110,6 +111,26 @@ public class CitaDao {
                            citas.add(citaAux);
                     }
                 }
+            }
+        }
+        return citas;
+    }
+
+    /**
+     * Obtiene todos las citas pendientes de un paciente
+     * @param Persona persona
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPendientes(Persona persona) {
+        if (persona == null) {
+            return new ArrayList<Cita>();
+        }
+        List<Cita> citas = new ArrayList<Cita>();
+        Calendar calToday = new GregorianCalendar();
+        for (Cita citaAux : CargaData.CITAS) {
+            if (citaAux.getPaciente().equals(persona)) {
+                if(citaAux.getHorario().getFechaInicio().after(calToday.getTime()))
+                    citas.add(citaAux);
             }
         }
         return citas;

@@ -8,6 +8,7 @@ import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Paciente;
+import pe.com.citasmedicas.model.Persona;
 
 /**
  *
@@ -50,13 +51,12 @@ public class CitaService {
     }
 
     /**
-     * Obtiene todos las citas de un médico para una fecha específica
-     * @param Medico medico
-     * @param Date fecha
+     * Obtiene todos las citas pendientes de un paciente
+     * @param Persona persona
      * @return List<Cita>
      */
-    public List<Cita> getCitasPorRangoFecha(Paciente paciente, Especialidad especialidad, Medico medico, Date fechaInicio, Date fechaFin) {
-        return citaDao.getCitasPorRangoFecha(paciente, especialidad, medico, fechaInicio, fechaFin);
+    public List<Cita> getCitasPendientes(Persona persona) {
+        return citaDao.getCitasPendientes(persona);
     }
 
     /**

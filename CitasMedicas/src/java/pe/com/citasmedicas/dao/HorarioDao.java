@@ -60,4 +60,8 @@ public class HorarioDao {
         }
         return horarios;
     }
+
+    public List<Horario> getHorarioAtencion(){
+        return CargaData.HORARIO_ATENCION;
+    }
 }

@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("home.jsp").forward(request, response);
         } else {
             request.setAttribute("error", "El usuario y/o la contraseña son incorrectas.");
-            request.getRequestDispatcher("logeoPrueba.jsp").forward(request, response);
+            request.getRequestDispatcher("loguin.jsp").forward(request, response);
         }
     }
 }

@@ -3,16 +3,23 @@ package pe.com.citasmedicas.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
+import pe.com.citasmedicas.model.Paciente;
+import pe.com.citasmedicas.model.Persona;
+import pe.com.citasmedicas.model.Usuario;
+import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.HorarioService;
 import pe.com.citasmedicas.service.MedicoService;
@@ -29,6 +36,7 @@ public class ReservaCitaServlet extends HttpServlet {
     EspecialidadService especialidadService = null;
     MedicoService medicoService = null;
     HorarioService horarioService = null;
+    CitaService citaService = null;
     //
     List<Especialidad> especialidades = null;
     List<Medico> medicos = null;
@@ -42,6 +50,9 @@ public class ReservaCitaServlet extends HttpServlet {
     List<Horario> horarioViernes = null;
     List<Horario> horarioSabado = null;
     List<Horario> horarioDomingo = null;
+    //
+    List<String> citasPendientes = null;
+    String filtro = "";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,17 +69,19 @@ public class ReservaCitaServlet extends HttpServlet {
             throws ServletException, IOException {
         // Se verifica la sesión
         sesion = request.getSession();
-        //
-        especialidadService = new EspecialidadService();
-        medicoService = new MedicoService();
-        horarioService = new HorarioService();
 
         if (sesion.getAttribute("usuario") == null) {
             System.out.println("la sesión ha caducado");
             response.sendRedirect(request.getContextPath() + "/loguin.jsp");
             return;
         }
+        //
+        especialidadService = new EspecialidadService();
+        medicoService = new MedicoService();
+        horarioService = new HorarioService();
+        citaService = new CitaService();
 
+        //
         String accion = request.getParameter("__ACTION");
         if (accion == null || accion.equalsIgnoreCase("")) {
             accion = "iniciar";
@@ -112,6 +125,8 @@ public class ReservaCitaServlet extends HttpServlet {
                 medicoId = medicos.get(0).getPersonaId();
             }
         }
+        cargarCitasPendientes();
+        sesion.setAttribute("citasPendientes", citasPendientes);
     }
 
     private void cargaMedico(HttpServletRequest request, HttpServletResponse response)
@@ -181,5 +196,23 @@ public class ReservaCitaServlet extends HttpServlet {
         sesion.setAttribute("horarioDomingo", horarioDomingo);
         
         sesion.setAttribute("filtro", filtro);
+    }
+
+    private void cargarCitasPendientes(){
+        citasPendientes = new ArrayList<String>();
+        Usuario usuario = (Usuario)sesion.getAttribute("usuario");
+        Persona paciente = null;
+        if(usuario != null){
+            paciente = usuario.getPersona();
+        }
+        if(paciente != null){
+            List<Cita> citas = citaService.getCitasPendientes(paciente);
+            for(Cita cita : citas){
+                String citaPendiente = "";
+                Formatter formatter = new Formatter(Locale.getDefault());
+                formatter.format("", cita.getHorario().getFechaInicio());
+
+            }
+        }
     }
 }
