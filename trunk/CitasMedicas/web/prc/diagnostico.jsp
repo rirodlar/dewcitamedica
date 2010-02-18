@@ -27,7 +27,7 @@
         
             <div id="menu">
                 <ul>                                              
-                    <li><a href="../index.jsp" title="">Inicio</a></li>
+                    <li><a href="../home.jsp" title="">Inicio</a></li>
                     <li><a href="#" title="">Nosotros</a></li>
                     <li><a class="current" href="#" title="">Servicios</a></li>
                     <li><a href="#" title="">Cont&aacute;ctenos</a></li>

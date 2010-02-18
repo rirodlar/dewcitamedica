@@ -65,7 +65,7 @@ public class ReservaCitaServlet extends HttpServlet {
 
         if (sesion.getAttribute("usuario") == null) {
             System.out.println("la sesión ha caducado");
-            response.sendRedirect(request.getContextPath() + "/logeoPrueba.jsp");
+            response.sendRedirect(request.getContextPath() + "/loguin.jsp");
             return;
         }
 
@@ -74,28 +74,20 @@ public class ReservaCitaServlet extends HttpServlet {
             accion = "iniciar";
         }
 
-        String argument = request.getParameter("__ARGUMENT");
-        //
-
         if (accion.equals("iniciar")) {
             iniciar(request, response);
-        } else if (accion.equals("cargaMedico")) {
+        } else if (accion.equals("cboEspecialidad_onchange")) {
             cargaMedico(request, response);
-        } else if (accion.equals("cargaHorario")) {
+        } else if (accion.equals("btnVerHorario_onclick")) {
             cargaHorario(request, response);
         } else if (accion.equals("reservar")) {
         }
+        
         sesion.setAttribute("especialidades", especialidades);
         sesion.setAttribute("especialidadId", especialidadId);
         sesion.setAttribute("medicos", medicos);
         sesion.setAttribute("medicoId", medicoId);
-        sesion.setAttribute("horarioLunes", horarioLunes);
-        sesion.setAttribute("horarioMartes", horarioMartes);
-        sesion.setAttribute("horarioMiercoles", horarioMiercoles);
-        sesion.setAttribute("horarioJueves", horarioJueves);
-        sesion.setAttribute("horarioViernes", horarioViernes);
-        sesion.setAttribute("horarioSabado", horarioSabado);
-        sesion.setAttribute("horarioDomingo", horarioDomingo);
+
         response.sendRedirect(request.getContextPath() + "/prc/reservar_cita.jsp");
         //request.getRequestDispatcher("prc/reservar_cita.jsp").forward(request, response);
     }
@@ -125,7 +117,7 @@ public class ReservaCitaServlet extends HttpServlet {
     private void cargaMedico(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         especialidades = (List<Especialidad>) sesion.getAttribute("especialidades");
-        especialidadId = Integer.parseInt(request.getParameter("especialidadId"));
+        especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
         // Se recuperan todos los médicos de la especialidad seleccionada
         Especialidad especialidad = especialidadService.getEspecialidadPorId(especialidadId);
         if (especialidad != null) {
@@ -141,14 +133,14 @@ public class ReservaCitaServlet extends HttpServlet {
 
     private void cargaHorario(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        especialidadId = Integer.parseInt(request.getParameter("especialidadId"));
-        medicoId = Integer.parseInt(request.getParameter("medicoId"));
+        especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
+        medicoId = Integer.parseInt(request.getParameter("cboMedico"));
 
         Especialidad especialidad = especialidadService.getEspecialidadPorId(especialidadId);
         Medico medico = medicoService.getMedicoPorId(medicoId);
 
         Calendar cal = new GregorianCalendar();
-        String fecha = "05/05/2010"; // obtener fecha desde el jsp
+        String fecha = request.getParameter("txtSemana"); // obtener fecha desde el jsp
         System.out.println(fecha.substring(6));
         System.out.println(fecha.substring(3,5));
         System.out.println(fecha.substring(0,2));
@@ -179,6 +171,15 @@ public class ReservaCitaServlet extends HttpServlet {
         String filtro = "Filtro: Especialidad = " + especialidad.getNombre() +
                 ", Medico = " + medico.getNombreCompleto() +
                 ", Semana = ";
+        sesion.setAttribute("horarioAtencion", horarioService.getHorarioAtencion());
+        sesion.setAttribute("horarioLunes", horarioLunes);
+        sesion.setAttribute("horarioMartes", horarioMartes);
+        sesion.setAttribute("horarioMiercoles", horarioMiercoles);
+        sesion.setAttribute("horarioJueves", horarioJueves);
+        sesion.setAttribute("horarioViernes", horarioViernes);
+        sesion.setAttribute("horarioSabado", horarioSabado);
+        sesion.setAttribute("horarioDomingo", horarioDomingo);
+        
         sesion.setAttribute("filtro", filtro);
     }
 }
