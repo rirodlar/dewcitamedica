@@ -103,7 +103,12 @@
           </tr>
           </table>
         <br/>
-        <p align="left">Usted posee una cita para el día martes 02 de febrero a las 15:20 horas.</p>
+        <p align="left">
+            <strong>Sus citas pendientes son:</strong>
+            <c:forEach var="citaPendiente" items="${citasPendientes}">
+                <br />${citaPendiente}
+            </c:forEach>
+        </p>
         <table class=x1i cellSpacing=0 cellPadding=0 width="840px" border=0>
             <tbody>
                 <tr>
@@ -115,13 +120,9 @@
           <table class="x1h" cellspacing="0" cellpadding="0" width="840px" border="0">
             <tr>
               <th class="x4j" width="91" scope="col">Hora</th>
-              <th class="x4j" width="107" scope="col">Lun 01</th>
-              <th class="x4j" width="107" scope="col">Mar 02</th>
-              <th class="x4j" width="107" scope="col">Mie 03</th>
-              <th class="x4j" width="107" scope="col">Jue 04</th>
-              <th class="x4j" width="107" scope="col">Vie 05</th>
-              <th class="x4j" width="107" scope="col">Sab 06</th>
-              <th class="x4j" width="107" scope="col">Dom 07</th>
+              <c:forEach var="diaSemana" items="${cabeceraSemana}">
+                  <th class="x4j" width="107" scope="col">${diaSemana}</th>
+              </c:forEach>
             </tr>
             </table>
             <div id="scroll">
