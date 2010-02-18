@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 ﻿<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
@@ -9,6 +10,8 @@
     <script type="text/javascript" src="../resources/jss/calendario/calendar-setup.js"></script>
     <script type="text/javascript" src="js/consulta.js"></script>
     <link rel="stylesheet" type="text/css" href="../resources/css/style.css" media="screen" />
+    <script type="text/javascript" src="js/reservar_cita.js"></script>
+    <script type="text/javascript" src="../resources/jss/tools/Utiles.js"></script>
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
     <![endif]-->
@@ -49,18 +52,30 @@
         <p>Por favor, seleccione los criterios necesarios para la b&uacute;squeda.</p>
         <br/>
         <form action="" method="post" name="frmReserva">
+        <INPUT id="__ACTION" name="__ACTION" type="HIDDEN"/>
+        <INPUT id="__ARGUMENT" name="__ARGUMENT" type="HIDDEN"/>
         <table width="840px" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td><label>Especialidad:
-                    <select name="cboEspecialidad" id="lstEspecialidad" class="x4" style="width:120px">
-                      <option value="ca">Cardiología</option>
-                      <option value="pe">Pediatría</option>
+                    <select name="cboEspecialidad" id="lstEspecialidad" class="x4" style="width:200px" onchange="javascript:cboCombo01_onchange();">
+                        <c:forEach var="especialidad" items="${especialidades}">
+                            <option value="${especialidad.especialidadId}"
+                                    <c:if test="${especialidad.especialidadId == especialidadId}">
+                                    selected="selected"
+                                    </c:if>
+                            >${especialidad.nombre}</option>
+                        </c:forEach>
                     </select>
                     </label></td>
                   <td><label>Médico:
-                    <select name="cboMedico" id="cboMedico" class="x4" style="width:120px">
-                      <option value="100001">Paredes Horacio, Alfredo</option>
-                      <option value="100002">Solier Solari, Pamela </option>
+                    <select name="cboMedico" id="cboMedico" class="x4" style="width:200px" onchange="javascript:cboCombo02_onchange();">
+                        <c:forEach var="medico" items="${medicos}">
+                            <option value="${medico.personaId}"
+                                    <c:if test="${medico.personaId == medicoId}">
+                                    selected="selected"
+                                    </c:if>
+                            >${medico.nombreCompleto}</option>
+                        </c:forEach>
                     </select>
                     </label></td>
                   <td>Semana:
