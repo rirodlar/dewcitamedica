@@ -184,3 +184,12 @@ function CheckAll(tableId, checkboxId){
         }
     }
 }
+
+function __doPostBack(url, action, target)
+{
+  var frm = document.forms[0]; 
+  frm.action = url;
+  frm.__ACTION.value = action;
+  frm.target = target; 
+  frm.submit();
+}
