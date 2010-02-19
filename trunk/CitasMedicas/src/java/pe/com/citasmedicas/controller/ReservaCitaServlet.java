@@ -313,6 +313,7 @@ public class ReservaCitaServlet extends HttpServlet {
         PacienteService pacienteService = new PacienteService();
         Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
 
+        errorMsg = "";
         fechaSemana = request.getParameter("txtSemana");
         especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
         medicoId = Integer.parseInt(request.getParameter("cboMedico"));
@@ -379,23 +380,23 @@ public class ReservaCitaServlet extends HttpServlet {
                             cargarCitasPendientes();
                             horario.setCita(nuevaCita);
                             horarioService.actualizarHorario(horario);
-                            errorMsg = "La cita ha sido grabada correctamente.";
+                            errorMsg += "La cita ha sido grabada correctamente.";
                             return;
                         }
                         else{
-                            errorMsg = "No se ha podido grabar la cita. Por favor, vuelva a intentarlo más tarde.";
+                            errorMsg += "No se ha podido grabar la cita. Por favor, vuelva a intentarlo más tarde.";
                             return;
                         }
                     } else {
-                        errorMsg = "El plazo mínimo para reservar es de dos (2) días.";
+                        errorMsg += "El plazo mínimo para reservar es de dos (2) días.";
                         return;
                     }
                 } else {
-                    errorMsg = "Usted ya posee una cita para la fecha y hora seleccionada.";
+                    errorMsg += "Usted ya posee una cita para la fecha y hora seleccionada.";
                     return;
                 }
             } else {
-                errorMsg = "El horario seleccionado no está disponible.";
+                errorMsg += "El horario seleccionado no está disponible.";
                 return;
             }
         } catch (Exception ex) {
@@ -403,16 +404,6 @@ public class ReservaCitaServlet extends HttpServlet {
             errorMsg = "Se produjo un error inesperado.";
             return;
         }
-        /*
-        1.- si la citaActual es nula: paso 2 / caso contrario: paso 5
-        2.- si el horario no posee ninguna cita: paso 3 / caso contrario: salir con error
-        3.- el paciente no poseea ninguna cita pendiente durante la semana
-        con el mismo medico y la misma especialidad: paso 4 / caso contrario: salir con error
-        4.- la fecha actual es menor a dos días de la fecha de la cita: grabar y salir
-        / caso contrario: salir con error
-        5.- si la cita actual pertenece al mismo horario -> salir
-        6.- si la cita actual no pertenece al mismo horario -> eliminar cita e ir al paso 2
-         */
     }
 
     private boolean existeHorario(Horario atencion, List<Horario> horarios) {
