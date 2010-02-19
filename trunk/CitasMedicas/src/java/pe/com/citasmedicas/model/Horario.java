@@ -2,7 +2,9 @@ package pe.com.citasmedicas.model;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  *
@@ -141,30 +143,19 @@ public class Horario {
      * @return rango de hora
      */
     public String getRango() {
-        int horaInicio = getHoraInicio();
-        int horaFin = getHoraFin();
-        int minutoInicio = getMinutoInicio();
-        int minutoFin = getMinutoFin();
+        Formatter formatter = new Formatter(Locale.getDefault());
+        formatter.format("%1$tH:%1$tM - %2$tH:%2$tM", getFechaInicio(), getFechaFin());
+        return formatter.toString();
+    }
 
-        String rango = "";
-
-        if(horaInicio < 10)
-            rango += "0";
-        rango += horaInicio + ":";
-
-        if(minutoInicio < 10)
-            rango += "0";
-        rango += minutoInicio + " - ";
-
-        if(horaFin < 10)
-            rango += "0";
-        rango += horaFin + ":";
-
-        if(minutoFin < 10)
-            rango += "0";
-        rango += minutoFin;
-
-        return rango;
+    @Override
+    public String toString() {
+        String cadena = "horarioId: " + getHorarioId() + "; " +
+                        " especialidad: " + getEspecialidad().getNombre() + "; " +
+                        " medico: " + getMedico().getNombreCompleto() + "; " +
+                        " fechaInicio: " + getFechaInicio() + "; " +
+                        " fechaFin: " + getFechaFin();
+        return cadena;
     }
 }
 

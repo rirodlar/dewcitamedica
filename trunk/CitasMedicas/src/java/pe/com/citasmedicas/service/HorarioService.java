@@ -46,4 +46,23 @@ public class HorarioService {
     public List<Horario> getHorarioAtencion() {
         return horarioDao.getHorarioAtencion();
     }
+
+    /**
+     * Elimina un horario
+     * @param Horario horario
+     * @return boolean
+     */
+    public boolean eliminarHorario(Horario horario) {
+        return horarioDao.eliminarHorario(horario);
+    }
+
+    /**
+     * Actualiza un horario
+     * @param Horario horario
+     * @return boolean
+     */
+    public boolean actualizarHorario(Horario horario) {
+        return horarioDao.actualizarHorario(horario);
+    }
+
 }

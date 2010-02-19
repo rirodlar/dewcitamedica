@@ -53,7 +53,9 @@ public class HorarioDao {
                 calH.setTime(horarioAux.getFechaInicio());
                 Calendar calP = new GregorianCalendar();
                 calP.setTime(fecha);
-                if (calH.get(Calendar.DAY_OF_WEEK) == calP.get(Calendar.DAY_OF_WEEK)) {
+                if (calH.get(Calendar.DATE) == calP.get(Calendar.DATE) &&
+                    calH.get(Calendar.MONTH) == calP.get(Calendar.MONTH) &&
+                    calH.get(Calendar.YEAR) == calP.get(Calendar.YEAR)) {
                     horarios.add(horarioAux);
                 }
             }
@@ -64,5 +66,30 @@ public class HorarioDao {
     public List<Horario> getHorarioAtencion(){
         List<Horario> horarioAtencion = (List<Horario>)((ArrayList<Horario>)CargaData.HORARIO_ATENCION).clone();
         return horarioAtencion;
+    }
+
+    /**
+     * Elimina un horario
+     * @param Horario horario
+     * @return boolean
+     */
+    public boolean eliminarHorario(Horario horario) {
+        if (horario == null) {
+            return false;
+        }
+        CargaData.HORARIOS.remove(horario);
+        return true;
+    }
+
+    /**
+     * Actualiza un horario
+     * @param Horario horario
+     * @return boolean
+     */
+    public boolean actualizarHorario(Horario horario) {
+        if (horario == null) {
+            return false;
+        }
+        return true;
     }
 }

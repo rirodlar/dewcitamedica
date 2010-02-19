@@ -16,12 +16,15 @@ import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
+import pe.com.citasmedicas.model.Paciente;
 import pe.com.citasmedicas.model.Persona;
 import pe.com.citasmedicas.model.Usuario;
+//import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.HorarioService;
 import pe.com.citasmedicas.service.MedicoService;
+import pe.com.citasmedicas.service.PacienteService;
 
 /**
  *
@@ -34,11 +37,14 @@ public class ReservaCitaServlet extends HttpServlet {
     //
     EspecialidadService especialidadService = null;
     MedicoService medicoService = null;
+    HorarioService horarioService = null;
+    CitaService citaService = null;
     //
     List<Especialidad> especialidades = null;
     List<Medico> medicos = null;
     Integer especialidadId = null;
     Integer medicoId = null;
+    String errorMsg = null;
     //
     List<String> citasPendientes = null;
     List<String> cabeceraSemana = null;
@@ -67,26 +73,30 @@ public class ReservaCitaServlet extends HttpServlet {
         //
         especialidadService = new EspecialidadService();
         medicoService = new MedicoService();
+        horarioService = new HorarioService();
+        citaService = new CitaService();
+        errorMsg = null;
         //
         String accion = request.getParameter("__ACTION");
         if (accion == null || accion.equalsIgnoreCase("")) {
             accion = "iniciar";
         }
-
+        System.out.println("Accion: " + accion);
         if (accion.equals("iniciar")) {
             iniciar(request, response);
         } else if (accion.equals("cboEspecialidad_onchange")) {
             cargaMedico(request, response);
         } else if (accion.equals("btnVerHorario_onclick")) {
             cargaHorario(request, response);
-        } else if (accion.equals("reservar")) {
+        } else if (accion.equals("btnReservar_onclick")) {
+            reservar(request, response);
         }
 
         sesion.setAttribute("especialidades", especialidades);
         sesion.setAttribute("especialidadId", especialidadId);
         sesion.setAttribute("medicos", medicos);
         sesion.setAttribute("medicoId", medicoId);
-
+        sesion.setAttribute("errorMsg", errorMsg);
         response.sendRedirect(request.getContextPath() + "/prc/reservar_cita.jsp");
     }
 
@@ -112,8 +122,7 @@ public class ReservaCitaServlet extends HttpServlet {
         }
         //
         cargarCitasPendientes();
-        sesion.setAttribute("citasPendientes", citasPendientes);
-
+        
         // Se inicializa la cabecera de los horarios
         cabeceraSemana = new ArrayList<String>();
         cabeceraSemana.add("Lunes");
@@ -154,7 +163,7 @@ public class ReservaCitaServlet extends HttpServlet {
         List<Horario> horarioSabado = null;
         List<Horario> horarioDomingo = null;
         //
-        HorarioService horarioService = new HorarioService();
+        horarioService = new HorarioService();
         //
         especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
         medicoId = Integer.parseInt(request.getParameter("cboMedico"));
@@ -225,9 +234,18 @@ public class ReservaCitaServlet extends HttpServlet {
         formatter.format("%1$ta %1$td/%1$tm", cal);
         cabeceraSemana.add(formatter.toString());
 
+        // Se construye el filtro
         String filtro = "Filtro: Especialidad = " + especialidad.getNombre() +
-                ", Medico = " + medico.getNombreCompleto() +
-                ", Semana = ";
+                "; Medico = " + medico.getNombreCompleto() +
+                "; Semana = Del ";
+        cal.add(Calendar.DATE, -6);
+        formatter = new Formatter(Locale.getDefault());
+        formatter.format("%1$td/%1$tm/%1$tY", cal);
+        filtro += formatter.toString();
+        cal.add(Calendar.DATE, 6);
+        formatter = new Formatter(Locale.getDefault());
+        formatter.format("%1$td/%1$tm/%1$tY", cal);
+        filtro += " al " + formatter.toString();
 
         // Se recuperan los horarios de atención
         // Primero se recupera el horario de atención del instituto
@@ -239,7 +257,7 @@ public class ReservaCitaServlet extends HttpServlet {
             boolean existe = false;
             existe = existeHorario(atencion, horarioLunes);
             if (!existe) {
-                 existe = existeHorario(atencion, horarioMartes);
+                existe = existeHorario(atencion, horarioMartes);
             }
             if (!existe) {
                 existe = existeHorario(atencion, horarioMiercoles);
@@ -277,7 +295,97 @@ public class ReservaCitaServlet extends HttpServlet {
         sesion.setAttribute("filtro", filtro);
     }
 
-    private boolean existeHorario(Horario atencion, List<Horario> horarios){
+    private void reservar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Se obtiene el horario seleccionado en el jsp
+        String sHorarioId = request.getParameter("radio");
+
+        if (sHorarioId == null || sHorarioId.equalsIgnoreCase("")) {
+            errorMsg = "Por favor, seleccione un horario.";
+            return;
+        }
+
+        Integer horarioId = null;
+        try {
+            horarioId = new Integer(Integer.parseInt(sHorarioId));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("sHorarioId: " + sHorarioId);
+            errorMsg = "El horario no existe.";
+            return;
+        }
+
+        Cita citaPendiente = (Cita) sesion.getAttribute("citaPendiente");
+
+        try {
+            Horario horario = horarioService.getHorarioPorId(horarioId);
+            // Si el horario seleccionado es igual a la cita pendiente, entonces se terminar el proceso
+            if(citaPendiente != null && citaPendiente.getHorario().equals(horario)){
+                return;
+            }
+            // Se verifica que no exista una cita para el horario seleccionado
+            if (horario.getCita() == null) {
+                // Se verifica que el paciente no poseea ninguna cita pendiente durante
+                // la semana para la especialidad y el medico seleccionado
+                if (citaPendiente != null) {
+                    citaService.eliminarCita(citaPendiente);
+                    Formatter formatter = new Formatter(Locale.getDefault());
+                    formatter.format("%1$tA %1$td de %1$tB del %1$tY, %1$tH:%1$tM hrs.", citaPendiente.getHorario().getHoraInicio());
+                    errorMsg = "Se ha eliminado la cita del " + formatter.toString();
+                }
+                // Se verifica que el paciente no poseea ninguna cita pendiente
+                // para la fecha seleccionada
+                List<Cita> citas = citaService.getCitasPorPacienteFecha(null, horario.getFechaInicio(), true);
+                if (citas.size() == 0) {
+                    // Se verifica que la fecha seleccionada tenga un lapso de dos
+                    // días de diferencia con la fecha actual
+                    Calendar today = Calendar.getInstance();
+                    if (horario.getFechaInicio().getTime() - today.getTimeInMillis() >= 172800000) {
+                        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+                        PacienteService pacienteService = new PacienteService();
+                        Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
+                        Cita nuevaCita = citaService.insertarCita(paciente, horario.getMedico(), horario, "PENDIENTE", null);
+                        if (nuevaCita != null) {
+                            cargarCitasPendientes();
+                            horario.setCita(nuevaCita);
+                            horarioService.actualizarHorario(horario);
+                            errorMsg = "La cita ha sido grabada correctamente.";
+                            return;
+                        }
+                        else{
+                            errorMsg = "No se ha podido grabar la cita. Por favor, vuelva a intentarlo más tarde.";
+                            return;
+                        }
+                    } else {
+                        errorMsg = "El plazo mínimo para reservar es de dos (2) días.";
+                        return;
+                    }
+                } else {
+                    errorMsg = "Usted ya posee una cita para la fecha y hora seleccionada.";
+                    return;
+                }
+            } else {
+                errorMsg = "El horario seleccionado no está disponible.";
+                return;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            errorMsg = "Se produjo un error inesperado.";
+            return;
+        }
+        /*
+        1.- si la citaActual es nula: paso 2 / caso contrario: paso 5
+        2.- si el horario no posee ninguna cita: paso 3 / caso contrario: salir con error
+        3.- el paciente no poseea ninguna cita pendiente durante la semana
+        con el mismo medico y la misma especialidad: paso 4 / caso contrario: salir con error
+        4.- la fecha actual es menor a dos días de la fecha de la cita: grabar y salir
+        / caso contrario: salir con error
+        5.- si la cita actual pertenece al mismo horario -> salir
+        6.- si la cita actual no pertenece al mismo horario -> eliminar cita e ir al paso 2
+         */
+    }
+
+    private boolean existeHorario(Horario atencion, List<Horario> horarios) {
         boolean existe = false;
         for (Horario domingo : horarios) {
             if (domingo.getHoraInicio() == atencion.getHoraInicio() &&
@@ -291,7 +399,6 @@ public class ReservaCitaServlet extends HttpServlet {
 
     private void cargarCitasPendientes() {
         citasPendientes = new ArrayList<String>();
-        CitaService citaService = new CitaService();
         Usuario usuario = (Usuario) sesion.getAttribute("usuario");
         Persona paciente = null;
         if (usuario != null) {
@@ -307,5 +414,6 @@ public class ReservaCitaServlet extends HttpServlet {
                 citasPendientes.add(citaPendiente);
             }
         }
+        sesion.setAttribute("citasPendientes", citasPendientes);
     }
 }
