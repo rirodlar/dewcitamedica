@@ -22,22 +22,22 @@
     	<div class="right_header">
    
             <div class="top_menu">
-            <a href="consulta.jsp" class="login">ingresar</a>
-            <a href="#" class="sign_up">registro</a>
+            <div style="width:90px;float:left;margin:0 3px 0 3px;">&nbsp;</div>
+            <a href="../loguin.jsp" class="login">Salir</a>
             </div>
         
             <div id="menu">
                 <ul>                                              
                     <li><a href="../home.jsp" title="">Inicio</a></li>
                     <li><a href="#" title="">Nosotros</a></li>
-                    <li><a class="current" href="#" title="">Servicios</a></li>
-                    <li><a href="#" title="">Cont&aacute;ctenos</a></li>
+                    <li><a class="current" href="#" title="">Citas</a></li>
+                    <li><a href="horario.jsp" title="">Horarios</a></li>
                 </ul>
             </div>
         
         </div>
     </div>
-    <div id="profundidad">&nbsp;Consulta de Citas&nbsp;|&nbsp;<a href="horario.jsp" class="enlace">Horarios</a></div>
+    <div id="profundidad">&nbsp;Consulta de Citas</div>
     
     <div id="contenido">
     <!-- Aqui el contenido de la pagina -->

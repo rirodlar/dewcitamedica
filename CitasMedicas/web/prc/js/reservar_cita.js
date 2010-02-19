@@ -8,5 +8,10 @@ function btnVerHorario_onclick () {
 }
 
 function btnReservar_onclick () {
-  __doPostBack("../ReservaCitaServlet", "btnReservar_onclick", "_self");
+	var frm = document.forms[0]; 
+	//Validar seleccion
+	if (frm.rbtCita.value == "")
+		alert("Por favor debe seleccionar una opcion");
+	else 
+		alert("Se selecciono una opcion");
 }

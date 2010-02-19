@@ -36,5 +36,10 @@ public class HorarioDaoTest {
         cal = new GregorianCalendar(2010, 2, 27);
         List<Horario> horarios = horarioDao.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         Assert.assertEquals(horarios.size(), 4);
+
+        cal = new GregorianCalendar(2010, 2, 23);
+        medico = medicoDao.getMedicoPorId(new Integer(1000001));
+        horarios = horarioDao.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
+        Assert.assertEquals(horarios.size(), 4);
     }
 }
