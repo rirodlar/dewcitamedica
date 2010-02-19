@@ -34,12 +34,24 @@ public class CitaService {
      * Obtiene todos las citas de un médico para una fecha específica
      * @param Medico medico
      * @param Date fecha
+     * @param boolean validaHora
      * @return List<Cita>
      */
-    public List<Cita> getCitasPorMedicoFecha(Medico medico, Date fecha) {
-        return citaDao.getCitasPorMedicoFecha(medico, fecha);
+    public List<Cita> getCitasPorMedicoFecha(Medico medico, Date fecha, boolean validaHora) {
+        return citaDao.getCitasPorMedicoFecha(medico, fecha, validaHora);
     }
-    
+
+    /**
+     * Obtiene todos las citas de un médico para una fecha específica
+     * @param Paciente paciente
+     * @param Date fecha
+     * @param boolean validaHora
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPorPacienteFecha(Paciente paciente, Date fecha, boolean validaHora) {
+        return citaDao.getCitasPorPacienteFecha(paciente, fecha, validaHora);
+    }
+
     /**
      * Obtiene la cita de un horario específico
      * @param Horario horario
@@ -90,7 +102,7 @@ public class CitaService {
      * @param Cita cita
      * @return boolean
      */
-    public boolean actualizaCita(Cita cita) {
-        return citaDao.actualizaCita(cita);
+    public boolean actualizarCita(Cita cita) {
+        return citaDao.actualizarCita(cita);
     }
 }

@@ -912,5 +912,9 @@ public class CargaData {
         for(int i = 0; i < HORARIO_ATENCION.size(); i++){
             System.out.println(HORARIO_ATENCION.get(i).getRango());
         }
+        Calendar calToday = Calendar.getInstance();
+        Calendar calMinus2 = Calendar.getInstance();
+        calMinus2.add(Calendar.DATE, -2);
+        System.out.println(calToday.getTimeInMillis() - calMinus2.getTimeInMillis());
     }
 }

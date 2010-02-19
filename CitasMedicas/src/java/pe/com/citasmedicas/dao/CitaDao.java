@@ -42,9 +42,10 @@ public class CitaDao {
      * Obtiene todos las citas de un médico para una fecha específica
      * @param Medico medico
      * @param Date fecha
+     * @param boolean validaHora
      * @return List<Cita>
      */
-    public List<Cita> getCitasPorMedicoFecha(Medico medico, Date fecha) {
+    public List<Cita> getCitasPorMedicoFecha(Medico medico, Date fecha, boolean validaHora) {
         if (medico == null || fecha == null) {
             return new ArrayList<Cita>();
         }
@@ -55,8 +56,17 @@ public class CitaDao {
                 calH.setTime(citaAux.getHorario().getFechaInicio());
                 Calendar calP = new GregorianCalendar();
                 calP.setTime(fecha);
-                if (calH.get(Calendar.DAY_OF_WEEK) == calP.get(Calendar.DAY_OF_WEEK)) {
-                    citas.add(citaAux);
+                if (calH.get(Calendar.DATE) == calP.get(Calendar.DATE) &&
+                        calH.get(Calendar.MONTH) == calP.get(Calendar.MONTH) &&
+                        calH.get(Calendar.YEAR) == calP.get(Calendar.YEAR)) {
+                    if (validaHora) {
+                        if (calH.get(Calendar.HOUR_OF_DAY) == calP.get(Calendar.HOUR_OF_DAY) &&
+                                calH.get(Calendar.MINUTE) == calP.get(Calendar.MINUTE)) {
+                            citas.add(citaAux);
+                        }
+                    } else {
+                        citas.add(citaAux);
+                    }
                 }
             }
         }
@@ -64,12 +74,13 @@ public class CitaDao {
     }
 
     /**
-     * Obtiene todos las citas de un médico para una fecha específica
-     * @param Medico medico
+     * Obtiene todos las citas de un paciente para una fecha específica
+     * @param Paciente paciente
      * @param Date fecha
+     * @param boolean validaHora
      * @return List<Cita>
      */
-    public List<Cita> getCitasPorPacienteFecha(Paciente paciente, Date fecha) {
+    public List<Cita> getCitasPorPacienteFecha(Paciente paciente, Date fecha, boolean validaHora) {
         if (paciente == null || fecha == null) {
             return new ArrayList<Cita>();
         }
@@ -80,35 +91,16 @@ public class CitaDao {
                 calH.setTime(citaAux.getHorario().getFechaInicio());
                 Calendar calP = new GregorianCalendar();
                 calP.setTime(fecha);
-                if (calH.get(Calendar.DAY_OF_WEEK) == calP.get(Calendar.DAY_OF_WEEK)) {
-                    citas.add(citaAux);
-                }
-            }
-        }
-        return citas;
-    }
-
-    /**
-     * Obtiene todos las citas de un médico para una fecha específica
-     * @param Medico medico
-     * @param Date fecha
-     * @return List<Cita>
-     */
-    public List<Cita> getCitasPorRangoFecha(Paciente paciente, Especialidad especialidad, Medico medico, Date fechaInicio, Date fechaFin) {
-        if (medico == null || fechaInicio == null || fechaFin == null) {
-            return new ArrayList<Cita>();
-        }
-        List<Cita> citas = new ArrayList<Cita>();
-        for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getPaciente().equals(paciente)) {
-                Horario horarioAux = citaAux.getHorario();
-                if(horarioAux != null){
-                    Especialidad especialidadAux = horarioAux.getEspecialidad();
-                    Medico medicoAux = horarioAux.getMedico();
-                    if(especialidadAux.equals(especialidad) && medicoAux.equals(medico)){
-                        Date fechaAux = horarioAux.getFechaInicio();
-                        if(fechaAux.after(fechaInicio) && fechaAux.before(fechaFin))
-                           citas.add(citaAux);
+                if (calH.get(Calendar.DATE) == calP.get(Calendar.DATE) &&
+                        calH.get(Calendar.MONTH) == calP.get(Calendar.MONTH) &&
+                        calH.get(Calendar.YEAR) == calP.get(Calendar.YEAR)) {
+                    if (validaHora) {
+                        if (calH.get(Calendar.HOUR_OF_DAY) == calP.get(Calendar.HOUR_OF_DAY) &&
+                                calH.get(Calendar.MINUTE) == calP.get(Calendar.MINUTE)) {
+                            citas.add(citaAux);
+                        }
+                    } else {
+                        citas.add(citaAux);
                     }
                 }
             }
@@ -129,8 +121,9 @@ public class CitaDao {
         Calendar calToday = new GregorianCalendar();
         for (Cita citaAux : CargaData.CITAS) {
             if (citaAux.getPaciente().equals(persona)) {
-                if(citaAux.getHorario().getFechaInicio().after(calToday.getTime()))
+                if (citaAux.getHorario().getFechaInicio().after(calToday.getTime())) {
                     citas.add(citaAux);
+                }
             }
         }
         return citas;
@@ -177,26 +170,28 @@ public class CitaDao {
         return cita;
     }
 
-     /**
+    /**
      * Elimina una cita
      * @param Cita cita
      * @return boolean
      */
     public boolean eliminarCita(Cita cita) {
-        if(cita == null)
+        if (cita == null) {
             return false;
+        }
         CargaData.CITAS.remove(cita);
         return true;
     }
 
-     /**
+    /**
      * Actualiza una cita
      * @param Cita cita
      * @return boolean
      */
-    public boolean actualizaCita(Cita cita) {
-        if(cita == null)
+    public boolean actualizarCita(Cita cita) {
+        if (cita == null) {
             return false;
+        }
         return true;
     }
 }
