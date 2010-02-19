@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
+﻿<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -22,22 +22,22 @@
     	<div class="right_header">
    
             <div class="top_menu">
-            <a href="consulta.jsp" class="login">ingresar</a>
-            <a href="#" class="sign_up">registro</a>
+            <div style="width:90px;float:left;margin:0 3px 0 3px;">&nbsp;</div>
+            <a href="../loguin.jsp" class="login">Salir</a>
             </div>
         
             <div id="menu">
                 <ul>                                              
                     <li><a href="../home.jsp" title="">Inicio</a></li>
                     <li><a href="#" title="">Nosotros</a></li>
-                    <li><a class="current" href="consulta.jsp" title="">Servicios</a></li>
-                    <li><a href="#" title="">Cont&aacute;ctenos</a></li>
+                    <li><a href="consulta.jsp" title="">Citas</a></li>
+                    <li><a class="current" href="#" title="">Horario</a></li>
                 </ul>
             </div>
         
         </div>
     </div>
-    <div id="profundidad">&nbsp;<a href="consulta.jsp" class="enlace">Consulta de Citas</a>&nbsp;|&nbsp;Horarios</div>
+    <div id="profundidad">&nbsp;Horarios</div>
     <div id="contenido">
     <!-- Aqui el contenido de la pagina -->
     		<div class="box_title">

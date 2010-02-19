@@ -3,6 +3,7 @@ package pe.com.citasmedicas.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pe.com.citasmedicas.commons.SYGFormatter;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
@@ -19,7 +21,6 @@ import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Paciente;
 import pe.com.citasmedicas.model.Persona;
 import pe.com.citasmedicas.model.Usuario;
-//import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.HorarioService;
@@ -45,6 +46,7 @@ public class ReservaCitaServlet extends HttpServlet {
     Integer especialidadId = null;
     Integer medicoId = null;
     String errorMsg = null;
+    String fechaSemana = null;
     //
     List<String> citasPendientes = null;
     List<String> cabeceraSemana = null;
@@ -97,6 +99,7 @@ public class ReservaCitaServlet extends HttpServlet {
         sesion.setAttribute("medicos", medicos);
         sesion.setAttribute("medicoId", medicoId);
         sesion.setAttribute("errorMsg", errorMsg);
+        sesion.setAttribute("fechaSemana", fechaSemana);
         response.sendRedirect(request.getContextPath() + "/prc/reservar_cita.jsp");
     }
 
@@ -120,6 +123,9 @@ public class ReservaCitaServlet extends HttpServlet {
                 medicoId = medicos.get(0).getPersonaId();
             }
         }
+
+        if (fechaSemana == null || fechaSemana.equalsIgnoreCase(""))
+            fechaSemana = SYGFormatter.formatDate(new Date());
         //
         cargarCitasPendientes();
         
@@ -150,6 +156,7 @@ public class ReservaCitaServlet extends HttpServlet {
                 medicoId = medicos.get(0).getPersonaId();
             }
         }
+        fechaSemana = request.getParameter("txtSemana");
     }
 
     private void cargaHorario(HttpServletRequest request, HttpServletResponse response)
@@ -293,10 +300,15 @@ public class ReservaCitaServlet extends HttpServlet {
         sesion.setAttribute("horarioDomingo", horarioDomingo);
         sesion.setAttribute("cabeceraSemana", cabeceraSemana);
         sesion.setAttribute("filtro", filtro);
+
+        fechaSemana = request.getParameter("txtSemana");
     }
 
     private void reservar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        fechaSemana = request.getParameter("txtSemana");
+        
         // Se obtiene el horario seleccionado en el jsp
         String sHorarioId = request.getParameter("radio");
 
