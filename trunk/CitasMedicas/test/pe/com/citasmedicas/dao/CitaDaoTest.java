@@ -31,7 +31,7 @@ public class CitaDaoTest {
 
         cal = new GregorianCalendar(2010, 2, 27);
         Assert.assertEquals((citaDao.getCitasPorMedicoFecha(medicoDao.getMedicoPorId(new Integer(1000005)),
-                cal.getTime())).size(), 1);
+                cal.getTime(), false)).size(), 1);
 
         cita = citaDao.getCitaPorHorario(horarioDao.getHorarioPorId(new Integer(1000004)));
         Assert.assertEquals(cita.getCitaId().intValue(), 1000001);
@@ -45,7 +45,7 @@ public class CitaDaoTest {
                 horarioDao.getHorarioPorId(new Integer(1000055)),
                 "RESERVADO", null);
         Assert.assertEquals((citaDao.getCitasPorMedicoFecha(medicoDao.getMedicoPorId(new Integer(1000005)),
-                cal.getTime())).size(), 2);
+                cal.getTime(), false)).size(), 2);
         Assert.assertEquals(CargaData.CITAS.size(), 5);
 
         citaDao.eliminarCita(cita);
