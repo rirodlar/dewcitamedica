@@ -31,7 +31,7 @@ public class CitaServiceTest {
 
         cal = new GregorianCalendar(2010, 2, 27);
         Assert.assertEquals((citaService.getCitasPorMedicoFecha(medicoService.getMedicoPorId(new Integer(1000005)),
-                cal.getTime())).size(), 1);
+                cal.getTime(), false)).size(), 1);
 
         cita = citaService.getCitaPorHorario(horarioService.getHorarioPorId(new Integer(1000004)));
         Assert.assertEquals(cita.getCitaId().intValue(), 1000001);
@@ -49,7 +49,7 @@ public class CitaServiceTest {
             ex.printStackTrace();
         }
         Assert.assertEquals((citaService.getCitasPorMedicoFecha(medicoService.getMedicoPorId(new Integer(1000005)),
-                cal.getTime())).size(), 2);
+                cal.getTime(), false)).size(), 2);
         Assert.assertEquals(CargaData.CITAS.size(), 5);
 
         citaService.eliminarCita(cita);
