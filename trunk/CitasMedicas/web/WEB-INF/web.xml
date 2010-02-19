@@ -16,10 +16,6 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>pe.com.citasmedicas.controller.LoginServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>PruebaServlet</servlet-name>
-        <servlet-class>pe.com.citasmedicas.controller.PruebaServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>ReservaCitaServlet</servlet-name>
         <url-pattern>/ReservaCitaServlet</url-pattern>
@@ -31,10 +27,6 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PruebaServlet</servlet-name>
-        <url-pattern>/PruebaServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
