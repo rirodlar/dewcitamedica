@@ -9,9 +9,19 @@ function btnVerHorario_onclick () {
 
 function btnReservar_onclick () {
 	var frm = document.forms[0]; 
+	var seleccion = false;
 	//Validar seleccion
-	if (frm.rbtCita.value == "")
-		alert("Por favor debe seleccionar una opcion");
-	else 
-		alert("Se selecciono una opcion");
+	var citas = document.getElementsByName("rbtCita");
+	
+	for (var i = 0 ; i < citas.length ; i++) {
+        if (citas[i].checked ) {
+            seleccion = true;
+			break
+        }
+    }
+	
+	if (seleccion) {
+		__doPostBack("../ReservaCitaServlet", "btnReservar_onclick", "_self");
+    } else
+		alert("Debe seleccionar un horario");
 }

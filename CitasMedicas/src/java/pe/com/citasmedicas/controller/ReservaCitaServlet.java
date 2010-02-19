@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import pe.com.citasmedicas.commons.SYGFormatter;
+import pe.com.citasmedicas.commons.CitasFormatter;
+import pe.com.citasmedicas.commons.CitasValidations;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
@@ -21,6 +22,7 @@ import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Paciente;
 import pe.com.citasmedicas.model.Persona;
 import pe.com.citasmedicas.model.Usuario;
+//import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.HorarioService;
@@ -125,7 +127,7 @@ public class ReservaCitaServlet extends HttpServlet {
         }
 
         if (fechaSemana == null || fechaSemana.equalsIgnoreCase(""))
-            fechaSemana = SYGFormatter.formatDate(new Date());
+            fechaSemana = CitasFormatter.formatDate(new Date());
         //
         cargarCitasPendientes();
         
@@ -307,10 +309,22 @@ public class ReservaCitaServlet extends HttpServlet {
     private void reservar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+        PacienteService pacienteService = new PacienteService();
+        Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
+
         fechaSemana = request.getParameter("txtSemana");
+        especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
+        medicoId = Integer.parseInt(request.getParameter("cboMedico"));
+
+        //Si no es paciente
+        if (paciente == null) {
+            errorMsg = "Ud. no esta registrado como paciente.";
+            return;
+        }
         
         // Se obtiene el horario seleccionado en el jsp
-        String sHorarioId = request.getParameter("radio");
+        String sHorarioId = request.getParameter("rbtCita");
 
         if (sHorarioId == null || sHorarioId.equalsIgnoreCase("")) {
             errorMsg = "Por favor, seleccione un horario.";
@@ -327,7 +341,14 @@ public class ReservaCitaServlet extends HttpServlet {
             return;
         }
 
-        Cita citaPendiente = (Cita) sesion.getAttribute("citaPendiente");
+        Cita citaPendiente = null;
+        
+        //Obtener la cita del paciente para la semana seleccionada
+        List<Cita> citasPendientesPaciente = citaService.getCitasPendientes(paciente, CitasValidations.parseDate(fechaSemana), medicoId, especialidadId);
+        for (Cita cita : citasPendientesPaciente) {
+            citaPendiente = cita;
+            break;
+        }
 
         try {
             Horario horario = horarioService.getHorarioPorId(horarioId);
@@ -337,7 +358,7 @@ public class ReservaCitaServlet extends HttpServlet {
             }
             // Se verifica que no exista una cita para el horario seleccionado
             if (horario.getCita() == null) {
-                // Se verifica que el paciente no poseea ninguna cita pendiente durante
+                // Se verifica que el paciente no posea ninguna cita pendiente durante
                 // la semana para la especialidad y el medico seleccionado
                 if (citaPendiente != null) {
                     citaService.eliminarCita(citaPendiente);
@@ -347,15 +368,12 @@ public class ReservaCitaServlet extends HttpServlet {
                 }
                 // Se verifica que el paciente no poseea ninguna cita pendiente
                 // para la fecha seleccionada
-                List<Cita> citas = citaService.getCitasPorPacienteFecha(null, horario.getFechaInicio(), true);
+                List<Cita> citas = citaService.getCitasPorPacienteFecha(paciente, horario.getFechaInicio(), true);
                 if (citas.size() == 0) {
                     // Se verifica que la fecha seleccionada tenga un lapso de dos
                     // días de diferencia con la fecha actual
                     Calendar today = Calendar.getInstance();
                     if (horario.getFechaInicio().getTime() - today.getTimeInMillis() >= 172800000) {
-                        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-                        PacienteService pacienteService = new PacienteService();
-                        Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
                         Cita nuevaCita = citaService.insertarCita(paciente, horario.getMedico(), horario, "PENDIENTE", null);
                         if (nuevaCita != null) {
                             cargarCitasPendientes();

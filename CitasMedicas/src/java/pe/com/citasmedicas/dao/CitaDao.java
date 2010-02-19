@@ -130,6 +130,34 @@ public class CitaDao {
     }
 
     /**
+     * Obtiene todos las citas pendientes de un paciente para una semana, medico y especialidad
+     * @param paciente
+     * @param fecha
+     * @param medicoId
+     * @param especialidadId
+     * @return
+     */
+    public List<Cita> getCitasPendientes(Paciente paciente, Date fecha, Integer medicoId, Integer especialidadId) {
+        if (paciente == null) {
+            return new ArrayList<Cita>();
+        }
+        List<Cita> citas = new ArrayList<Cita>();
+
+        for (Cita citaAux : CargaData.CITAS) {
+            if (citaAux.getPaciente().equals(paciente) && citaAux.getMedico().getPersonaId() == medicoId
+                && citaAux.getHorario().getEspecialidad().getEspecialidadId() == especialidadId) {
+
+                //Si el horario se encuentra en la fecha de semana seleccionado
+                if (citaAux.getHorario().getFechaInicio().getTime() <= fecha.getTime()
+                    && citaAux.getHorario().getFechaFin().getTime() >= fecha.getTime()) {
+                    citas.add(citaAux);
+                }
+            }
+        }
+        return citas;
+    }
+
+    /**
      * Obtiene la cita de un horario específico
      * @param Horario horario
      * @return Cita

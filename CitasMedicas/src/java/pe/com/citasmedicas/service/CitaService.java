@@ -71,6 +71,18 @@ public class CitaService {
     }
 
     /**
+     * Obtiene todos las citas pendientes de un paciente para una semana, medico y especialidad
+     * @param paciente
+     * @param fecha
+     * @param medicoId
+     * @param especialidadId
+     * @return
+     */
+    public List<Cita> getCitasPendientes(Paciente paciente, Date fecha, Integer medicoId, Integer especialidadId) {
+        return citaDao.getCitasPendientes(paciente, fecha, medicoId, especialidadId);
+    }
+
+    /**
      * Ingresa una cita
      * @param Paciente paciente
      * @param Medico medico
