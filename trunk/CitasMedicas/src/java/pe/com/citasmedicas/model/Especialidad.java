@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author dew - Grupo 04
  */
-public class Especialidad {
+public class Especialidad extends Bean {
 
     private Integer especialidadId;
     private String nombre;

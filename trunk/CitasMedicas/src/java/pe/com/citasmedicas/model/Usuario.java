@@ -4,7 +4,7 @@ package pe.com.citasmedicas.model;
  *
  * @author dew - Grupo 04
  */
-public class Usuario {
+public class Usuario extends Bean {
 
     private Integer usuarioId;
     private String username;

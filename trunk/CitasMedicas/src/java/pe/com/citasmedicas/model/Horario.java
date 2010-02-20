@@ -10,7 +10,7 @@ import java.util.Locale;
  *
  * @author dew - Grupo 04
  */
-public class Horario {
+public class Horario extends Bean {
 
     private Integer horarioId;
     private Date fechaInicio;

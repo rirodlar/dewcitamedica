@@ -6,7 +6,7 @@ import java.util.List;
  *
  * @author dew - Grupo 04
  */
-public class Medico extends Persona {
+public class Medico extends Persona{
 
     private String nroColegiatura;
     private List<Especialidad> especialidades;

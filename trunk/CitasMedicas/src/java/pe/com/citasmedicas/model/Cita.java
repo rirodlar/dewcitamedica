@@ -4,7 +4,7 @@ package pe.com.citasmedicas.model;
  *
  * @author dew - Grupo 04
  */
-public class Cita {
+public class Cita extends Bean{
 
     private Integer citaId;
     private String estado;
