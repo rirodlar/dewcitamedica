@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
-import pe.com.citasmedicas.commons.ValidationUtil;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Paciente;
