@@ -50,7 +50,7 @@
                     <h2>Reservar <span class="dark_blue">Cita</span></h2>
                 </div>
                 <div class="caja_contenido">
-                    <p>Por favor, seleccione los criterios necesarios para la b&uacute;squeda.</p>
+                    <p>Por favor, seleccione los criterios necesarios para la b&uacute;squeda.${fechaSemana}</p>
                     <br/>
                     <form action="" method="post" name="frmReserva">
                         <input id="__ACTION" name="__ACTION" type="HIDDEN" />

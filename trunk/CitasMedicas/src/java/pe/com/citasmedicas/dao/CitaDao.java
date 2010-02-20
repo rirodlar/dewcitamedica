@@ -131,20 +131,20 @@ public class CitaDao {
 
     /**
      * Obtiene todos las citas pendientes de un paciente para una semana, medico y especialidad
-     * @param paciente
-     * @param fechaIni
-     * @param fechaFin
-     * @param medicoId
-     * @param especialidadId
+     * @param Paciente paciente
+     * @param Date fechaIni
+     * @param Date fechaFin
+     * @param Medico medico
+     * @param Especialidad especialidad
      * @return Cita en la semana (solo puede haber una coincidencia para los parametros ingresados)
      */
-    public Cita getCitaSemPendiente(Paciente paciente, Date fechaIni, Date fechaFin, Integer medicoId, Integer especialidadId) {
+    public Cita getCitaSemPendiente(Paciente paciente, Date fechaIni, Date fechaFin, Medico medico, Especialidad especialidad) {
         
         Cita cita = null;
 
         for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getPaciente().equals(paciente) && citaAux.getMedico().getPersonaId() == medicoId
-                && citaAux.getHorario().getEspecialidad().getEspecialidadId() == especialidadId) {
+            if (citaAux.getPaciente().equals(paciente) && citaAux.getHorario().getMedico().equals(medico)
+                && citaAux.getHorario().getEspecialidad().equals(especialidad)) {
 
                 //Si el horario se encuentra en la fecha de semana seleccionada y esta pendiente
                 if (citaAux.getHorario().getFechaInicio().getTime() >= fechaIni.getTime()

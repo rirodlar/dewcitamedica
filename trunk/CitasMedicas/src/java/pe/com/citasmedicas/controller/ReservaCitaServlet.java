@@ -313,7 +313,7 @@ public class ReservaCitaServlet extends HttpServlet {
     private void reservar(HttpSession sesion, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //Variables
-        Usuario usuario = null;
+        /*Usuario usuario = null;
         Integer especialidadId = null;
         Integer medicoId = null;
         String fechaSemana = "";
@@ -423,7 +423,7 @@ public class ReservaCitaServlet extends HttpServlet {
             ex.printStackTrace();
             errorMsg = "Se produjo un error inesperado.";
             return;
-        }
+        }*/
     }
 
     private boolean existeHorario(Horario atencion, List<Horario> horarios) {
