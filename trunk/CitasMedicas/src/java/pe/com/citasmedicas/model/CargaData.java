@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 
 /**
  *
@@ -908,13 +910,7 @@ public class CargaData {
     }
 
     public static void main(String arg[]){
-        CargaData.inicializar();
-        for(int i = 0; i < HORARIO_ATENCION.size(); i++){
-            System.out.println(HORARIO_ATENCION.get(i).getRango());
-        }
-        Calendar calToday = Calendar.getInstance();
-        Calendar calMinus2 = Calendar.getInstance();
-        calMinus2.add(Calendar.DATE, -2);
-        System.out.println(calToday.getTimeInMillis() - calMinus2.getTimeInMillis());
+        //DateUtils.format(Calendar.getInstance(), "%1$tA %1$td de %1$tB del %1$tY, %1$tH:%1$tM hrs.");
+        System.out.println(DateFormatUtils.format(Calendar.getInstance(), "EEEE dd 'de' MMMM 'del' yyyy"));
     }
 }
