@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.StringUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
 import pe.com.citasmedicas.controller.Accion;
 import pe.com.citasmedicas.model.Cita;
@@ -52,7 +53,7 @@ public class ReservarCitaAccion implements Accion {
             sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));
         }
         
-        if(vistaAux != null && !vistaAux.equalsIgnoreCase("")){
+        if(StringUtils.isEmpty(vistaAux)){
             if(vistaAux.equals(AyudanteAccion.ERROR))
                 return false;
             vista = vistaAux;
