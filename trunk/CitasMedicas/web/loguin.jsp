@@ -17,6 +17,7 @@
         <div class="form_login">
         <form id="frmLogeo" name="frmLogeo" method="post" action="Control">
           <input id="__ACTION" name="__ACTION" type="HIDDEN" value="login" />
+          <input id="__ARGUMENT" name="__ARGUMENT" type="HIDDEN" value="validar" />
           <table border="0" cellpadding="0" cellspacing="0" align="center" width="210px">
             <tr>
                 <td><b>Usuario:</b></td>
