@@ -323,9 +323,9 @@ public class ReservaCitaServlet extends HttpServlet {
         pacienteService = new PacienteService();
         Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
 
-        fechaSemana = request.getParameter("txtSemana");
-        especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
-        medicoId = Integer.parseInt(request.getParameter("cboMedico"));
+        especialidadId = (Integer) sesion.getAttribute("especialidadId");
+        medicoId = (Integer) sesion.getAttribute("medicoId");
+        fechaSemana = (String) sesion.getAttribute("fechaSemana");
 
         //Si no es paciente
         if (paciente == null) {
