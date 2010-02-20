@@ -62,13 +62,20 @@ public class ControlServlet extends HttpServlet {
 
         //Si es exitosa la ejecucion de la Accion (devuelve true)
         if (objAccion.ejecutar(request, response)) {
+
             //Obtener la vista resultante
             vista = objAccion.getVista();
             //Redireccionar la vista
-            response.sendRedirect(request.getContextPath() + vista);
+            if (!StringUtils.isEmpty(accion) && StringUtils.equals(accion, "login")) {
+                getServletContext().getRequestDispatcher(vista).forward(request, response);
+            }
+            else{
+                response.sendRedirect(request.getContextPath() + vista);
+            }
+            //response.sendRedirect(request.getContextPath() + vista);
             //getServletContext().getRequestDispatcher(vista).forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + PAGINA_PRINCIPAL);
+            getServletContext().getRequestDispatcher(PAGINA_PRINCIPAL).forward(request, response);
         }
 
     }
