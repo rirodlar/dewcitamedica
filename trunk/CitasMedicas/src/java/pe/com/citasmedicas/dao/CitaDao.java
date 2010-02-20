@@ -208,6 +208,7 @@ public class CitaDao {
         if (cita == null) {
             return false;
         }
+        cita.getHorario().setCita(null);
         CargaData.CITAS.remove(cita);
         return true;
     }
