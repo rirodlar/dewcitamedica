@@ -21,7 +21,7 @@
     <body class="principal">
         <div id="main_container">
             <div class="header">
-                <div id="logo"><a href="index.jsp"><img src="../resources/img/logo.png" alt="" title="" width="162" height="54" border="0" /></a></div>
+                <div id="logo"><a href="../home.jsp"><img src="../resources/img/logo.png" alt="" title="" width="162" height="54" border="0" /></a></div>
 
                 <div class="right_header">
 
@@ -68,7 +68,7 @@
                                             </c:forEach>
                                         </select>
                                     </label></td>
-                                <td><label>Médico:
+                                <td><label>M&eacute;dico:
                                         <select name="cboMedico" id="cboMedico" class="x4" style="width:200px">
                                             <c:forEach var="medico" items="${medicos}">
                                                 <option value="${medico.personaId}"
@@ -110,7 +110,7 @@
                                 <br />${citaPendiente}
                             </c:forEach>
                             <c:if test="${errorMsg != null}">
-                                <br /><br />${errorMsg}<br />
+                                <br /><br /><span class="x2o">${errorMsg}</span><br />
                             </c:if>
                         </p>
                         <table class=x1i cellSpacing=0 cellPadding=0 width="840px" border=0>

@@ -13,7 +13,7 @@
   		__doPostBack("Control", "reservarCita", "iniciar", "_self");
 	}
 	function login () {
-  		__doPostBack("Control", "ingresar", "iniciar", "_self");
+  		__doPostBack("Control", "login", "iniciar", "_self");
 	}
 </script>
 <script type="text/javascript" src="resources/jss/tools/Utiles.js"></script>
@@ -21,7 +21,7 @@
 <body class="principal">
 <div id="main_container">
 	<div class="header">
-    	<div id="logo"><a href="index.jsp"><img src="resources/img/logo.png" alt="" title="" width="162" height="54" border="0" /></a></div>
+    	<div id="logo"><a href="home.jsp"><img src="resources/img/logo.png" alt="" title="" width="162" height="54" border="0" /></a></div>
 
     	<div class="right_header">
 

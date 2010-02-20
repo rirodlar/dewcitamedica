@@ -27,5 +27,5 @@ function btnReservar_onclick () {
 }
 
 function cerrarSesion() {
-	//__doPostBack("../LoginServlet", "cerrarSesion", "_self");
+    __doPostBack("../Control", "login", "logout", "_self");
 }
