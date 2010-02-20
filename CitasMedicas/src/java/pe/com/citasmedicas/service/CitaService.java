@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import pe.com.citasmedicas.dao.CitaDao;
 import pe.com.citasmedicas.model.Cita;
+import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Paciente;
@@ -72,15 +73,15 @@ public class CitaService {
 
     /**
      * Obtiene todos las citas pendientes de un paciente para una semana, medico y especialidad
-     * @param paciente
-     * @param fechaIni
-     * @param fechaFin
-     * @param medicoId
-     * @param especialidadId
+     * @param Paciente paciente
+     * @param Date fechaIni
+     * @param Date fechaFin
+     * @param Medico medico
+     * @param Especialidad especialidad
      * @return Cita en la semana (solo puede haber una coincidencia para los parametros ingresados)
      */
-    public Cita getCitaSemPendiente(Paciente paciente, Date fechaIni, Date fechaFin, Integer medicoId, Integer especialidadId) {
-        return citaDao.getCitaSemPendiente(paciente, fechaIni, fechaFin, medicoId, especialidadId);
+    public Cita getCitaSemPendiente(Paciente paciente, Date fechaIni, Date fechaFin, Medico medico, Especialidad especialidad) {
+        return citaDao.getCitaSemPendiente(paciente, fechaIni, fechaFin, medico, especialidad);
     }
 
     /**

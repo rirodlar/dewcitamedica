@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.StringUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
 import pe.com.citasmedicas.commons.ValidationUtil;
 import pe.com.citasmedicas.model.Cita;
@@ -41,18 +42,11 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
 
             // Variables
             HttpSession sesion = request.getSession();
-            Integer especialidadId = null;
             Usuario usuario = null;
             Paciente paciente = null;
-            Integer medicoId = null;
-            String fechaSemana = "";
+            Horario horario = null;
             Cita citaPendiente = null;
             String errorMsg = "";
-
-            //Obtener atributos de sesion (criterios de busqueda para la semana de reserva)
-            especialidadId = (Integer) sesion.getAttribute("especialidadId");
-            medicoId = (Integer) sesion.getAttribute("medicoId");
-            fechaSemana = (String) sesion.getAttribute("fechaSemana");
 
             usuario = (Usuario) sesion.getAttribute("usuario");
             pacienteService = new PacienteService();
@@ -60,15 +54,15 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
 
             //Si no es paciente
             if (paciente == null) {
-                request.setAttribute("errorMsg", "Ud. no esta registrado como paciente.");
+                sesion.setAttribute("errorMsg", "Ud. no esta registrado como paciente.");
                 return null;
             }
 
             // Se obtiene el horario seleccionado en el jsp
             String sHorarioId = request.getParameter("rbtCita");
 
-            if (sHorarioId == null || sHorarioId.equalsIgnoreCase("")) {
-                request.setAttribute("errorMsg", "Por favor, seleccione un horario.");
+            if (StringUtils.isEmpty(sHorarioId)) {
+                sesion.setAttribute("errorMsg", "Por favor, seleccione un horario.");
                 return null;
             }
 
@@ -78,29 +72,32 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 System.out.println("sHorarioId: " + sHorarioId);
-                request.setAttribute("errorMsg", "El horario no existe.");
+                sesion.setAttribute("errorMsg", "El horario no existe.");
                 return null;
             }
 
-        //Obtener dia inicio y fin de la semana
-        Calendar cal = new GregorianCalendar();
-        cal.set(Calendar.YEAR, Integer.parseInt(fechaSemana.substring(6)));
-        cal.set(Calendar.MONTH, Integer.parseInt(fechaSemana.substring(3, 5)) - 1);
-        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fechaSemana.substring(0, 2)));
-        
-        if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
-            cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
-        } else {
-            cal.add(Calendar.DATE, -6);
-        }
-        Date fecIni = cal.getTime();
-        cal.add(Calendar.DATE, +5);
-        Date fecFin = cal.getTime();
+            horario = horarioService.getHorarioPorId(horarioId);
+
+            //Obtener dia inicio y fin de la semana
+            Calendar cal = new GregorianCalendar();
+            cal.setTimeInMillis(horario.getFechaInicio().getTime());
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+
+            if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+                cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
+            } else {
+                cal.add(Calendar.DATE, -6);
+            }
+            Date fecIni = cal.getTime();
+            cal.add(Calendar.DATE, 7);
+            Date fecFin = cal.getTime();
 
             //Obtener la cita del paciente para la semana seleccionada
-        citaPendiente = citaService.getCitaSemPendiente(paciente, fecIni, fecFin, medicoId, especialidadId);
+            citaPendiente = citaService.getCitaSemPendiente(paciente, fecIni, fecFin, horario.getMedico(), horario.getEspecialidad());
 
-            Horario horario = horarioService.getHorarioPorId(horarioId);
             // Si el horario seleccionado es igual a la cita pendiente, entonces se terminar el proceso
             if (citaPendiente != null && citaPendiente.getHorario().equals(horario)) {
                 return null;
@@ -112,7 +109,7 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
                 if (citaPendiente != null) {
                     citaService.eliminarCita(citaPendiente);
                     Formatter formatter = new Formatter(Locale.getDefault());
-                    formatter.format("%1$tA %1$td de %1$tB del %1$tY, %1$tH:%1$tM hrs.", citaPendiente.getHorario().getHoraInicio());
+                    formatter.format("%1$tA %1$td de %1$tB del %1$tY, %1$tH:%1$tM hrs.", citaPendiente.getHorario().getFechaInicio());
                     errorMsg = "Se ha eliminado la cita del " + formatter.toString();
                 }
                 // Se verifica que el paciente no poseea ninguna cita pendiente
@@ -128,22 +125,22 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
                             horario.setCita(nuevaCita);
                             horarioService.actualizarHorario(horario);
                             errorMsg += "<br />La cita ha sido grabada correctamente.";
-                            request.setAttribute("errorMsg", errorMsg);
+                            sesion.setAttribute("errorMsg", errorMsg);
                             return null;
                         } else {
-                            request.setAttribute("errorMsg", "No se ha podido grabar la cita. Por favor, vuelva a intentarlo más tarde.");
+                            sesion.setAttribute("errorMsg", "No se ha podido grabar la cita. Por favor, vuelva a intentarlo más tarde.");
                             return null;
                         }
                     } else {
-                        request.setAttribute("errorMsg", "El plazo mínimo para reservar es de dos (2) días.");
+                        sesion.setAttribute("errorMsg", "El plazo mínimo para reservar es de dos (2) días.");
                         return null;
                     }
                 } else {
-                    request.setAttribute("errorMsg", "Usted ya posee una cita para la fecha y hora seleccionada.");
+                    sesion.setAttribute("errorMsg", "Usted ya posee una cita para la fecha y hora seleccionada.");
                     return null;
                 }
             } else {
-                request.setAttribute("errorMsg", "El horario seleccionado no está disponible.");
+                sesion.setAttribute("errorMsg", "El horario seleccionado no está disponible.");
                 return null;
             }
         } catch (Exception ex) {
