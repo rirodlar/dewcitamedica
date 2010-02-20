@@ -6,14 +6,13 @@ package pe.com.citasmedicas.accion.reservarcita;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
-import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
 import pe.com.citasmedicas.controller.Accion;
 import pe.com.citasmedicas.model.Cita;
@@ -82,9 +81,8 @@ public class ReservarCitaAccion implements Accion {
             List<Cita> citas = citaService.getCitasPendientes(paciente);
             for (Cita cita : citas) {
                 String citaPendiente = "";
-                Formatter formatter = new Formatter(Locale.getDefault());
-                formatter.format("%1$tA %1$td de %1$tB del %1$tY, %1$tH:%1$tM hrs.", cita.getHorario().getFechaInicio());
-                citaPendiente = formatter.toString() + " : " + cita.getHorario().getEspecialidad().getNombre() + " - " + cita.getHorario().getMedico().getNombreCompleto();
+                citaPendiente = DateFormatUtils.format(cita.getHorario().getFechaInicio(), "EEEE dd 'de' MMMM 'del' yyyy, k:mm 'hrs.'")
+                                + " : " + cita.getHorario().getEspecialidad().getNombre() + " - " + cita.getHorario().getMedico().getNombreCompleto();
                 citasPendientes.add(citaPendiente);
             }
         }

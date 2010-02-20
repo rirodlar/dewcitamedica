@@ -6,6 +6,10 @@ import pe.com.citasmedicas.accion.diagnosticar.DiagnosticarAccion;
 import pe.com.citasmedicas.accion.horario.MantenerHorarioAccion;
 import pe.com.citasmedicas.accion.reservarcita.ReservarCitaAccion;
 
+/**
+ *
+ * @author dew - Grupo 04
+ */
 public class FabricaAccion {
 
     /**

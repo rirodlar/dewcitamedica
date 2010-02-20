@@ -5,6 +5,10 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ *
+ * @author dew - Grupo 04
+ */
 public class AyudanteSolicitud {
 
     HttpServletRequest request;

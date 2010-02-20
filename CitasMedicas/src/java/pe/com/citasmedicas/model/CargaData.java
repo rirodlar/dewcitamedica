@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
 
 /**
  *
@@ -911,6 +910,6 @@ public class CargaData {
 
     public static void main(String arg[]){
         //DateUtils.format(Calendar.getInstance(), "%1$tA %1$td de %1$tB del %1$tY, %1$tH:%1$tM hrs.");
-        System.out.println(DateFormatUtils.format(Calendar.getInstance(), "EEEE dd 'de' MMMM 'del' yyyy"));
+        System.out.println(DateFormatUtils.format(Calendar.getInstance(), "EEEE dd 'de' MMMM 'del' yyyy, k:mm 'hrs.'"));
     }
 }

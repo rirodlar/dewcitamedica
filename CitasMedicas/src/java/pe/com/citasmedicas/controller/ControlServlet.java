@@ -14,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  *
- * @author rSaenz
+ * @author dew - Grupo 04
  */
 public class ControlServlet extends HttpServlet {
 

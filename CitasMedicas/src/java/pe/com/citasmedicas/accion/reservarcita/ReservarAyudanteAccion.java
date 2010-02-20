@@ -7,15 +7,14 @@ package pe.com.citasmedicas.accion.reservarcita;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Horario;
@@ -107,9 +106,9 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
                 // la semana para la especialidad y el medico seleccionado
                 if (citaPendiente != null) {
                     citaService.eliminarCita(citaPendiente);
-                    Formatter formatter = new Formatter(Locale.getDefault());
-                    formatter.format("%1$tA %1$td de %1$tB del %1$tY, %1$tH:%1$tM hrs.", citaPendiente.getHorario().getFechaInicio());
-                    errorMsg = "Se ha eliminado la cita del " + formatter.toString();
+                    errorMsg = "Se ha eliminado la cita del " + 
+                                DateFormatUtils.format(citaPendiente.getHorario().getFechaInicio(), "EEEE dd 'de' MMMM 'del' yyyy, k:mm 'hrs.'")
+                                + "<br />";
                 }
                 // Se verifica que el paciente no poseea ninguna cita pendiente
                 // para la fecha seleccionada
@@ -123,7 +122,7 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
                         if (nuevaCita != null) {
                             horario.setCita(nuevaCita);
                             horarioService.actualizarHorario(horario);
-                            errorMsg += "<br />La cita ha sido grabada correctamente.";
+                            errorMsg += "La cita ha sido grabada correctamente.";
                             sesion.setAttribute("errorMsg", errorMsg);
                             return null;
                         } else {

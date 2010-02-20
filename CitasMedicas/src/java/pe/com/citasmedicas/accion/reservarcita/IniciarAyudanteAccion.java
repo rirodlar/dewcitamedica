@@ -7,14 +7,14 @@ package pe.com.citasmedicas.accion.reservarcita;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.time.DateFormatUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
-import pe.com.citasmedicas.commons.FormatterUtil;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.service.EspecialidadService;
@@ -65,7 +65,7 @@ public class IniciarAyudanteAccion implements AyudanteAccion{
             }
 
             if (fechaSemana == null || fechaSemana.equalsIgnoreCase("")) {
-                fechaSemana = FormatterUtil.formatDate(new Date());
+                fechaSemana = DateFormatUtils.format(Calendar.getInstance(), "dd/MM/yyyy");
             }
 
             // Se inicializa la cabecera de los horarios
