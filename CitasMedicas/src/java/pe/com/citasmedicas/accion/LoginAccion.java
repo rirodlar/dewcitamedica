@@ -50,6 +50,7 @@ public class LoginAccion implements Accion {
                 HttpSession tempSession = request.getSession(false);
                 tempSession.invalidate();
                 System.out.println("Se invalido la sesión");
+                vista = "/loguin.jsp";
             }
         }
         return true;

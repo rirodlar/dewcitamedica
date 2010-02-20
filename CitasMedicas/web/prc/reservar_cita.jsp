@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div id="profundidad">&nbsp;Reserva de Citas</div>
-    <div class="xh"><b>Usuario:</b> ${usuario.persona.nombreCompleto}</div>
+    		<div class="xh"><b>Usuario:</b> ${usuario.persona.nombreCompleto}</div>
             <div id="contenido">
                 <!-- Aqui el contenido de la pagina -->
                 <div class="box_title">
@@ -340,19 +340,13 @@
                             ${filtro}
                         </div>
                     </form>
-
                 </div>
-
             </div>
-
             <div id="footer">
                 <div class="copyright">
                     <img src="../resources/img/footer_logo.gif" alt="" title="" />
                 </div>
                 <div class="center_footer">&copy; Medical Clinic 2008. All Rights Reserved</div>
-                <div class="footer_links">
-                    <a href="http://csstemplatesmarket.com"><img src="../resources/img/csstemplatesmarket.gif" alt="csstemplatesmarket" title="csstemplatesmarket" border="0" /></a>
-                </div>
             </div>
         </div>
     </body>

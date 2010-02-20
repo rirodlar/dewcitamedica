@@ -3,13 +3,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Medical Theme Css Template</title>
+<title>Medical clinic - Home</title>
 <link rel="stylesheet" type="text/css" href="resources/css/style.css" media="screen" />
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" href="iecss.css" />
 <![endif]-->
+<script type="text/javascript">
+	function servicios () {
+  		__doPostBack("Control", "reservarCita", "iniciar", "_self");
+	}
+	function login () {
+  		__doPostBack("Control", "ingresar", "iniciar", "_self");
+	}
+</script>
+<script type="text/javascript" src="resources/jss/tools/Utiles.js"></script>
 </head>
-
 <body class="principal">
 <div id="main_container">
 	<div class="header">
@@ -18,7 +26,7 @@
     	<div class="right_header">
 
             <div class="top_menu">
-            <a href="prc/consulta.jsp" class="login">ingresar</a>
+            <a href="javascript:login()" class="login">ingresar</a>
             <a href="#" class="sign_up">registro</a>
             </div>
 
@@ -26,7 +34,7 @@
                 <ul>
                     <li><a class="current" href="#" title="">Inicio</a></li>
                     <li><a href="#" title="">Nosotros</a></li>
-                    <li><a href="ReservaCitaServlet" title="">Servicios</a></li>
+                    <li><a href="javascript:servicios()" title="">Servicios</a></li>
                     <li><a href="#" title="">Cont&aacute;ctenos</a></li>
                 </ul>
             </div>
@@ -34,8 +42,6 @@
         </div>
 
     </div>
-
-
     <div id="middle_box">
     	<div class="middle_box_content"><img src="resources/img/banner_content.jpg" alt="" title="" /></div>
     </div>
@@ -135,7 +141,10 @@
             </div>
         <div class="clear"></div>
        </div>
-
+	<form action="" method="post" name="frmHome">
+    	<input id="__ACTION" name="__ACTION" type="HIDDEN" />
+        <input id="__ARGUMENT" name="__ARGUMENT" type="HIDDEN" />
+    </form>
      <div id="footer">
      	<div class="copyright">
         <img src="resources/img/footer_logo.gif" alt="" title="" />
