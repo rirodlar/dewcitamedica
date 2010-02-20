@@ -24,45 +24,47 @@ public class SecurityFilter implements Filter {
     /*
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("SecurityFilter is being initialized...");
-        noFilter = config.getInitParameter("noFilter");
-        context = config.getInitParameter("context");
-        StringTokenizer stkn = new StringTokenizer(noFilter, ",", false);
-        while (stkn.hasMoreTokens()) {
-            String token = stkn.nextToken();
-            noFilters.add(context + token);
-        }
+    System.out.println("SecurityFilter is being initialized...");
+    noFilter = config.getInitParameter("noFilter");
+    context = config.getInitParameter("context");
+    StringTokenizer stkn = new StringTokenizer(noFilter, ",", false);
+    while (stkn.hasMoreTokens()) {
+    String token = stkn.nextToken();
+    noFilters.add(context + token);
     }
-    */
-
+    }
+     */
     @Override
     public void doFilter(ServletRequest _request, ServletResponse _response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) _request;
         HttpServletResponse response = (HttpServletResponse) _response;
-        /*
+
         String uri = request.getRequestURI();
-        System.out.printf("Security Filter: Requested URI = %s \n", uri);
-        for (Iterator i = noFilters.iterator(); i.hasNext();) {
-            String url = (String) i.next();
-            if (uri.contains(url)) {
-                System.out.printf("Security Filter: Filter configured for no security on URL = %s \n", url);
-                chain.doFilter(request, response);
+        if (!uri.endsWith("/loguin.jsp")) {
+            /*for (Iterator i = noFilters.iterator(); i.hasNext();) {
+                String url = (String) i.next();
+                if (uri.contains(url)) {
+                    System.out.printf("Security Filter: Filter configured for no security on URL = %s \n", url);
+                    chain.doFilter(request, response);
+                    return;
+                }
+            }
+             */
+            HttpSession session = request.getSession();
+            if (session.getAttribute("usuario") == null) {
+                System.out.println("la sesión ha caducado");
+                response.sendRedirect(request.getContextPath() + "/loguin.jsp");
                 return;
             }
-        }
-        */
-        HttpSession session = request.getSession();
-        if (session.getAttribute("usuario") == null) {
-            System.out.println("la sesión ha caducado");
-            response.sendRedirect(request.getContextPath() + "/loguin.jsp");
-            return;
         }
         chain.doFilter(request, response);
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }
