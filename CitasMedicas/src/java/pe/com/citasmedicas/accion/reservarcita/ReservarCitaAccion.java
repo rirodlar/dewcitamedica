@@ -32,33 +32,35 @@ public class ReservarCitaAccion implements Accion {
     @Override
     public boolean ejecutar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String argumento = request.getParameter("__ARGUMENT");
-        
+
         String vistaAux = null;
         HttpSession sesion = request.getSession();
+
         if(argumento.equals("iniciar")){
             IniciarAyudanteAccion ayudante = new IniciarAyudanteAccion();
             vistaAux = ayudante.procesar(request, response);
             sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));
         }
         else if(argumento.equals("cboEspecialidad_onchange")){
-            IniciarAyudanteAccion ayudante = new IniciarAyudanteAccion();
+            CargarMedicosAyudanteAccion ayudante = new CargarMedicosAyudanteAccion();
             vistaAux = ayudante.procesar(request, response);
         }
         else if(argumento.equals("btnVerHorario_onclick")){
-            IniciarAyudanteAccion ayudante = new IniciarAyudanteAccion();
+            BuscarHorarioAyudanteAccion ayudante = new BuscarHorarioAyudanteAccion();
             vistaAux = ayudante.procesar(request, response);
         }
         else if(argumento.equals("btnReservar_onclick")){
-            IniciarAyudanteAccion ayudante = new IniciarAyudanteAccion();
+            ReservarAyudanteAccion ayudante = new ReservarAyudanteAccion();
             vistaAux = ayudante.procesar(request, response);
             sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));
         }
-        
-        if(StringUtils.isEmpty(vistaAux)){
+
+        if(!StringUtils.isEmpty(vistaAux)){
             if(vistaAux.equals(AyudanteAccion.ERROR))
                 return false;
             vista = vistaAux;
         }
+
         return true;
     }
 
