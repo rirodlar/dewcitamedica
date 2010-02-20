@@ -25,6 +25,7 @@ public class AyudanteSolicitud {
     public Accion getAccion() 
     {
         String accion = request.getParameter("__ACTION");
+        System.out.println("Accion: " + accion);
         return FabricaAccion.crearAccion(accion);
     }
 }
