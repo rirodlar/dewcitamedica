@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
-public class CitasValidations
+public class ValidationUtil
 {
   public static boolean isChecked(String param)
   {
