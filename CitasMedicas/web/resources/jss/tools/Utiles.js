@@ -3,7 +3,7 @@
  * seleccion de checkbox dependientes, manejo de cadenas, etc.
  */
  
-//Funcion que devuelve una cadena sin espacios vacíos al inicio y final
+//Funcion que devuelve una cadena sin espacios vacï¿½os al inicio y final
 //Depende de las funciones TrimLeft y TrimRight
 function Trim(str){
   var resultStr = "";
@@ -18,7 +18,7 @@ function TrimLeft(str){
   var resultStr = "";
   var i = len = 0;
   
-  //Sale del método si es un valor inválido
+  //Sale del mï¿½todo si es un valor invï¿½lido
   if(str + "" == "undefined" || str == null)
     return null;
     
@@ -31,7 +31,7 @@ function TrimLeft(str){
     len = str.length - 1;
     len = str.length;
     
-    //Recorre la cadena para hallar la posición del inicio de la cadena (sin espacios)
+    //Recorre la cadena para hallar la posiciï¿½n del inicio de la cadena (sin espacios)
     while((i <= len) && (str.charAt(i) == " "))
       i++;
       
@@ -45,7 +45,7 @@ function TrimRight(str){
   var resultStr = "";
   var i = 0;
   
-  //Sale del método si es un valor inválido
+  //Sale del mï¿½todo si es un valor invï¿½lido
   if(str + "" == "undefined" || str == null)
     return null;
     
@@ -143,7 +143,7 @@ function openDialog(url, height, width) {
 
 // Habilita todos los controles de ingreso de datos del formulario. 
 // Deshabilita los botones para mantener la seguridad.  
-// Este método permite que lleguen al servidor los de los controles que están deshabilitados.
+// Este mï¿½todo permite que lleguen al servidor los de los controles que estï¿½n deshabilitados.
 function enableControls() {          
     var elem = document.forms[0].elements;
 
@@ -191,5 +191,12 @@ function __doPostBack(url, action, target)
   frm.action = url;
   frm.__ACTION.value = action;
   frm.target = target; 
+  frm.submit();
+}
+
+function __doPostBack(argument)
+{
+  var frm = document.forms[0];
+  frm.__ARGUMENT.value = argument;
   frm.submit();
 }

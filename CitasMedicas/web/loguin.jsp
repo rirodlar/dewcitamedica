@@ -15,7 +15,8 @@
         <div class="loguin_bg">
         <div class="title_login">
         <div class="form_login">
-        <form id="frmLogeo" name="frmLogeo" method="post" action="LoginServlet">
+        <form id="frmLogeo" name="frmLogeo" method="post" action="Control">
+          <input id="__ACTION" name="__ACTION" type="HIDDEN" value="login" />
           <table border="0" cellpadding="0" cellspacing="0" align="center" width="210px">
             <tr>
                 <td><b>Usuario:</b></td>
