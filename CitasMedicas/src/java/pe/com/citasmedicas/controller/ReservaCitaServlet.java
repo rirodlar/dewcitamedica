@@ -317,16 +317,18 @@ public class ReservaCitaServlet extends HttpServlet {
         Integer especialidadId = null;
         Integer medicoId = null;
         String fechaSemana = "";
+        Cita citaPendiente = null;
         String errorMsg =  "";
-        //
-        usuario = (Usuario) sesion.getAttribute("usuario");
-        pacienteService = new PacienteService();
-        Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
 
+        //Obtener atributos de sesion (criterios de busqueda para la semana de reserva)
         especialidadId = (Integer) sesion.getAttribute("especialidadId");
         medicoId = (Integer) sesion.getAttribute("medicoId");
         fechaSemana = (String) sesion.getAttribute("fechaSemana");
 
+        usuario = (Usuario) sesion.getAttribute("usuario");
+        pacienteService = new PacienteService();
+        Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
+        
         //Si no es paciente
         if (paciente == null) {
             errorMsg = "Ud. no esta registrado como paciente.";
@@ -351,14 +353,23 @@ public class ReservaCitaServlet extends HttpServlet {
             return;
         }
 
-        Cita citaPendiente = null;
+        //Obtener dia inicio y fin de la semana
+        Calendar cal = new GregorianCalendar();
+        cal.set(Calendar.YEAR, Integer.parseInt(fechaSemana.substring(6)));
+        cal.set(Calendar.MONTH, Integer.parseInt(fechaSemana.substring(3, 5)) - 1);
+        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fechaSemana.substring(0, 2)));
+        
+        if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+            cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
+        } else {
+            cal.add(Calendar.DATE, -6);
+        }
+        Date fecIni = cal.getTime();
+        cal.add(Calendar.DATE, +5);
+        Date fecFin = cal.getTime();
         
         //Obtener la cita del paciente para la semana seleccionada
-        List<Cita> citasPendientesPaciente = citaService.getCitasPendientes(paciente, ValidationUtil.parseDate(fechaSemana), medicoId, especialidadId);
-        for (Cita cita : citasPendientesPaciente) {
-            citaPendiente = cita;
-            break;
-        }
+        citaPendiente = citaService.getCitaSemPendiente(paciente, fecIni, fecFin, medicoId, especialidadId);
 
         try {
             Horario horario = horarioService.getHorarioPorId(horarioId);

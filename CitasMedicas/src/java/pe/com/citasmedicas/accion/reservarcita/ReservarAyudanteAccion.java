@@ -6,7 +6,9 @@ package pe.com.citasmedicas.accion.reservarcita;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Formatter;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.ServletException;
@@ -44,17 +46,17 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
             Paciente paciente = null;
             Integer medicoId = null;
             String fechaSemana = "";
-            String errorMsg = "";
             Cita citaPendiente = null;
+            String errorMsg = "";
 
-            //
+            //Obtener atributos de sesion (criterios de busqueda para la semana de reserva)
+            especialidadId = (Integer) sesion.getAttribute("especialidadId");
+            medicoId = (Integer) sesion.getAttribute("medicoId");
+            fechaSemana = (String) sesion.getAttribute("fechaSemana");
+
             usuario = (Usuario) sesion.getAttribute("usuario");
             pacienteService = new PacienteService();
             paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
-
-            fechaSemana = request.getParameter("txtSemana");
-            especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
-            medicoId = Integer.parseInt(request.getParameter("cboMedico"));
 
             //Si no es paciente
             if (paciente == null) {
@@ -80,12 +82,23 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
                 return null;
             }
 
+        //Obtener dia inicio y fin de la semana
+        Calendar cal = new GregorianCalendar();
+        cal.set(Calendar.YEAR, Integer.parseInt(fechaSemana.substring(6)));
+        cal.set(Calendar.MONTH, Integer.parseInt(fechaSemana.substring(3, 5)) - 1);
+        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fechaSemana.substring(0, 2)));
+        
+        if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+            cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
+        } else {
+            cal.add(Calendar.DATE, -6);
+        }
+        Date fecIni = cal.getTime();
+        cal.add(Calendar.DATE, +5);
+        Date fecFin = cal.getTime();
+
             //Obtener la cita del paciente para la semana seleccionada
-            List<Cita> citasPendientesPaciente = citaService.getCitasPendientes(paciente, ValidationUtil.parseDate(fechaSemana), medicoId, especialidadId);
-            for (Cita cita : citasPendientesPaciente) {
-                citaPendiente = cita;
-                break;
-            }
+        citaPendiente = citaService.getCitaSemPendiente(paciente, fecIni, fecFin, medicoId, especialidadId);
 
             Horario horario = horarioService.getHorarioPorId(horarioId);
             // Si el horario seleccionado es igual a la cita pendiente, entonces se terminar el proceso
