@@ -1,12 +1,10 @@
 // JavaScript Document
 function cboEspecialidad_onchange () {
-  var frm = document.forms[0];
-  frm.__ARGUMENT.value = "cargarMedicos";
-  frm.submit();
+  __doPostBack("../Control", "reservarCita", "cboEspecialidad_onchange", "_self");
 }
 
 function btnVerHorario_onclick () {
-  __doPostBack("buscarHorario");
+  __doPostBack("../Control", "reservarCita", "btnVerHorario_onclick", "_self");
 }
 
 function btnReservar_onclick () {
@@ -23,11 +21,11 @@ function btnReservar_onclick () {
     }
 	
 	if (seleccion) {
-		__doPostBack("reservar");
+		__doPostBack("../Control", "reservarCita", "btnReservar_onclick", "_self");
     } else
 		alert("Debe seleccionar un horario");
 }
 
 function cerrarSesion() {
-	__doPostBack("../LoginServlet", "cerrarSesion", "_self");
+	//__doPostBack("../LoginServlet", "cerrarSesion", "_self");
 }
