@@ -40,7 +40,7 @@
         <p/>
         <table border="0" cellpadding="0" cellspacing="0" align="center" width="300px">
         	<tr>
-            	<td colspan="3"><span class="x2o">${error}</span></td>
+            	<td colspan="3"><span class="x2o">${errorMsg}</span></td>
             </tr>
         </table>
         </form>
