@@ -42,14 +42,14 @@ public class LoginAccion implements Accion {
                 session.setAttribute("usuario", usuario);
                 vista = "/home.jsp";
             } else {
-                request.setAttribute("error", "El usuario y/o la contraseña son incorrectas.");
-                vista = "/loguin.jsp?error=El usuario y/o la contraseña son incorrectas.";
+                request.setAttribute("errorMsg", "El usuario y/o la contraseña son incorrectas.");
+                vista = "/loguin.jsp";
             }
         } else {
             if (request.isRequestedSessionIdValid()) {
                 HttpSession tempSession = request.getSession(false);
                 tempSession.invalidate();
-                System.out.println("Se invalido la sesión");
+                vista = "/loguin.jsp";
                 vista = "/loguin.jsp";
             }
         }
