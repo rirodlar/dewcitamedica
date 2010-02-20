@@ -23,7 +23,17 @@ public class ControlServlet extends HttpServlet {
     private String vista = null;
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doIt(request, response);
+    }
+
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doIt(request, response);
+    }
+
+    private void doIt(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         //Se valida la sesion
@@ -60,5 +70,6 @@ public class ControlServlet extends HttpServlet {
         } else {
             response.sendRedirect(request.getContextPath() + PAGINA_PRINCIPAL);
         }
+
     }
 }

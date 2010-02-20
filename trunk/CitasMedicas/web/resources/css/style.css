@@ -233,7 +233,7 @@ padding:10px 10px 0 0;
 }
 #contenido {
 width:870px;
-height: 530px;
+height: 540px;
 margin: auto;
 padding: 15px 15px 15px 15px;
 }
@@ -273,7 +273,7 @@ padding:125px 0px 0 10px;
 	FONT-SIZE: x-small; BORDER-RIGHT: #c9cbd3 1px solid; BORDER-TOP: hidden; BORDER-LEFT: #c9cbd3 1px solid; BORDER-BOTTOM: #c9cbd3 1px solid; BACKGROUND-COLOR: #f2f2f5
 }
 div#scroll {
-	height:230px;
+	height:220px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	direction:rtl;
