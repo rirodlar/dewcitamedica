@@ -52,8 +52,9 @@
                 <div class="caja_contenido">
                     <p>Por favor, seleccione los criterios necesarios para la b&uacute;squeda.</p>
                     <br/>
-                    <form action="" method="post" name="frmReserva">
-                        <INPUT id="__ACTION" name="__ACTION" type="HIDDEN"/>
+                    <form action="../Control" method="post" name="frmReserva">
+                        <input id="__ACTION" name="__ACTION" type="HIDDEN" value="reservarCita" />
+                        <input id="__ARGUMENT" name="__ARGUMENT" type="HIDDEN" />
                         <table width="840px" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td><label>Especialidad:
