@@ -19,7 +19,7 @@ import pe.com.citasmedicas.service.UsuarioService;
  */
 public class LoginAccion implements Accion {
 
-    private String vista;
+    private String vista= "/loguin.jsp";
 
     @Override
     public boolean ejecutar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author rSaenz
+ * @author dew - Grupo 04
  */
 public class SecurityFilter implements Filter {
 

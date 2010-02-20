@@ -15,8 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.time.DateFormatUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
-import pe.com.citasmedicas.commons.FormatterUtil;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
@@ -72,37 +72,37 @@ public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
             // Se recuperan los horarios para el día lunes
             horarioLunes = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día lunes
-            cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+            cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
             // Se recuperan los horarios para el día martes
             cal.add(Calendar.DATE, 1);
             horarioMartes = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día martes
-            cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+            cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
             // Se recuperan los horarios para el día miércoles
             cal.add(Calendar.DATE, 1);
             horarioMiercoles = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día miércoles
-            cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+            cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
             // Se recuperan los horarios para el día jueves
             cal.add(Calendar.DATE, 1);
             horarioJueves = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día jueves
-            cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+            cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
             // Se recuperan los horarios para el día viernes
             cal.add(Calendar.DATE, 1);
             horarioViernes = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día viernes
-            cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+            cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
             // Se recuperan los horarios para el día sábado
             cal.add(Calendar.DATE, 1);
             horarioSabado = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día sábado
-            cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+            cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
             // Se recuperan los horarios para el día domingo
             cal.add(Calendar.DATE, 1);
             horarioDomingo = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día domingo
-            cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+            cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
 
             // Se construye el filtro
             filtro = "Filtro: Especialidad = " + especialidad.getNombre() +
@@ -166,6 +166,7 @@ public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
             sesion.setAttribute("medicoId", medicoId);
             sesion.setAttribute("fechaSemana", fechaSemana);
             sesion.setAttribute("filtro", filtro);
+            sesion.setAttribute("errorMsg", "");
             return null;
         } catch (Exception ex) {
             ex.printStackTrace();
