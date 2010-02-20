@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import pe.com.citasmedicas.accion.AyudanteAccion;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Horario;
@@ -79,10 +80,7 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
             //Obtener dia inicio y fin de la semana
             Calendar cal = new GregorianCalendar();
             cal.setTimeInMillis(horario.getFechaInicio().getTime());
-            cal.set(Calendar.HOUR_OF_DAY, 0);
-            cal.set(Calendar.MINUTE, 0);
-            cal.set(Calendar.SECOND, 0);
-            cal.set(Calendar.MILLISECOND, 0);
+            cal = DateUtils.truncate(cal, Calendar.DATE);
 
             if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
                 cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
@@ -102,24 +100,26 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
             }
             // Se verifica que no exista una cita para el horario seleccionado
             if (horario.getCita() == null) {
-                // Se verifica que el paciente no posea ninguna cita pendiente durante
-                // la semana para la especialidad y el medico seleccionado
-                if (citaPendiente != null) {
-                    citaService.eliminarCita(citaPendiente);
-                    errorMsg = "Se ha eliminado la cita del " + 
-                                DateFormatUtils.format(citaPendiente.getHorario().getFechaInicio(), "EEEE dd 'de' MMMM 'del' yyyy, k:mm 'hrs.'")
-                                + "<br />";
-                }
                 // Se verifica que el paciente no poseea ninguna cita pendiente
                 // para la fecha seleccionada
                 List<Cita> citas = citaService.getCitasPorPacienteFecha(paciente, horario.getFechaInicio(), true);
                 if (citas.size() == 0) {
                     // Se verifica que la fecha seleccionada tenga un lapso de dos
                     // días de diferencia con la fecha actual
-                    Calendar today = Calendar.getInstance();
-                    if (horario.getFechaInicio().getTime() - today.getTimeInMillis() >= 172800000) {
+                    Calendar today = DateUtils.truncate(Calendar.getInstance(), Calendar.DATE);
+                    today.add(Calendar.DATE, 2);
+
+                    if (horario.getFechaInicio().getTime() > today.getTimeInMillis()) {
                         Cita nuevaCita = citaService.insertarCita(paciente, horario.getMedico(), horario, "PENDIENTE", null);
                         if (nuevaCita != null) {
+                            // Se verifica que el paciente no posea ninguna cita pendiente durante
+                            // la semana para la especialidad y el medico seleccionado
+                            if (citaPendiente != null) {
+                                citaService.eliminarCita(citaPendiente);
+                                errorMsg = "Se ha eliminado la cita del " +
+                                        DateFormatUtils.format(citaPendiente.getHorario().getFechaInicio(), "EEEE dd 'de' MMMM 'del' yyyy, k:mm 'hrs.'") + "<br />";
+                            }
+
                             horario.setCita(nuevaCita);
                             horarioService.actualizarHorario(horario);
                             errorMsg += "La cita ha sido grabada correctamente.";

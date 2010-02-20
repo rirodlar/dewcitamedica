@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author dew - Grupo 04
  */
-public class Persona {
+public class Persona extends Bean {
 
     private Integer personaId;
     private String nombre;
