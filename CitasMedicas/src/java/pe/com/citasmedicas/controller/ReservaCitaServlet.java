@@ -318,14 +318,6 @@ public class ReservaCitaServlet extends HttpServlet {
         Integer medicoId = null;
         String fechaSemana = "";
         String errorMsg =  "";
-        List<String> cabeceraSemana = null;
-        List<Horario> horarioLunes = null;
-        List<Horario> horarioMartes = null;
-        List<Horario> horarioMiercoles = null;
-        List<Horario> horarioJueves = null;
-        List<Horario> horarioViernes = null;
-        List<Horario> horarioSabado = null;
-        List<Horario> horarioDomingo = null;
         //
         usuario = (Usuario) sesion.getAttribute("usuario");
         pacienteService = new PacienteService();
