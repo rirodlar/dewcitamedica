@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import pe.com.citasmedicas.commons.CitasFormatter;
-import pe.com.citasmedicas.commons.CitasValidations;
+import pe.com.citasmedicas.commons.FormatterUtil;
+import pe.com.citasmedicas.commons.ValidationUtil;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
@@ -22,7 +22,6 @@ import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Paciente;
 import pe.com.citasmedicas.model.Persona;
 import pe.com.citasmedicas.model.Usuario;
-//import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.HorarioService;
@@ -35,23 +34,20 @@ import pe.com.citasmedicas.service.PacienteService;
  */
 public class ReservaCitaServlet extends HttpServlet {
 
-    //
-    HttpSession sesion = null;
-    //
-    EspecialidadService especialidadService = null;
-    MedicoService medicoService = null;
-    HorarioService horarioService = null;
-    CitaService citaService = null;
-    //
-    List<Especialidad> especialidades = null;
-    List<Medico> medicos = null;
-    Integer especialidadId = null;
-    Integer medicoId = null;
-    String errorMsg = null;
-    String fechaSemana = null;
-    //
-    List<String> citasPendientes = null;
-    List<String> cabeceraSemana = null;
+    // Servicios a utilizar
+    private EspecialidadService especialidadService = null;
+    private MedicoService medicoService = null;
+    private HorarioService horarioService = null;
+    private CitaService citaService = null;
+    private PacienteService pacienteService = null;
+
+    public ReservaCitaServlet() {
+        especialidadService = new EspecialidadService();
+        medicoService = new MedicoService();
+        horarioService = new HorarioService();
+        citaService = new CitaService();
+        pacienteService = new PacienteService();
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -67,7 +63,7 @@ public class ReservaCitaServlet extends HttpServlet {
     private void doIt(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Se verifica la sesión
-        sesion = request.getSession();
+        HttpSession sesion = request.getSession();
 
         if (sesion.getAttribute("usuario") == null) {
             System.out.println("la sesión ha caducado");
@@ -75,43 +71,38 @@ public class ReservaCitaServlet extends HttpServlet {
             return;
         }
         //
-        especialidadService = new EspecialidadService();
-        medicoService = new MedicoService();
-        horarioService = new HorarioService();
-        citaService = new CitaService();
-        errorMsg = null;
-        //
         String accion = request.getParameter("__ACTION");
         if (accion == null || accion.equalsIgnoreCase("")) {
             accion = "iniciar";
         }
-        System.out.println("Accion: " + accion);
         if (accion.equals("iniciar")) {
-            iniciar(request, response);
+            pageOnLoad(sesion, request, response);
         } else if (accion.equals("cboEspecialidad_onchange")) {
-            cargaMedico(request, response);
+            cargaMedico(sesion, request, response);
         } else if (accion.equals("btnVerHorario_onclick")) {
-            cargaHorario(request, response);
+            cargaHorario(sesion, request, response);
         } else if (accion.equals("btnReservar_onclick")) {
-            reservar(request, response);
+            reservar(sesion, request, response);
         }
-
-        sesion.setAttribute("especialidades", especialidades);
-        sesion.setAttribute("especialidadId", especialidadId);
-        sesion.setAttribute("medicos", medicos);
-        sesion.setAttribute("medicoId", medicoId);
-        sesion.setAttribute("errorMsg", errorMsg);
-        sesion.setAttribute("fechaSemana", fechaSemana);
         response.sendRedirect(request.getContextPath() + "/prc/reservar_cita.jsp");
     }
 
-    private void iniciar(HttpServletRequest request, HttpServletResponse response)
+    private void pageOnLoad(HttpSession sesion, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Variables
+        List<Especialidad> especialidades = null;
+        Integer especialidadId = null;
+        List<Medico> medicos = null;
+        Integer medicoId = null;
+        List<String> cabeceraSemana = null;
+        String errorMsg = "";
+        String fechaSemana = "";
         // Se recuperan todas las especialidades
         especialidades = especialidadService.getEspecialidades();
         if (especialidades == null) {
             especialidades = new ArrayList<Especialidad>();
         }
+        //
         if (especialidades.size() > 0) {
             especialidadId = especialidades.get(0).getEspecialidadId();
         }
@@ -127,10 +118,8 @@ public class ReservaCitaServlet extends HttpServlet {
         }
 
         if (fechaSemana == null || fechaSemana.equalsIgnoreCase(""))
-            fechaSemana = CitasFormatter.formatDate(new Date());
-        //
-        cargarCitasPendientes();
-        
+            fechaSemana = FormatterUtil.formatDate(new Date());
+
         // Se inicializa la cabecera de los horarios
         cabeceraSemana = new ArrayList<String>();
         cabeceraSemana.add("Lunes");
@@ -141,14 +130,30 @@ public class ReservaCitaServlet extends HttpServlet {
         cabeceraSemana.add("Sábado");
         cabeceraSemana.add("Domingo");
         sesion.setAttribute("cabeceraSemana", cabeceraSemana);
+        sesion.setAttribute("especialidades", especialidades);
+        sesion.setAttribute("especialidadId", especialidadId);
+        sesion.setAttribute("medicos", medicos);
+        sesion.setAttribute("medicoId", medicoId);
+        sesion.setAttribute("errorMsg", errorMsg);
+        sesion.setAttribute("fechaSemana", fechaSemana);
+        sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));
     }
 
-    private void cargaMedico(HttpServletRequest request, HttpServletResponse response)
+    private void cargaMedico(HttpSession sesion, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //Variables
+        List<Especialidad> especialidades = null;
+        Especialidad especialidad = null;
+        Integer especialidadId = null;
+        List<Medico> medicos = null;
+        Integer medicoId = null;
+        String fechaSemana = "";
+        //
+        fechaSemana = request.getParameter("txtSemana");
         especialidades = (List<Especialidad>) sesion.getAttribute("especialidades");
         especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
         // Se recuperan todos los médicos de la especialidad seleccionada
-        Especialidad especialidad = especialidadService.getEspecialidadPorId(especialidadId);
+        especialidad = especialidadService.getEspecialidadPorId(especialidadId);
         if (especialidad != null) {
             medicos = medicoService.getMedicosPorEspecialidad(especialidad);
             if (medicos == null) {
@@ -158,12 +163,23 @@ public class ReservaCitaServlet extends HttpServlet {
                 medicoId = medicos.get(0).getPersonaId();
             }
         }
-        fechaSemana = request.getParameter("txtSemana");
+        sesion.setAttribute("especialidades", especialidades);
+        sesion.setAttribute("especialidadId", especialidadId);
+        sesion.setAttribute("medicos", medicos);
+        sesion.setAttribute("medicoId", medicoId);
+        sesion.setAttribute("fechaSemana", fechaSemana);
     }
 
-    private void cargaHorario(HttpServletRequest request, HttpServletResponse response)
+    private void cargaHorario(HttpSession sesion, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //
+        //Variables
+        Integer especialidadId = null;
+        Integer medicoId = null;
+        String fechaSemana = "";
+        String filtro =  "";
+        Especialidad especialidad = null;
+        Medico medico = null;
+        List<String> cabeceraSemana = null;
         List<Horario> horarioLunes = null;
         List<Horario> horarioMartes = null;
         List<Horario> horarioMiercoles = null;
@@ -177,14 +193,14 @@ public class ReservaCitaServlet extends HttpServlet {
         especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
         medicoId = Integer.parseInt(request.getParameter("cboMedico"));
 
-        Especialidad especialidad = especialidadService.getEspecialidadPorId(especialidadId);
-        Medico medico = medicoService.getMedicoPorId(medicoId);
+        especialidad = especialidadService.getEspecialidadPorId(especialidadId);
+        medico = medicoService.getMedicoPorId(medicoId);
 
         Calendar cal = new GregorianCalendar();
-        String fecha = request.getParameter("txtSemana"); // obtener fecha desde el jsp
-        cal.set(Calendar.YEAR, Integer.parseInt(fecha.substring(6)));
-        cal.set(Calendar.MONTH, Integer.parseInt(fecha.substring(3, 5)) - 1);
-        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fecha.substring(0, 2)));
+        fechaSemana = request.getParameter("txtSemana");
+        cal.set(Calendar.YEAR, Integer.parseInt(fechaSemana.substring(6)));
+        cal.set(Calendar.MONTH, Integer.parseInt(fechaSemana.substring(3, 5)) - 1);
+        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fechaSemana.substring(0, 2)));
 
         if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
             cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
@@ -197,58 +213,44 @@ public class ReservaCitaServlet extends HttpServlet {
         // Se recuperan los horarios para el día lunes
         horarioLunes = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         // Se establece la cabecera del día lunes
-        Formatter formatter = new Formatter(Locale.getDefault());
-        formatter.format("%1$ta %1$td/%1$tm", cal);
-        cabeceraSemana.add(formatter.toString());
+        cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
         // Se recuperan los horarios para el día martes
         cal.add(Calendar.DATE, 1);
         horarioMartes = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         // Se establece la cabecera del día martes
-        formatter = new Formatter(Locale.getDefault());
-        formatter.format("%1$ta %1$td/%1$tm", cal);
-        cabeceraSemana.add(formatter.toString());
+        cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
         // Se recuperan los horarios para el día miércoles
         cal.add(Calendar.DATE, 1);
         horarioMiercoles = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         // Se establece la cabecera del día miércoles
-        formatter = new Formatter(Locale.getDefault());
-        formatter.format("%1$ta %1$td/%1$tm", cal);
-        cabeceraSemana.add(formatter.toString());
+        cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
         // Se recuperan los horarios para el día jueves
         cal.add(Calendar.DATE, 1);
         horarioJueves = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         // Se establece la cabecera del día jueves
-        formatter = new Formatter(Locale.getDefault());
-        formatter.format("%1$ta %1$td/%1$tm", cal);
-        cabeceraSemana.add(formatter.toString());
+        cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
         // Se recuperan los horarios para el día viernes
         cal.add(Calendar.DATE, 1);
         horarioViernes = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         // Se establece la cabecera del día viernes
-        formatter = new Formatter(Locale.getDefault());
-        formatter.format("%1$ta %1$td/%1$tm", cal);
-        cabeceraSemana.add(formatter.toString());
+        cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
         // Se recuperan los horarios para el día sábado
         cal.add(Calendar.DATE, 1);
         horarioSabado = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         // Se establece la cabecera del día sábado
-        formatter = new Formatter(Locale.getDefault());
-        formatter.format("%1$ta %1$td/%1$tm", cal);
-        cabeceraSemana.add(formatter.toString());
+        cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
         // Se recuperan los horarios para el día domingo
         cal.add(Calendar.DATE, 1);
         horarioDomingo = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
         // Se establece la cabecera del día domingo
-        formatter = new Formatter(Locale.getDefault());
-        formatter.format("%1$ta %1$td/%1$tm", cal);
-        cabeceraSemana.add(formatter.toString());
-
+        cabeceraSemana.add(FormatterUtil.formatCabeceraHorario(cal.getTime()));
+ 
         // Se construye el filtro
-        String filtro = "Filtro: Especialidad = " + especialidad.getNombre() +
+        filtro = "Filtro: Especialidad = " + especialidad.getNombre() +
                 "; Medico = " + medico.getNombreCompleto() +
                 "; Semana = Del ";
         cal.add(Calendar.DATE, -6);
-        formatter = new Formatter(Locale.getDefault());
+        Formatter formatter = new Formatter(Locale.getDefault());
         formatter.format("%1$td/%1$tm/%1$tY", cal);
         filtro += formatter.toString();
         cal.add(Calendar.DATE, 6);
@@ -301,19 +303,34 @@ public class ReservaCitaServlet extends HttpServlet {
         sesion.setAttribute("horarioSabado", horarioSabado);
         sesion.setAttribute("horarioDomingo", horarioDomingo);
         sesion.setAttribute("cabeceraSemana", cabeceraSemana);
+        sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));
+        sesion.setAttribute("especialidadId", especialidadId);
+        sesion.setAttribute("medicoId", medicoId);
+        sesion.setAttribute("fechaSemana", fechaSemana);
         sesion.setAttribute("filtro", filtro);
-
-        fechaSemana = request.getParameter("txtSemana");
     }
 
-    private void reservar(HttpServletRequest request, HttpServletResponse response)
+    private void reservar(HttpSession sesion, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-        PacienteService pacienteService = new PacienteService();
+        //Variables
+        Usuario usuario = null;
+        Integer especialidadId = null;
+        Integer medicoId = null;
+        String fechaSemana = "";
+        String errorMsg =  "";
+        List<String> cabeceraSemana = null;
+        List<Horario> horarioLunes = null;
+        List<Horario> horarioMartes = null;
+        List<Horario> horarioMiercoles = null;
+        List<Horario> horarioJueves = null;
+        List<Horario> horarioViernes = null;
+        List<Horario> horarioSabado = null;
+        List<Horario> horarioDomingo = null;
+        //
+        usuario = (Usuario) sesion.getAttribute("usuario");
+        pacienteService = new PacienteService();
         Paciente paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
 
-        errorMsg = "";
         fechaSemana = request.getParameter("txtSemana");
         especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
         medicoId = Integer.parseInt(request.getParameter("cboMedico"));
@@ -345,7 +362,7 @@ public class ReservaCitaServlet extends HttpServlet {
         Cita citaPendiente = null;
         
         //Obtener la cita del paciente para la semana seleccionada
-        List<Cita> citasPendientesPaciente = citaService.getCitasPendientes(paciente, CitasValidations.parseDate(fechaSemana), medicoId, especialidadId);
+        List<Cita> citasPendientesPaciente = citaService.getCitasPendientes(paciente, ValidationUtil.parseDate(fechaSemana), medicoId, especialidadId);
         for (Cita cita : citasPendientesPaciente) {
             citaPendiente = cita;
             break;
@@ -377,7 +394,7 @@ public class ReservaCitaServlet extends HttpServlet {
                     if (horario.getFechaInicio().getTime() - today.getTimeInMillis() >= 172800000) {
                         Cita nuevaCita = citaService.insertarCita(paciente, horario.getMedico(), horario, "PENDIENTE", null);
                         if (nuevaCita != null) {
-                            cargarCitasPendientes();
+                            sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));
                             horario.setCita(nuevaCita);
                             horarioService.actualizarHorario(horario);
                             errorMsg += "La cita ha sido grabada correctamente.";
@@ -418,8 +435,8 @@ public class ReservaCitaServlet extends HttpServlet {
         return existe;
     }
 
-    private void cargarCitasPendientes() {
-        citasPendientes = new ArrayList<String>();
+    private List<String> cargarCitasPendientes(HttpSession sesion) {
+        List<String> citasPendientes = new ArrayList<String>();
         Usuario usuario = (Usuario) sesion.getAttribute("usuario");
         Persona paciente = null;
         if (usuario != null) {
@@ -435,6 +452,6 @@ public class ReservaCitaServlet extends HttpServlet {
                 citasPendientes.add(citaPendiente);
             }
         }
-        sesion.setAttribute("citasPendientes", citasPendientes);
+        return citasPendientes;
     }
 }
