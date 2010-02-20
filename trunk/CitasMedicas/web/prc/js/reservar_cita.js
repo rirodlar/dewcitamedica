@@ -27,3 +27,7 @@ function btnReservar_onclick () {
     } else
 		alert("Debe seleccionar un horario");
 }
+
+function cerrarSesion() {
+	__doPostBack("../LoginServlet", "cerrarSesion", "_self");
+}
