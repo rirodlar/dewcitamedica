@@ -32,6 +32,7 @@ public class ReservarCitaAccion implements Accion {
     @Override
     public boolean ejecutar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String argumento = request.getParameter("__ARGUMENT");
+        
         String vistaAux = null;
         HttpSession sesion = request.getSession();
         if(argumento.equals("iniciar")){
@@ -39,15 +40,15 @@ public class ReservarCitaAccion implements Accion {
             vistaAux = ayudante.procesar(request, response);
             sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));
         }
-        else if(argumento.equals("cargarMedicos")){
+        else if(argumento.equals("cboEspecialidad_onchange")){
             IniciarAyudanteAccion ayudante = new IniciarAyudanteAccion();
             vistaAux = ayudante.procesar(request, response);
         }
-        else if(argumento.equals("buscarHorario")){
+        else if(argumento.equals("btnVerHorario_onclick")){
             IniciarAyudanteAccion ayudante = new IniciarAyudanteAccion();
             vistaAux = ayudante.procesar(request, response);
         }
-        else if(argumento.equals("reservar")){
+        else if(argumento.equals("btnReservar_onclick")){
             IniciarAyudanteAccion ayudante = new IniciarAyudanteAccion();
             vistaAux = ayudante.procesar(request, response);
             sesion.setAttribute("citasPendientes", cargarCitasPendientes(sesion));

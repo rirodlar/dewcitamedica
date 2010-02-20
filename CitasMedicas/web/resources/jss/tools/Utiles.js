@@ -194,9 +194,12 @@ function __doPostBack(url, action, target)
   frm.submit();
 }
 
-function __doPostBack(argument)
+function __doPostBack(url, action, argument, target)
 {
-  var frm = document.forms[0];
+  var frm = document.forms[0]; 
+  frm.action = url;
+  frm.__ACTION.value = action;
   frm.__ARGUMENT.value = argument;
+  frm.target = target; 
   frm.submit();
 }
