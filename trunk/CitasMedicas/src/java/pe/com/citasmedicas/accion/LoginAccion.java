@@ -43,7 +43,7 @@ public class LoginAccion implements Accion {
                 vista = "/home.jsp";
             } else {
                 request.setAttribute("error", "El usuario y/o la contraseña son incorrectas.");
-                vista = "/loguin.jsp";
+                vista = "/loguin.jsp?error=El usuario y/o la contraseña son incorrectas.";
             }
         } else {
             if (request.isRequestedSessionIdValid()) {
