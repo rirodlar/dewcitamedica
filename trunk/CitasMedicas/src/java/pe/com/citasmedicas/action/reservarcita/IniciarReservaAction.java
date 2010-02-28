@@ -1,33 +1,35 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package pe.com.citasmedicas.action.reservarcita;
 
-import java.io.IOException;
+import com.opensymphony.xwork2.validator.annotations.Validation;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.time.DateFormatUtils;
-import pe.com.citasmedicas.action.AyudanteAccion;
+import org.apache.struts2.config.Namespace;
+import org.apache.struts2.config.Result;
+import org.apache.struts2.config.Results;
+import org.apache.struts2.dispatcher.ServletDispatcherResult;
+import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
+import pe.com.citasmedicas.model.Usuario;
 import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.MedicoService;
 
 /**
  *
- * @author rSaenz
+ * @author dew - Grupo 04
  */
-public class IniciarAyudanteAccion implements AyudanteAccion{
+@Namespace("/reserva")
+@Results({
+    @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
+    @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
+})
+public class IniciarReservaAction extends BaseAction{
 
     @Override
-    public String procesar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(){
         try{
             // Servicios
             EspecialidadService especialidadService = new EspecialidadService();
@@ -36,12 +38,10 @@ public class IniciarAyudanteAccion implements AyudanteAccion{
             // Variables
             HttpSession sesion = request.getSession();
             List<String> cabeceraSemana = new ArrayList<String>();
-
             List<Especialidad> especialidades = null;
             Integer especialidadId = null;
             List<Medico> medicos = null;
             Integer medicoId = null;
-            String errorMsg = "";
             String fechaSemana = "";
 
             // Se recuperan todas las especialidades
@@ -81,13 +81,14 @@ public class IniciarAyudanteAccion implements AyudanteAccion{
             sesion.setAttribute("especialidadId", especialidadId);
             sesion.setAttribute("medicos", medicos);
             sesion.setAttribute("medicoId", medicoId);
-            sesion.setAttribute("errorMsg", errorMsg);
+            sesion.setAttribute("errorMsg", "");
             sesion.setAttribute("fechaSemana", fechaSemana);
-            return null;
+            sesion.setAttribute("citasPendientes", 
+                    ReservarCitaCommons.cargarCitasPendientes(((Usuario) sesion.getAttribute("usuario")).getPersona()));
+            return SUCCESS;
         }catch(Exception ex){
             ex.printStackTrace();
-            return AyudanteAccion.ERROR;
+            return ERROR;
         }
     }
-
 }

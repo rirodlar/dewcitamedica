@@ -1,22 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.com.citasmedicas.action.reservarcita;
 
-import java.io.IOException;
+import com.opensymphony.xwork2.conversion.annotations.Conversion;
+import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.Validation;
+import org.apache.struts2.config.Result;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Formatter;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.time.DateFormatUtils;
-import pe.com.citasmedicas.action.AyudanteAccion;
+import org.apache.struts2.config.Namespace;
+import org.apache.struts2.config.Results;
+import org.apache.struts2.dispatcher.ServletDispatcherResult;
+import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
@@ -26,12 +25,24 @@ import pe.com.citasmedicas.service.MedicoService;
 
 /**
  *
- * @author rSaenz
+ * @author dew - Grupo 04
  */
-public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
+@Namespace("/reserva")
+@Results({
+    @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
+    @Result(name="input", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
+    @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
+})
+@Conversion()
+@Validation()
+public class BuscarHorarioAction extends BaseAction {
+
+    private Integer cboEspecialidad;
+    private Integer cboMedico;
+    private Date txtSemana;
 
     @Override
-    public String procesar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute() {
         try {
             // Servicios
             HorarioService horarioService = new HorarioService();
@@ -41,10 +52,8 @@ public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
             //Variables
             HttpSession sesion = request.getSession();
             List<String> cabeceraSemana = new ArrayList<String>();
-            Integer especialidadId = Integer.parseInt(request.getParameter("cboEspecialidad"));
-            Integer medicoId = Integer.parseInt(request.getParameter("cboMedico"));
-            String fechaSemana = request.getParameter("txtSemana");
             String filtro = "";
+            String errorMsg = "";
             Especialidad especialidad = null;
             Medico medico = null;
             List<Horario> horarioLunes = null;
@@ -55,14 +64,11 @@ public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
             List<Horario> horarioSabado = null;
             List<Horario> horarioDomingo = null;
             //
-            especialidad = especialidadService.getEspecialidadPorId(especialidadId);
-            medico = medicoService.getMedicoPorId(medicoId);
+            especialidad = especialidadService.getEspecialidadPorId(this.cboEspecialidad);
+            medico = medicoService.getMedicoPorId(this.cboMedico);
 
             Calendar cal = new GregorianCalendar();
-            cal.set(Calendar.YEAR, Integer.parseInt(fechaSemana.substring(6)));
-            cal.set(Calendar.MONTH, Integer.parseInt(fechaSemana.substring(3, 5)) - 1);
-            cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(fechaSemana.substring(0, 2)));
-
+            cal.setTime(txtSemana);
             if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
                 cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
             } else {
@@ -109,13 +115,9 @@ public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
                     "; Medico = " + medico.getNombreCompleto() +
                     "; Semana = Del ";
             cal.add(Calendar.DATE, -6);
-            Formatter formatter = new Formatter(Locale.getDefault());
-            formatter.format("%1$td/%1$tm/%1$tY", cal);
-            filtro += formatter.toString();
+            filtro += DateFormatUtils.format(cal.getTime(), "dd/MM/yyyy");
             cal.add(Calendar.DATE, 6);
-            formatter = new Formatter(Locale.getDefault());
-            formatter.format("%1$td/%1$tm/%1$tY", cal);
-            filtro += " al " + formatter.toString();
+            filtro += " al " + DateFormatUtils.format(cal.getTime(), "dd/MM/yyyy");
 
             // Se recuperan los horarios de atención
             // Primero se recupera el horario de atención del instituto
@@ -162,15 +164,16 @@ public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
             sesion.setAttribute("horarioSabado", horarioSabado);
             sesion.setAttribute("horarioDomingo", horarioDomingo);
             sesion.setAttribute("cabeceraSemana", cabeceraSemana);
-            sesion.setAttribute("especialidadId", especialidadId);
-            sesion.setAttribute("medicoId", medicoId);
-            sesion.setAttribute("fechaSemana", fechaSemana);
+            sesion.setAttribute("especialidadId", cboEspecialidad);
+            sesion.setAttribute("medicoId", cboMedico);
+            sesion.setAttribute("fechaSemana", DateFormatUtils.format(txtSemana, "dd/MM/yyyy"));
             sesion.setAttribute("filtro", filtro);
-            sesion.setAttribute("errorMsg", "");
-            return null;
+            sesion.setAttribute("errorMsg", errorMsg);
+            return SUCCESS;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return AyudanteAccion.ERROR;
+            request.setAttribute("errorMsg", ex.getMessage());
+            return ERROR;
         }
     }
 
@@ -185,4 +188,52 @@ public class BuscarHorarioAyudanteAccion implements AyudanteAccion {
         }
         return existe;
     }
+
+    /**
+     * @return the cboEspecialidad
+     */
+    public Integer getCboEspecialidad() {
+        return cboEspecialidad;
+    }
+
+    /**
+     * @param cboEspecialidad the cboEspecialidad to set
+     */
+    @RequiredFieldValidator(message = "Por favor, seleccione una especialidad.")
+    public void setCboEspecialidad(Integer cboEspecialidad) {
+        this.cboEspecialidad = cboEspecialidad;
+    }
+
+    /**
+     * @return the cboMedico
+     */
+    public Integer getCboMedico() {
+        return cboMedico;
+    }
+
+    /**
+     * @param cboMedico the cboMedico to set
+     */
+    @RequiredFieldValidator(message = "Por favor, seleccione un médico.")
+    public void setCboMedico(Integer cboMedico) {
+        this.cboMedico = cboMedico;
+    }
+
+    /**
+     * @return the txtSemana
+     */
+    @TypeConversion(converter="pe.com.citasmedicas.action.converter.DateConverter")
+    public Date getTxtSemana() {
+        return txtSemana;
+    }
+
+    /**
+     * @param txtSemana the txtSemana to set
+     */
+    @TypeConversion(converter="pe.com.citasmedicas.action.converter.DateConverter")
+    @RequiredFieldValidator(message = "Por favor, ingrese una fecha.")
+    public void setTxtSemana(Date txtSemana) {
+        this.txtSemana = txtSemana;
+    }
+
 }

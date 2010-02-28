@@ -1,22 +1,19 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.com.citasmedicas.action.reservarcita;
 
-import java.io.IOException;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.Validation;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
-import pe.com.citasmedicas.action.AyudanteAccion;
+import org.apache.struts2.config.Namespace;
+import org.apache.struts2.config.Result;
+import org.apache.struts2.config.Results;
+import org.apache.struts2.dispatcher.ServletDispatcherResult;
+import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Paciente;
@@ -27,12 +24,21 @@ import pe.com.citasmedicas.service.PacienteService;
 
 /**
  *
- * @author rSaenz
+ * @author dew - Grupo 04
  */
-public class ReservarAyudanteAccion implements AyudanteAccion {
+@Namespace("/reserva")
+@Results({
+    @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
+    @Result(name="input", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
+    @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
+})
+@Validation()
+public class ReservarCitaAction extends BaseAction{
+
+    private Integer rbtCita;
 
     @Override
-    public String procesar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute() throws Exception {
         try {
             // Servicios
             HorarioService horarioService = new HorarioService();
@@ -54,28 +60,10 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
             //Si no es paciente
             if (paciente == null) {
                 sesion.setAttribute("errorMsg", "Ud. no esta registrado como paciente.");
-                return null;
+                return INPUT;
             }
 
-            // Se obtiene el horario seleccionado en el jsp
-            String sHorarioId = request.getParameter("rbtCita");
-
-            if (StringUtils.isEmpty(sHorarioId)) {
-                sesion.setAttribute("errorMsg", "Por favor, seleccione un horario.");
-                return null;
-            }
-
-            Integer horarioId = null;
-            try {
-                horarioId = new Integer(Integer.parseInt(sHorarioId));
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                System.out.println("sHorarioId: " + sHorarioId);
-                sesion.setAttribute("errorMsg", "El horario no existe.");
-                return null;
-            }
-
-            horario = horarioService.getHorarioPorId(horarioId);
+            horario = horarioService.getHorarioPorId(rbtCita);
 
             //Obtener dia inicio y fin de la semana
             Calendar cal = new GregorianCalendar();
@@ -123,27 +111,46 @@ public class ReservarAyudanteAccion implements AyudanteAccion {
                             horario.setCita(nuevaCita);
                             horarioService.actualizarHorario(horario);
                             errorMsg += "La cita ha sido grabada correctamente.";
+                            sesion.setAttribute("citasPendientes",
+                                    ReservarCitaCommons.cargarCitasPendientes(((Usuario) sesion.getAttribute("usuario")).getPersona()));
+
                             sesion.setAttribute("errorMsg", errorMsg);
-                            return null;
+                            return SUCCESS;
                         } else {
                             sesion.setAttribute("errorMsg", "No se ha podido grabar la cita. Por favor, vuelva a intentarlo más tarde.");
-                            return null;
+                            return INPUT;
                         }
                     } else {
                         sesion.setAttribute("errorMsg", "El plazo mínimo para reservar es de dos (2) días.");
-                        return null;
+                        return INPUT;
                     }
                 } else {
                     sesion.setAttribute("errorMsg", "Usted ya posee una cita para la fecha y hora seleccionada.");
-                    return null;
+                    return INPUT;
                 }
             } else {
                 sesion.setAttribute("errorMsg", "El horario seleccionado no está disponible.");
-                return null;
+                return INPUT;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            return AyudanteAccion.ERROR;
+            request.setAttribute("errorMsg", ex.getMessage());
+            return ERROR;
         }
+    }
+
+    /**
+     * @return the rbtCita
+     */
+    public Integer getRbtCita() {
+        return rbtCita;
+    }
+
+    /**
+     * @param rbtCita the rbtCita to set
+     */
+    @RequiredFieldValidator(message = "Por favor, seleccione un médico.")
+    public void setRbtCita(Integer rbtCita) {
+        this.rbtCita = rbtCita;
     }
 }
