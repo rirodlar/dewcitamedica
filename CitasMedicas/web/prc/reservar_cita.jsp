@@ -1,38 +1,46 @@
-﻿<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <script language="javascript" type="text/javascript" src="../resources/jss/tools/Utiles.js"></script>
-        <link rel="stylesheet" type="text/css" media="all" href="../resources/css/calendario/calendar-win2k-2.css" />
-        <script type="text/javascript" src="../resources/jss/calendario/calendar.js"></script>
-        <script type="text/javascript" src="../resources/jss/calendario/calendar-es.js"></script>
-        <script type="text/javascript" src="../resources/jss/calendario/calendar-setup.js"></script>
-        <script type="text/javascript" src="js/reservar_cita.js"></script>
-        <link rel="stylesheet" type="text/css" href="../resources/css/style.css" media="screen" />
-        <script type="text/javascript" src="js/reservar_cita.js"></script>
-        <script type="text/javascript" src="../resources/jss/tools/Utiles.js"></script>
-        <!--[if IE 6]>
-        <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
-        <![endif]-->
+        <script language="javascript" type="text/javascript" src="<s:url value='/resources/jss/tools/Utiles.js'/>"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<s:url value='/resources/css/calendario/calendar-win2k-2.css'/>" />
+        <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar-es.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar-setup.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/prc/js/reservar_cita.js'/>"></script>
+        <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
+        <script type="text/javascript" src="<s:url value='/resources/jss/tools/Utiles.js'/>"></script>
+        <script type="text/javascript">
+            function cboEspecialidad_onchange () {
+                frmReserva.action = '<s:url value="/reserva/cargarMedicos.action"/>';
+                frmReserva.submit();
+            }
+            function btnVerHorario_onclick () {
+                frmReserva.action = '<s:url value="/reserva/buscarHorario.action"/>'
+                frmReserva.submit();
+            }
+            function cerrarSesion() {
+                frmReserva.action = '<s:url value="/login/logout.action"/>'
+                frmReserva.submit();
+            }
+        </script>
         <title>Reservar Cita</title>
     </head>
     <body class="principal">
         <div id="main_container">
             <div class="header">
-                <div id="logo"><a href="../home.jsp"><img src="../resources/img/logo.png" alt="" title="" width="162" height="54" border="0" /></a></div>
-
+                <div id="logo"><a href="<s:url value='/home.jsp'/>"><img src="<s:url value='/resources/img/logo.png'/>" alt="" title="" width="162" height="54" border="0" /></a></div>
                 <div class="right_header">
-
                     <div class="top_menu">
                         <div style="width:90px;float:left;margin:0 3px 0 3px;">&nbsp;</div>
                         <a href="javascript:cerrarSesion();" class="login">Salir</a>
                     </div>
-
                     <div id="menu">
                         <ul>
-                            <li><a href="../home.jsp" title="">Inicio</a></li>
+                            <li><a href="<s:url value='/home.jsp'/>" title="">Inicio</a></li>
                             <li><a href="#" title="">Nosotros</a></li>
                             <li><a class="current" href="#" title="">Reservas</a></li>
                             <li><a href="#" title="">Cont&aacute;ctenos</a></li>
@@ -42,23 +50,23 @@
                 </div>
             </div>
             <div id="profundidad">&nbsp;Reserva de Citas</div>
-    		<div class="xh"><b>Usuario:</b> ${usuario.persona.nombreCompleto}</div>
+            <div class="xh"><b>Usuario:</b> ${usuario.persona.nombreCompleto}</div>
             <div id="contenido">
                 <!-- Aqui el contenido de la pagina -->
                 <div class="box_title">
-                    <div class="title_icon"><img src="../resources/img/mini_icon1.gif" alt="" title="" /></div>
+                    <div class="title_icon"><img src="<s:url value='/resources/img/mini_icon1.gif'/>" alt="" title="" /></div>
                     <h2>Reservar <span class="dark_blue">Cita</span></h2>
                 </div>
                 <div class="caja_contenido">
                     <p>Por favor, seleccione los criterios necesarios para la b&uacute;squeda.</p>
                     <br/>
-                    <form action="" method="post" name="frmReserva">
-                        <input id="__ACTION" name="__ACTION" type="HIDDEN" />
-                        <input id="__ARGUMENT" name="__ARGUMENT" type="HIDDEN" />
+                    <s:form action="" method="POST" name="frmReserva">
+                        <s:hidden name="__ACTION" />
+                        <s:hidden name="__ARGUMENT" />
                         <table width="840px" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td><label>Especialidad:
-                                        <select name="cboEspecialidad" id="lstEspecialidad" class="x4" style="width:200px" onchange="javascript:cboEspecialidad_onchange();">
+                                        <select name="cboEspecialidad" id="cboEspecialidad" class="x4" style="width:200px" onchange="javascript:cboEspecialidad_onchange(); ">
                                             <c:forEach var="especialidad" items="${especialidades}">
                                                 <option value="${especialidad.especialidadId}"
                                                         <c:if test="${especialidad.especialidadId == especialidadId}">
@@ -81,7 +89,7 @@
                                     </label></td>
                                 <td>Semana:
                                     <input name="txtSemana" type="text" id="txtSemana" value="${fechaSemana}" class="x4" style="width:70px" readonly="readonly" />
-                                    <IMG src="../resources/img/cdp.gif" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Venta" align="top" style="cursor:hand"/>
+                                    <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Venta" align="top" style="cursor:hand"/>
                                     <script type="text/javascript">
                                         Calendar.setup({
                                             input : "txtSemana", // Input Id")
@@ -154,17 +162,17 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a href="#" title="Ver Cita"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:when>
-                                                                <c:otherwise> <!--Cita de otro paciente-->
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise> <!--Cita de otro paciente-->
                                                                     <a href="#" title="No disponible"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
                                         </td>
                                         <td class="${pageScope.estilo}" width="107" align="center">
                                             <c:forEach var="martes" items="${horarioMartes}">
@@ -182,17 +190,17 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a href="#" title="Ver Cita"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:when>
-                                                                <c:otherwise> <!--Cita de otro paciente-->
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise> <!--Cita de otro paciente-->
                                                                     <a href="#" title="No disponible"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
                                         </td>
                                         <td class="${pageScope.estilo}" width="107" align="center">
                                             <c:forEach var="miercoles" items="${horarioMiercoles}">
@@ -210,17 +218,17 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a href="#" title="Ver Cita"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:when>
-                                                                <c:otherwise> <!--Cita de otro paciente-->
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise> <!--Cita de otro paciente-->
                                                                     <a href="#" title="No disponible"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
                                         </td>
                                         <td class="${pageScope.estilo}" width="107" align="center">
                                             <c:forEach var="jueves" items="${horarioJueves}">
@@ -238,17 +246,17 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a href="#" title="Ver Cita"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:when>
-                                                                <c:otherwise> <!--Cita de otro paciente-->
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise> <!--Cita de otro paciente-->
                                                                     <a href="#" title="No disponible"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
                                         </td>
                                         <td class="${pageScope.estilo}" width="107" align="center">
                                             <c:forEach var="viernes" items="${horarioViernes}">
@@ -266,17 +274,17 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a href="#" title="Ver Cita"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:when>
-                                                                <c:otherwise> <!--Cita de otro paciente-->
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise> <!--Cita de otro paciente-->
                                                                     <a href="#" title="No disponible"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
                                         </td>
                                         <td class="${pageScope.estilo}" width="107" align="center">
                                             <c:forEach var="sabado" items="${horarioSabado}">
@@ -294,17 +302,17 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a href="#" title="Ver Cita"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:when>
-                                                                <c:otherwise> <!--Cita de otro paciente-->
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise> <!--Cita de otro paciente-->
                                                                     <a href="#" title="No disponible"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
                                         </td>
                                         <td class="${pageScope.estilo}" width="107" align="center">
                                             <c:forEach var="domingo" items="${horarioDomingo}">
@@ -322,24 +330,24 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a href="#" title="Ver Cita"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:when>
-                                                                <c:otherwise> <!--Cita de otro paciente-->
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </c:when>
+                                                                    <c:otherwise> <!--Cita de otro paciente-->
                                                                     <a href="#" title="No disponible"><img src="../resources/img/tip.gif" border="0" width="16" height="16" /></a>
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:if>
-                                            </c:forEach>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </table>
                             ${filtro}
                         </div>
-                    </form>
+                    </s:form>
                 </div>
             </div>
             <div id="footer">
