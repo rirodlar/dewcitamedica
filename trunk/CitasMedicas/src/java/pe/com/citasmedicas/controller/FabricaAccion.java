@@ -1,10 +1,10 @@
 package pe.com.citasmedicas.controller;
 
-import pe.com.citasmedicas.accion.HomeAccion;
-import pe.com.citasmedicas.accion.LoginAccion;
-import pe.com.citasmedicas.accion.diagnosticar.DiagnosticarAccion;
-import pe.com.citasmedicas.accion.horario.MantenerHorarioAccion;
-import pe.com.citasmedicas.accion.reservarcita.ReservarCitaAccion;
+import pe.com.citasmedicas.action.HomeAccion;
+import pe.com.citasmedicas.action.LoginAccion;
+import pe.com.citasmedicas.action.diagnosticar.DiagnosticarAccion;
+import pe.com.citasmedicas.action.horario.MantenerHorarioAccion;
+import pe.com.citasmedicas.action.reservarcita.ReservarCitaAccion;
 
 /**
  *

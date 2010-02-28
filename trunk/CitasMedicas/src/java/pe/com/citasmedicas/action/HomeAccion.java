@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package pe.com.citasmedicas.accion.diagnosticar;
+package pe.com.citasmedicas.action;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -15,16 +15,19 @@ import pe.com.citasmedicas.controller.Accion;
  *
  * @author rSaenz
  */
-public class DiagnosticarAccion implements Accion{
+public class HomeAccion implements Accion{
+
+    private String vista;
 
     @Override
     public boolean ejecutar(HttpServletRequest _request, HttpServletResponse _response) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        vista = "/home.jsp";
+        return true;
     }
 
     @Override
     public String getVista() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return vista;
     }
 
 }

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package pe.com.citasmedicas.accion;
+package pe.com.citasmedicas.action;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
