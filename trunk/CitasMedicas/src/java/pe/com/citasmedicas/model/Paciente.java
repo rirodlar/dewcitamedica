@@ -1,12 +1,21 @@
 package pe.com.citasmedicas.model;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 /**
  *
  * @author dew - Grupo 04
  */
+@Entity
+@DiscriminatorValue(value="P")
 public class Paciente extends Persona{
 
+    @Column(name="peso", nullable=false)
     private Double peso;
+
+    @Column(name="estatura", nullable=false)
     private Integer estatura;
 
     /**

@@ -197,77 +197,77 @@ public class CargaData {
 
         usuario.setUsuarioId(new Integer(1000000));
         usuario.setUsername("jorgeCasana");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(jorgeCasana);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000001));
         usuario = new Usuario();
         usuario.setUsername("jaimeEspinoza");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(jaimeEspinoza);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000002));
         usuario = new Usuario();
         usuario.setUsername("miguelSanchez");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(miguelSanchez);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000003));
         usuario = new Usuario();
         usuario.setUsername("joseCaravedo");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(joseCaravedo);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000004));
         usuario = new Usuario();
         usuario.setUsername("eduardoBarriga");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(eduardoBarriga);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000005));
         usuario = new Usuario();
         usuario.setUsername("fernandoSalazar");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(fernandoSalazar);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000006));
         usuario = new Usuario();
         usuario.setUsername("albertoFranco");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(albertoFranco);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000007));
         usuario = new Usuario();
         usuario.setUsername("sandraFranco");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(sandraFranco);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000008));
         usuario = new Usuario();
         usuario.setUsername("juanMatzumura");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(juanMatzumura);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000009));
         usuario = new Usuario();
         usuario.setUsername("carolinaChang");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(carolinaChang);
         USUARIOS.add(usuario);
 
         usuario.setUsuarioId(new Integer(1000010));
         usuario = new Usuario();
         usuario.setUsername("anaTalavera");
-        usuario.setPassword("desarrolloweb");
+        usuario.setPassword("web");
         usuario.setPersona(anaTalavera);
         USUARIOS.add(usuario);
         

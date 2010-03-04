@@ -1,10 +1,15 @@
 package pe.com.citasmedicas.dao;
 
-import java.util.ArrayList;
 import java.util.List;
-import pe.com.citasmedicas.model.CargaData;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Transaction;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
+import pe.com.citasmedicas.persistence.HibernateUtil;
 
 /**
  *
@@ -22,11 +27,22 @@ public class MedicoDao {
             return null;
         }
         Medico medico = null;
-        for (Medico medicoAux : CargaData.MEDICOS) {
-            if (medicoAux.getPersonaId().intValue() == medicoId.intValue()) {
-                medico = medicoAux;
-                break;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        Session hs = hsf.getCurrentSession();
+        Transaction htx = null;
+        try {
+            htx = hs.beginTransaction();
+            medico = (Medico)hs.get(Medico.class, medicoId);
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
             }
+            e.printStackTrace();
         }
         return medico;
     }
@@ -37,17 +53,28 @@ public class MedicoDao {
      * @return List<Medico>
      */
     public List<Medico> getMedicosPorEspecialidad(Especialidad especialidad) {
-        if(especialidad == null){
-            return new ArrayList<Medico>();
+        if (especialidad == null) {
+            return null;
         }
-        List<Medico> medicos = new ArrayList<Medico>();
-        for(Medico medicoAux : CargaData.MEDICOS){
-            for(Especialidad especialidadAux : medicoAux.getEspecialidades()){
-                if(especialidadAux.equals(especialidad)){
-                    medicos.add(medicoAux);
-                    break;
+        List<Medico> medicos = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        Session hs = hsf.getCurrentSession();
+        Transaction htx = null;
+        try {
+            htx = hs.beginTransaction();
+            Query hqlQuery = hs.createQuery("select m from Medico m join m.especialidades e where e.especialidadId = :especialidadId");
+            hqlQuery.setParameter("especialidadId", especialidad.getEspecialidadId(), Hibernate.INTEGER);
+            medicos = hqlQuery.list();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
                 }
             }
+            e.printStackTrace();
         }
         return medicos;
     }
