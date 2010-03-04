@@ -1,14 +1,23 @@
 package pe.com.citasmedicas.model;
 
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 /**
  *
  * @author dew - Grupo 04
  */
+@Entity
+@DiscriminatorValue(value="M")
 public class Medico extends Persona{
 
+    @Column(name="nroColegiatura", nullable=false, length=5)
     private String nroColegiatura;
+
+    @ManyToMany(mappedBy="medicos")
     private List<Especialidad> especialidades;
 
     /**

@@ -1,7 +1,13 @@
 package pe.com.citasmedicas.dao;
 
-import pe.com.citasmedicas.model.CargaData;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import pe.com.citasmedicas.model.Usuario;
+import pe.com.citasmedicas.persistence.HibernateUtil;
 
 /**
  *
@@ -19,11 +25,24 @@ public class UsuarioDao {
             return null;
         }
         Usuario usuario = null;
-        for (Usuario usuarioAux : CargaData.USUARIOS) {
-            if (usuarioAux.getUsername().equals(username)) {
-                usuario = usuarioAux;
-                break;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        Session hs = hsf.getCurrentSession();
+        Transaction htx = null;
+        try {
+            htx = hs.beginTransaction();
+            Query hqlQuery = hs.createQuery("from Usuario u where u.username = :username");
+            hqlQuery.setParameter("username", username, Hibernate.STRING);
+            usuario = (Usuario)hqlQuery.uniqueResult();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
             }
+            e.printStackTrace();
         }
         return usuario;
     }

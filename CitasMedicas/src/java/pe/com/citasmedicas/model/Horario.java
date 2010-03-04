@@ -5,18 +5,48 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author dew - Grupo 04
  */
+@Entity
+@Table(name="horario", schema="cita_medica")
 public class Horario extends Bean {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="horarioId", nullable=false)
     private Integer horarioId;
+
+    @Column(name="fechaInicio", nullable=false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaInicio;
+    
+    @Column(name="fechaFin", nullable=false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFin;
+
+    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Medico.class)
+    @JoinColumn(name="personaId")
     private Medico medico;
+
+    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Especialidad.class)
+    @JoinColumn(name="especialidadId")
     private Especialidad especialidad;
+
+    @OneToOne(mappedBy="horario", optional=false)
     private Cita cita;
 
     /**

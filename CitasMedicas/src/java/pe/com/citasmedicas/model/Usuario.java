@@ -1,14 +1,35 @@
 package pe.com.citasmedicas.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  *
  * @author dew - Grupo 04
  */
+@Entity
+@Table(name="usuario", schema="cita_medica")
 public class Usuario extends Bean {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="usuarioId", nullable=false)
     private Integer usuarioId;
+
+    @Column(name="username", nullable=false, length=15)
     private String username;
+
+    @Column(name="password", nullable=false, length=15)
     private String password;
+
+    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Persona.class)
+    @JoinColumn(name="personaId", nullable=false)
     private Persona persona;
 
     /**

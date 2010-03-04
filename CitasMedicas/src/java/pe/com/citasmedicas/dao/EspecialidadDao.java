@@ -1,8 +1,14 @@
 package pe.com.citasmedicas.dao;
 
+import java.util.ArrayList;
 import java.util.List;
-import pe.com.citasmedicas.model.CargaData;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import pe.com.citasmedicas.model.Especialidad;
+import pe.com.citasmedicas.persistence.HibernateUtil;
 
 /**
  *
@@ -15,7 +21,27 @@ public class EspecialidadDao {
      * @return List<Especialidad>
      */
     public List<Especialidad> getEspecialidades() {
-        return CargaData.ESPECIALIDADES;
+        List<Especialidad> especialidades = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        Session hs = hsf.getCurrentSession();
+        Transaction htx = null;
+        try {
+            htx = hs.beginTransaction();
+            Query hqlQuery = hs.createQuery("from Especialidad e order by e.nombre asc");
+            especialidades = hqlQuery.list();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
+            }
+            especialidades = new ArrayList<Especialidad>();
+            e.printStackTrace();
+        }
+        return especialidades;
     }
 
     /**
@@ -28,11 +54,22 @@ public class EspecialidadDao {
             return null;
         }
         Especialidad especialidad = null;
-        for (Especialidad especialidadAux : getEspecialidades()) {
-            if (especialidadAux.getEspecialidadId().intValue() == especialidadId.intValue()) {
-                especialidad = especialidadAux;
-                break;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        Session hs = hsf.getCurrentSession();
+        Transaction htx = null;
+        try {
+            htx = hs.beginTransaction();
+            especialidad = (Especialidad)hs.get(Especialidad.class, especialidadId);
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
             }
+            e.printStackTrace();
         }
         return especialidad;
     }

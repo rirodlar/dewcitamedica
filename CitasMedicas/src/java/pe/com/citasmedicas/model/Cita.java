@@ -1,16 +1,44 @@
 package pe.com.citasmedicas.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 /**
  *
  * @author dew - Grupo 04
  */
+@Entity
+@Table(name="cita", schema="cita_medica")
 public class Cita extends Bean{
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="citaId", nullable=false)
     private Integer citaId;
+
+    @Column(name="estado")
     private String estado;
+
+    @Column(name="diagnostico")
     private String diagnostico;
+
+    @ManyToOne
+    @JoinColumn(name="pacienteId")
     private Paciente paciente;
+
+    @ManyToOne
+    @JoinColumn(name="medicoId")
     private Medico medico;
+
+    @OneToOne(targetEntity=pe.com.citasmedicas.model.Horario.class, optional=false)
+    @JoinColumn(name="horarioId")
     private Horario horario;
 
     /**
