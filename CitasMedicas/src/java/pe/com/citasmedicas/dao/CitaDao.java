@@ -210,7 +210,10 @@ public class CitaDao {
         try {
             hs = hsf.getCurrentSession();
             htx = hs.beginTransaction();
-            Query hqlQuery = hs.createQuery("from Cita c where c.paciente = :pacienteId and c.horario.fechaInicio > current_timestamp()");
+            Query hqlQuery = hs.createQuery("from Cita c " +
+                    "where c.paciente = :pacienteId " +
+                    "and c.horario.fechaInicio > current_timestamp() " +
+                    "order by c.horario.fechaInicio");
             hqlQuery.setParameter("pacienteId", pacienteId, Hibernate.INTEGER);
             citas = hqlQuery.list();
             htx.commit();
@@ -268,7 +271,8 @@ public class CitaDao {
                     "and c.horario.medico = :medicoId " +
                     "and c.horario.especialidad = :especialidadId " +
                     "and c.horario.fechaInicio >= :fechaInicio " +
-                    "and c.horario.fechaInicio <= :fechaFin");
+                    "and c.horario.fechaInicio <= :fechaFin " +
+                    "order by c.horario.fechaInicio asc");
             hqlQuery.setParameter("pacienteId", pacienteId, Hibernate.INTEGER);
             hqlQuery.setParameter("medicoId", medicoId, Hibernate.INTEGER);
             hqlQuery.setParameter("especialidadId", especialidadId, Hibernate.INTEGER);
@@ -373,6 +377,8 @@ public class CitaDao {
             }
             e.printStackTrace();
             return false;
+        }finally{
+            hs.close();
         }
         return true;
     }
@@ -390,8 +396,11 @@ public class CitaDao {
         Transaction htx = null;
         SessionFactory hsf = HibernateUtil.getSessionFactory();
         try {
-            hs = hsf.getCurrentSession();
+            hs = hsf.openSession();
             htx = hs.beginTransaction();
+            Horario horario = cita.getHorario();
+            horario.setCita(null);
+            hs.update(horario);
             hs.delete(cita);
             htx.commit();
         } catch (HibernateException e) {
@@ -404,6 +413,8 @@ public class CitaDao {
             }
             e.printStackTrace();
             return false;
+        }finally{
+            hs.close();
         }
         return true;
     }

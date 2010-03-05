@@ -18,11 +18,7 @@ public class UsuarioDaoTest {
             UsuarioDao usuarioDao = new UsuarioDao();
             Usuario usuario = usuarioDao.getUsuarioPorUsername("anaTalavera");
             Assert.assertEquals(usuario.getPassword(), "web");
-
-            Persona persona = usuario.getPersona();
-            if(persona != null) {
-                Assert.assertEquals(persona.getApellidoPaterno(), "TALAVERA");
-            }
+            Assert.assertEquals(usuario.getPersona().getApellidoPaterno(), "TALAVERA");
         } catch (HibernateException e) {
             e.printStackTrace();
         }
