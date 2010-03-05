@@ -52,7 +52,7 @@ CREATE TABLE  `cita_medica`.`cita` (
   `citaId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pacienteId` int(10) unsigned NOT NULL,
   `horarioId` int(10) unsigned NOT NULL,
-  `medicoId` int(10) unsigned NOT NULL COMMENT 'Medico que atiende la cita',
+  `medicoId` int(10) unsigned COMMENT 'Medico que atiende la cita',
   `estado` varchar(13) NOT NULL DEFAULT 'RESERVADO',
   `sintoma` varchar(250) DEFAULT NULL,
   `diagnostico` varchar(45) DEFAULT NULL,
@@ -85,12 +85,3 @@ ALTER TABLE `cita_medica`.`horario` ADD CONSTRAINT `FK_Horario_Cita` FOREIGN KEY
     REFERENCES `cita` (`citaId`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT;
-
-
-CREATE VIEW `cita_medica`.`vw_cita_horario`
-AS
-select `c`.`citaId` AS `CITAID`,`c`.`estado` AS `ESTADO`,`c`.`diagnostico` AS `DIAGNOSTICO`,
-	`c`.`pacienteId` AS `PACIENTEID`,`c`.`medicoId` AS `MEDICOATENCIONID`,`h`.`horarioId` AS `HORARIOID`,
-	`h`.`fechaInicio` AS `FECHAINICIO`,`h`.`fechaFin` AS `FECHAFIN`,`h`.`especialidadId` AS `ESPECIALIDADID`,
-	`h`.`medicoId` AS `MEDICOID`
-from `cita` `c` join `horario` `h` on (`c`.`horarioId` = `h`.`horarioId`);

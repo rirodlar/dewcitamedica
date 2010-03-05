@@ -12,16 +12,16 @@ import org.apache.commons.lang.time.DateFormatUtils;
  */
 public class CargaData {
 
-    public static List<Especialidad> ESPECIALIDADES = null;
+    /*public static List<Especialidad> ESPECIALIDADES = null;
     public static List<Medico> MEDICOS = null;
     public static List<Paciente> PACIENTES = null;
     public static List<Horario> HORARIOS = null;
     public static List<Cita> CITAS = null;
-    public static List<Usuario> USUARIOS = null;
+    public static List<Usuario> USUARIOS = null;*/
     public static List<Horario> HORARIO_ATENCION = null;
 
     public static void inicializar() {
-        ESPECIALIDADES = new ArrayList<Especialidad>();
+        /*ESPECIALIDADES = new ArrayList<Especialidad>();
         MEDICOS = new ArrayList<Medico>();
         PACIENTES = new ArrayList<Paciente>();
         HORARIOS = new ArrayList<Horario>();
@@ -882,8 +882,10 @@ public class CargaData {
         cita.setPaciente(anaTalavera);
         CITAS.add(cita);
         horario47.setCita(cita);
-
+*/
         // Horarios disponibles
+        HORARIO_ATENCION = new ArrayList<Horario>();
+        Calendar cal = new GregorianCalendar();
         Calendar calAux = new GregorianCalendar();
         Calendar[] atencion = new Calendar[2];
         cal.set(Calendar.HOUR_OF_DAY, 8);

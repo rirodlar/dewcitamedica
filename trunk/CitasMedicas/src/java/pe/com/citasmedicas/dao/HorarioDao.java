@@ -88,7 +88,8 @@ public class HorarioDao {
                     "select h from Horario h " +
                     "where h.medico = :medicoId " +
                     "and h.especialidad = :especialidadId " +
-                    "and cast(h.fechaInicio as date) = :fecha");
+                    "and cast(h.fechaInicio as date) = :fecha " +
+                    "order by h.fechaInicio asc");
             hqlQuery.setParameter("medicoId", medicoId, Hibernate.INTEGER);
             hqlQuery.setParameter("especialidadId", especialidadId, Hibernate.INTEGER);
             hqlQuery.setParameter("fecha", fecha, Hibernate.DATE);

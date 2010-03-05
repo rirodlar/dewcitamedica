@@ -83,7 +83,8 @@ public class ReservarCitaAction extends BaseAction{
             citaPendiente = citaService.getCitaSemPendiente(paciente, fecIni, fecFin, horario.getMedico(), horario.getEspecialidad());
 
             // Si el horario seleccionado es igual a la cita pendiente, entonces se terminar el proceso
-            if (citaPendiente != null && citaPendiente.getHorario().equals(horario)) {
+            if (citaPendiente != null && 
+                citaPendiente.getHorario().getHorarioId().intValue() == horario.getHorarioId().intValue()) {
                 return null;
             }
             // Se verifica que no exista una cita para el horario seleccionado

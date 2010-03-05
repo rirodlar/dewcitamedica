@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,7 +48,7 @@ public class Horario extends Bean {
     private Especialidad especialidad;
 
     @OneToOne(targetEntity=pe.com.citasmedicas.model.Cita.class, optional=true)
-    @JoinColumn(name="citaId")
+    @JoinColumn(name="citaId", nullable=true)
     private Cita cita;
 
     /**

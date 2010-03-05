@@ -27,6 +27,7 @@ public class HoraioDaoTest {
             
             Calendar cal = new GregorianCalendar(2010, 3, 21);
             List<Horario> horarios = horarioDao.getHorariosPorEspecMedicoFecha(new Integer(1000000), new Integer(1000000), cal.getTime());
+            System.out.println(horarios.get(0).getCita().getPaciente().getNombreCompleto());
             Assert.assertEquals(horarios.size(), 4);
         } catch (HibernateException e) {
             e.printStackTrace();
