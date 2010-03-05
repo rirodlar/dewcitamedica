@@ -55,7 +55,7 @@ public class IniciarReservaAction extends BaseAction{
             }
             if (especialidadId != null) {
                 // Se recuperan todos los médicos de la especialidad seleccionada
-                medicos = medicoService.getMedicosPorEspecialidad(especialidades.get(0));
+                medicos = medicoService.getMedicosPorEspecialidad(especialidadId);
                 if (medicos == null) {
                     medicos = new ArrayList<Medico>();
                 }

@@ -10,9 +10,7 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
-import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
-import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.MedicoService;
 
 /**
@@ -35,21 +33,18 @@ public class CargarMedicosAction extends BaseAction{
     public String execute() throws Exception {
         try{
             // Servicios
-            EspecialidadService especialidadService = new EspecialidadService();
             MedicoService medicoService = new MedicoService();
 
             // Variables
             HttpSession sesion = request.getSession();
             
-            Especialidad especialidad = null;
             List<Medico> medicos = null;
 
             int medicoId = 0;
 
             // Se recuperan todos los médicos de la especialidad seleccionada
-            especialidad = especialidadService.getEspecialidadPorId(cboEspecialidad);
-            if (especialidad != null) {
-                medicos = medicoService.getMedicosPorEspecialidad(especialidad);
+            if (cboEspecialidad != null) {
+                medicos = medicoService.getMedicosPorEspecialidad(cboEspecialidad);
                 if (medicos == null) {
                     medicos = new ArrayList<Medico>();
                 }

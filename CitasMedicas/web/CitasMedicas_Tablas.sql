@@ -1,4 +1,7 @@
-﻿CREATE TABLE  `cita_medica`.`especialidad` (
+﻿CREATE SCHEMA `cita_medica`;
+
+
+CREATE TABLE  `cita_medica`.`especialidad` (
   `especialidadId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(25) NOT NULL,
   PRIMARY KEY (`especialidadId`)
@@ -15,7 +18,7 @@ CREATE TABLE  `cita_medica`.`persona` (
   `peso` double DEFAULT NULL COMMENT 'Peso del paciente en kilogramos',
   `estatura` int(10) unsigned DEFAULT NULL COMMENT 'Estatura del paciente en centimetros',
   `nroColegiatura` varchar(5) DEFAULT NULL,
-  `tipo` varchar(1) NOT NULL DEFAULT 'P' COMMENT 'Indica si es paciente o medico',
+  `tipo` varchar(1) NOT NULL DEFAULT 'P' COMMENT 'Indica si es paciente (P) o medico (M)',
   PRIMARY KEY (`personaId`)
 );
 
@@ -32,10 +35,11 @@ CREATE TABLE  `cita_medica`.`medico_especialidad` (
 
 CREATE TABLE  `cita_medica`.`horario` (
   `horarioId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `medicoId` int(10) unsigned NOT NULL,
+  `especialidadId` int(10) unsigned NOT NULL,
   `fechaInicio` datetime NOT NULL,
   `fechaFin` datetime NOT NULL,
-  `especialidadId` int(10) unsigned NOT NULL,
-  `medicoId` int(10) unsigned NOT NULL,
+  `citaId` int(10) unsigned,
   PRIMARY KEY (`horarioId`),
   KEY `FK_Horario_Especialidad` (`especialidadId`),
   KEY `FK_Horario_Medico` (`medicoId`),
@@ -46,11 +50,16 @@ CREATE TABLE  `cita_medica`.`horario` (
 
 CREATE TABLE  `cita_medica`.`cita` (
   `citaId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `estado` varchar(13) NOT NULL DEFAULT 'RESERVADO',
-  `diagnostico` varchar(45) DEFAULT NULL,
   `pacienteId` int(10) unsigned NOT NULL,
-  `medicoId` int(10) unsigned NOT NULL COMMENT 'Medico que atiende la cita',
   `horarioId` int(10) unsigned NOT NULL,
+  `medicoId` int(10) unsigned NOT NULL COMMENT 'Medico que atiende la cita',
+  `estado` varchar(13) NOT NULL DEFAULT 'RESERVADO',
+  `sintoma` varchar(250) DEFAULT NULL,
+  `diagnostico` varchar(45) DEFAULT NULL,
+  `receta` varchar(250) DEFAULT NULL,
+  `analisis` varchar(250) DEFAULT NULL,
+  `fechaProximaCita` date DEFAULT NULL,
+  `observaciones` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`citaId`),
   KEY `FK_cita_paciente` (`pacienteId`),
   KEY `FK_cita_medico` (`medicoId`),
@@ -72,10 +81,16 @@ CREATE TABLE  `cita_medica`.`usuario` (
 );
 
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW  `cita_medica`.`vw_cita_horario`
+ALTER TABLE `cita_medica`.`horario` ADD CONSTRAINT `FK_Horario_Cita` FOREIGN KEY `FK_Horario_Cita` (`citaId`)
+    REFERENCES `cita` (`citaId`)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT;
+
+
+CREATE VIEW `cita_medica`.`vw_cita_horario`
 AS
 select `c`.`citaId` AS `CITAID`,`c`.`estado` AS `ESTADO`,`c`.`diagnostico` AS `DIAGNOSTICO`,
 	`c`.`pacienteId` AS `PACIENTEID`,`c`.`medicoId` AS `MEDICOATENCIONID`,`h`.`horarioId` AS `HORARIOID`,
 	`h`.`fechaInicio` AS `FECHAINICIO`,`h`.`fechaFin` AS `FECHAFIN`,`h`.`especialidadId` AS `ESPECIALIDADID`,
 	`h`.`medicoId` AS `MEDICOID`
-from (`cita` `c` join `horario` `h` on((`c`.`horarioId` = `h`.`horarioId`)));
+from `cita` `c` join `horario` `h` on (`c`.`horarioId` = `h`.`horarioId`);

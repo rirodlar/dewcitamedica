@@ -39,6 +39,18 @@ public class HorarioService {
         return horarioDao.getHorariosPorEspecMedicoFecha(especialidad, medico, fecha);
     }
 
+    /**
+     * Obtiene todos los horarios de un médico para una especialidad y fecha específica
+     * @param Integer especialidadId
+     * @param Integer medicoId
+     * @param Date fecha
+     * @return List<Horario>
+     */
+    public List<Horario> getHorariosPorEspecMedicoFecha(Integer especialidadId, Integer medicoId, Date fecha) {
+        return horarioDao.getHorariosPorEspecMedicoFecha(especialidadId, medicoId, fecha);
+    }
+
+
     public List<Horario> getHorarioAtencion() {
         return horarioDao.getHorarioAtencion();
     }

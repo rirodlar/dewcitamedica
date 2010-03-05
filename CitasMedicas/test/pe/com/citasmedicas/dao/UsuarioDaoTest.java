@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.com.citasmedicas.dao;
 
 import org.hibernate.HibernateException;
@@ -12,7 +8,7 @@ import pe.com.citasmedicas.model.Usuario;
 
 /**
  *
- * @author rSaenz
+ * @author dew - Grupo 04
  */
 public class UsuarioDaoTest {
 
@@ -20,12 +16,11 @@ public class UsuarioDaoTest {
     public void hibernateTest() {
         try {
             UsuarioDao usuarioDao = new UsuarioDao();
-            Usuario usuario = usuarioDao.getUsuarioPorUsername("anaTalavera");//usuarioDao.
+            Usuario usuario = usuarioDao.getUsuarioPorUsername("anaTalavera");
             Assert.assertEquals(usuario.getPassword(), "web");
 
             Persona persona = usuario.getPersona();
             if(persona != null) {
-                System.out.println("----->>>>> *** P *** <<<<<-----");
                 Assert.assertEquals(persona.getApellidoPaterno(), "TALAVERA");
             }
         } catch (HibernateException e) {

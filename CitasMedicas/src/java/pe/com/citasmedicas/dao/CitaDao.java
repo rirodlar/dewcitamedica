@@ -3,15 +3,21 @@ package pe.com.citasmedicas.dao;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import pe.com.citasmedicas.model.CargaData;
+import org.apache.commons.lang.time.DateUtils;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Paciente;
 import pe.com.citasmedicas.model.Persona;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.Hibernate;
+import pe.com.citasmedicas.persistence.HibernateUtil;
 
 /**
  *
@@ -29,11 +35,25 @@ public class CitaDao {
             return null;
         }
         Cita cita = null;
-        for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getCitaId().intValue() == citaId.intValue()) {
-                cita = citaAux;
-                break;
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try{
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            cita = (Cita)hs.get(Cita.class, citaId);
+            htx.commit();
+        }
+        catch(HibernateException he){
+            if(htx != null && htx.isActive()){
+                try{
+                    htx.rollback();
+                }
+                catch(HibernateException he2){
+                    System.out.println("No se pudo realizar rollback...");
+                }
             }
+            he.printStackTrace();
         }
         return cita;
     }
@@ -46,29 +66,56 @@ public class CitaDao {
      * @return List<Cita>
      */
     public List<Cita> getCitasPorMedicoFecha(Medico medico, Date fecha, boolean validaHora) {
-        if (medico == null || fecha == null) {
+        if(medico == null){
+            return new ArrayList<Cita>();
+        }
+        return getCitasPorMedicoFecha(medico.getPersonaId(), fecha, validaHora);
+    }
+
+    /**
+     * Obtiene todos las citas de un médico para una fecha específica
+     * @param Integer medicoId
+     * @param Date fecha
+     * @param boolean validaHora
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPorMedicoFecha(Integer medicoId, Date fecha, boolean validaHora) {
+        if (medicoId == null || fecha == null) {
             return new ArrayList<Cita>();
         }
         List<Cita> citas = new ArrayList<Cita>();
-        for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getMedico().equals(medico)) {
-                Calendar calH = new GregorianCalendar();
-                calH.setTime(citaAux.getHorario().getFechaInicio());
-                Calendar calP = new GregorianCalendar();
-                calP.setTime(fecha);
-                if (calH.get(Calendar.DATE) == calP.get(Calendar.DATE) &&
-                        calH.get(Calendar.MONTH) == calP.get(Calendar.MONTH) &&
-                        calH.get(Calendar.YEAR) == calP.get(Calendar.YEAR)) {
-                    if (validaHora) {
-                        if (calH.get(Calendar.HOUR_OF_DAY) == calP.get(Calendar.HOUR_OF_DAY) &&
-                                calH.get(Calendar.MINUTE) == calP.get(Calendar.MINUTE)) {
-                            citas.add(citaAux);
-                        }
-                    } else {
-                        citas.add(citaAux);
-                    }
+                Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            String query = "from Cita c where c.horario.medico = :medicoId ";
+            if(validaHora){
+                query += "and cast(c.horario.fechaInicio as timestamp) = :fecha";
+            }
+            else{
+                query += "and cast(c.horario.fechaInicio as date) = :fecha";
+            }
+            Query hqlQuery = hs.createQuery(query);
+            hqlQuery.setParameter("medicoId", medicoId, Hibernate.INTEGER);
+            if(validaHora){
+                hqlQuery.setParameter("fecha", fecha, Hibernate.TIMESTAMP);
+            }
+            else{
+                hqlQuery.setParameter("fecha", DateUtils.truncate(fecha, Calendar.DATE), Hibernate.DATE);
+            }
+            citas = hqlQuery.list();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null && htx.isActive()){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
                 }
             }
+            e.printStackTrace();
         }
         return citas;
     }
@@ -81,79 +128,163 @@ public class CitaDao {
      * @return List<Cita>
      */
     public List<Cita> getCitasPorPacienteFecha(Paciente paciente, Date fecha, boolean validaHora) {
-        if (paciente == null || fecha == null) {
+        if(paciente == null){
+            return new ArrayList<Cita>();
+        }
+        return getCitasPorPacienteFecha(paciente.getPersonaId(), fecha, validaHora);
+    }
+
+    /**
+     * Obtiene todos las citas de un paciente para una fecha específica
+     * @param Integer pacienteId
+     * @param Date fecha
+     * @param boolean validaHora
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPorPacienteFecha(Integer pacienteId, Date fecha, boolean validaHora) {
+        if (pacienteId == null || fecha == null) {
             return new ArrayList<Cita>();
         }
         List<Cita> citas = new ArrayList<Cita>();
-        for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getPaciente().equals(paciente)) {
-                Calendar calH = new GregorianCalendar();
-                calH.setTime(citaAux.getHorario().getFechaInicio());
-                Calendar calP = new GregorianCalendar();
-                calP.setTime(fecha);
-                if (calH.get(Calendar.DATE) == calP.get(Calendar.DATE) &&
-                        calH.get(Calendar.MONTH) == calP.get(Calendar.MONTH) &&
-                        calH.get(Calendar.YEAR) == calP.get(Calendar.YEAR)) {
-                    if (validaHora) {
-                        if (calH.get(Calendar.HOUR_OF_DAY) == calP.get(Calendar.HOUR_OF_DAY) &&
-                                calH.get(Calendar.MINUTE) == calP.get(Calendar.MINUTE)) {
-                            citas.add(citaAux);
-                        }
-                    } else {
-                        citas.add(citaAux);
-                    }
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            String query = "from Cita c where c.paciente = :pacienteId ";
+            if(validaHora){
+                query += "and cast(c.horario.fechaInicio as timestamp) = :fecha";
+            }
+            else{
+                query += "and cast(c.horario.fechaInicio as date) = :fecha";
+            }
+            Query hqlQuery = hs.createQuery(query);
+            hqlQuery.setParameter("pacienteId", pacienteId, Hibernate.INTEGER);
+            if(validaHora){
+                hqlQuery.setParameter("fecha", fecha, Hibernate.TIMESTAMP);
+            }
+            else{
+                hqlQuery.setParameter("fecha", DateUtils.truncate(fecha, Calendar.DATE), Hibernate.DATE);
+            }
+            citas = hqlQuery.list();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null && htx.isActive()){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
                 }
             }
+            e.printStackTrace();
         }
         return citas;
     }
 
     /**
      * Obtiene todos las citas pendientes de un paciente
-     * @param Persona persona
+     * @param Persona paciente
      * @return List<Cita>
      */
-    public List<Cita> getCitasPendientes(Persona persona) {
-        if (persona == null) {
+    public List<Cita> getCitasPendientes(Persona paciente) {
+        if (paciente == null) {
+            return new ArrayList<Cita>();
+        }
+        return getCitasPendientes(paciente.getPersonaId());
+    }
+
+    /**
+     * Obtiene todos las citas pendientes de un paciente
+     * @param Integer pacienteId
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPendientes(Integer pacienteId) {
+        if (pacienteId == null) {
             return new ArrayList<Cita>();
         }
         List<Cita> citas = new ArrayList<Cita>();
-        Calendar calToday = new GregorianCalendar();
-        for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getPaciente().equals(persona)) {
-                if (citaAux.getHorario().getFechaInicio().after(calToday.getTime())) {
-                    citas.add(citaAux);
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            Query hqlQuery = hs.createQuery("from Cita c where c.paciente = :pacienteId and c.horario.fechaInicio > current_timestamp()");
+            hqlQuery.setParameter("pacienteId", pacienteId, Hibernate.INTEGER);
+            citas = hqlQuery.list();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null && htx.isActive()){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
                 }
             }
+            e.printStackTrace();
         }
         return citas;
     }
 
     /**
-     * Obtiene todos las citas pendientes de un paciente para una semana, medico y especialidad
+     * Obtiene la cita pendiente de un paciente para una semana, medico y especialidad
      * @param Paciente paciente
-     * @param Date fechaIni
+     * @param Date fechaInicio
      * @param Date fechaFin
      * @param Medico medico
      * @param Especialidad especialidad
-     * @return Cita en la semana (solo puede haber una coincidencia para los parametros ingresados)
+     * @return Cita en la semana
      */
-    public Cita getCitaSemPendiente(Paciente paciente, Date fechaIni, Date fechaFin, Medico medico, Especialidad especialidad) {
-        
+    public Cita getCitaSemPendiente(Paciente paciente, Date fechaInicio, Date fechaFin, Medico medico, Especialidad especialidad) {
+        if(paciente == null || medico == null || especialidad == null){
+            return null;
+        }
+        return getCitaSemPendiente(paciente.getPersonaId(), fechaInicio, fechaFin, medico.getPersonaId(), especialidad.getEspecialidadId());
+    }
+    
+    /**
+     * Obtiene la cita pendiente de un paciente para una semana, medico y especialidad
+     * @param Integer pacienteId
+     * @param Date fechaInicio
+     * @param Date fechaFin
+     * @param Integer medicoId
+     * @param Integer especialidadId
+     * @return Cita en la semana
+     */
+    public Cita getCitaSemPendiente(Integer pacienteId, Date fechaInicio, Date fechaFin, Integer medicoId, Integer especialidadId) {
+        if (pacienteId == null || fechaInicio == null || fechaFin == null || medicoId == null || especialidadId == null) {
+            return null;
+        }
         Cita cita = null;
-
-        for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getPaciente().equals(paciente) && citaAux.getHorario().getMedico().equals(medico)
-                && citaAux.getHorario().getEspecialidad().equals(especialidad)) {
-
-                //Si el horario se encuentra en la fecha de semana seleccionada y esta pendiente
-                if (citaAux.getHorario().getFechaInicio().getTime() >= fechaIni.getTime()
-                    && citaAux.getHorario().getFechaFin().getTime() <= fechaFin.getTime()
-                    && citaAux.getEstado().equalsIgnoreCase("PENDIENTE")) {
-                    cita = citaAux;
-                    break;
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            Query hqlQuery = hs.createQuery("from Cita c " +
+                    "where c.paciente = :pacienteId " +
+                    "and c.horario.medico = :medicoId " +
+                    "and c.horario.especialidad = :especialidadId " +
+                    "and c.horario.fechaInicio >= :fechaInicio " +
+                    "and c.horario.fechaInicio <= :fechaFin");
+            hqlQuery.setParameter("pacienteId", pacienteId, Hibernate.INTEGER);
+            hqlQuery.setParameter("medicoId", medicoId, Hibernate.INTEGER);
+            hqlQuery.setParameter("especialidadId", especialidadId, Hibernate.INTEGER);
+            hqlQuery.setParameter("fechaInicio", fechaInicio, Hibernate.DATE);
+            hqlQuery.setParameter("fechaFin", fechaFin, Hibernate.DATE);
+            cita = (Cita)hqlQuery.uniqueResult();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null && htx.isActive()){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
                 }
             }
+            e.printStackTrace();
         }
         return cita;
     }
@@ -164,15 +295,41 @@ public class CitaDao {
      * @return Cita
      */
     public Cita getCitaPorHorario(Horario horario) {
-        if (horario == null) {
+        if(horario == null){
+            return null;
+        }
+        return getCitaPorHorario(horario.getHorarioId());
+    }
+
+    /**
+     * Obtiene la cita de un horario específico
+     * @param Integer horarioId
+     * @return Cita
+     */
+    public Cita getCitaPorHorario(Integer horarioId) {
+        if (horarioId == null) {
             return null;
         }
         Cita cita = null;
-        for (Cita citaAux : CargaData.CITAS) {
-            if (citaAux.getHorario().equals(horario)) {
-                cita = citaAux;
-                break;
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            Query hqlQuery = hs.createQuery("from Cita c where c.horario = :horarioId");
+            hqlQuery.setParameter("horarioId", horarioId, Hibernate.INTEGER);
+            cita = (Cita)hqlQuery.uniqueResult();
+            htx.commit();
+        } catch (HibernateException e) {
+            if(htx != null && htx.isActive()){
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
             }
+            e.printStackTrace();
         }
         return cita;
     }
@@ -186,17 +343,38 @@ public class CitaDao {
      * @param String diagnostico
      * @return Cita
      */
-    public Cita insertarCita(Paciente paciente, Medico medico, Horario horario, String estado, String diagnostico) {
+    public boolean insertarCita(Paciente paciente, Horario horario) {
+        if(paciente == null || horario == null){
+            return false;
+        }
         Cita cita = new Cita();
-        cita.setCitaId(1000000 + CargaData.CITAS.size());
         cita.setPaciente(paciente);
-        cita.setMedico(medico);
         cita.setHorario(horario);
-        cita.setEstado(estado);
-        cita.setDiagnostico(diagnostico);
-        horario.setCita(cita);
-        CargaData.CITAS.add(cita);
-        return cita;
+        cita.setEstado(Cita.ESTADO_RESERVADO);
+
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.openSession();
+            htx = hs.beginTransaction();
+            Integer citaId = (Integer)hs.save(cita);
+            cita.setCitaId(citaId);
+            horario.setCita(cita);
+            hs.update(horario);
+            htx.commit();
+        } catch (HibernateException e) {
+            if (htx != null && htx.isActive()) {
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
+            }
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -208,8 +386,25 @@ public class CitaDao {
         if (cita == null) {
             return false;
         }
-        cita.getHorario().setCita(null);
-        CargaData.CITAS.remove(cita);
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            hs.delete(cita);
+            htx.commit();
+        } catch (HibernateException e) {
+            if (htx != null && htx.isActive()) {
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
+            }
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
 
@@ -220,6 +415,25 @@ public class CitaDao {
      */
     public boolean actualizarCita(Cita cita) {
         if (cita == null) {
+            return false;
+        }
+        Session hs = null;
+        Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+        try {
+            hs = hsf.getCurrentSession();
+            htx = hs.beginTransaction();
+            hs.update(cita);
+            htx.commit();
+        } catch (HibernateException e) {
+            if (htx != null && htx.isActive()) {
+                try {
+                    htx.rollback();
+                } catch (HibernateException e2) {
+                    System.out.println("No se pudo realizar el rollback...");
+                }
+            }
+            e.printStackTrace();
             return false;
         }
         return true;

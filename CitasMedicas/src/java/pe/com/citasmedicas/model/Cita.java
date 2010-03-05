@@ -1,5 +1,7 @@
 package pe.com.citasmedicas.model;
 
+import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -17,6 +21,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="cita", schema="cita_medica")
 public class Cita extends Bean{
+
+    public static final String ESTADO_RESERVADO = "RESERVADO";
+    public static final String ESTADO_ATENDIDO = "ATENDIDO";
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -29,17 +36,33 @@ public class Cita extends Bean{
     @Column(name="diagnostico")
     private String diagnostico;
 
-    @ManyToOne
+    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Paciente.class, optional=false)
     @JoinColumn(name="pacienteId")
     private Paciente paciente;
 
-    @ManyToOne
+    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Medico.class, optional=true)
     @JoinColumn(name="medicoId")
     private Medico medico;
 
     @OneToOne(targetEntity=pe.com.citasmedicas.model.Horario.class, optional=false)
     @JoinColumn(name="horarioId")
     private Horario horario;
+
+    @Column(name="sintoma", nullable=true, length=250)
+    private String sintoma;
+
+    @Column(name="receta", nullable=true, length=250)
+    private String receta;
+
+    @Column(name="analisis", nullable=true, length=250)
+    private String analisis;
+
+    @Column(name="observaciones", nullable=true, length=250)
+    private String observaciones;
+
+    @Column(name="fechaProximaCita", nullable=true)
+    @Temporal(value=TemporalType.DATE)
+    private Date fechaProximaCita;
 
     /**
      * @return the citaId
@@ -123,6 +146,76 @@ public class Cita extends Bean{
      */
     public void setHorario(Horario horario) {
         this.horario = horario;
+    }
+
+    /**
+     * @return the sintoma
+     */
+    public String getSintoma() {
+        return sintoma;
+    }
+
+    /**
+     * @param sintoma the sintoma to set
+     */
+    public void setSintoma(String sintoma) {
+        this.sintoma = sintoma;
+    }
+
+    /**
+     * @return the receta
+     */
+    public String getReceta() {
+        return receta;
+    }
+
+    /**
+     * @param receta the receta to set
+     */
+    public void setReceta(String receta) {
+        this.receta = receta;
+    }
+
+    /**
+     * @return the analisis
+     */
+    public String getAnalisis() {
+        return analisis;
+    }
+
+    /**
+     * @param analisis the analisis to set
+     */
+    public void setAnalisis(String analisis) {
+        this.analisis = analisis;
+    }
+
+    /**
+     * @return the observaciones
+     */
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    /**
+     * @param observaciones the observaciones to set
+     */
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    /**
+     * @return the fechaProximaCita
+     */
+    public Date getFechaProximaCita() {
+        return fechaProximaCita;
+    }
+
+    /**
+     * @param fechaProximaCita the fechaProximaCita to set
+     */
+    public void setFechaProximaCita(Date fechaProximaCita) {
+        this.fechaProximaCita = fechaProximaCita;
     }
 }
 
