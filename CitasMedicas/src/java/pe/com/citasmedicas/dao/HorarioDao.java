@@ -1,8 +1,10 @@
 package pe.com.citasmedicas.dao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang.time.DateUtils;
 import pe.com.citasmedicas.model.CargaData;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
@@ -92,7 +94,7 @@ public class HorarioDao {
                     "order by h.fechaInicio asc");
             hqlQuery.setParameter("medicoId", medicoId, Hibernate.INTEGER);
             hqlQuery.setParameter("especialidadId", especialidadId, Hibernate.INTEGER);
-            hqlQuery.setParameter("fecha", fecha, Hibernate.DATE);
+            hqlQuery.setParameter("fecha", DateUtils.truncate(fecha, Calendar.DATE), Hibernate.DATE);
             horarios = hqlQuery.list();
             htx.commit();
         } catch (HibernateException e) {

@@ -28,12 +28,12 @@ import pe.com.citasmedicas.service.PacienteService;
  */
 @Namespace("/reserva")
 @Results({
-    @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
-    @Result(name="input", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
-    @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
+    @Result(name = "success", value = "/prc/reservar_cita.jsp", type = ServletDispatcherResult.class),
+    @Result(name = "input", value = "/prc/reservar_cita.jsp", type = ServletDispatcherResult.class),
+    @Result(name = "error", value = "/errorPage.jsp", type = ServletDispatcherResult.class)
 })
 @Validation()
-public class ReservarCitaAction extends BaseAction{
+public class ReservarCitaAction extends BaseAction {
 
     private Integer rbtCita;
 
@@ -83,8 +83,8 @@ public class ReservarCitaAction extends BaseAction{
             citaPendiente = citaService.getCitaSemPendiente(paciente, fecIni, fecFin, horario.getMedico(), horario.getEspecialidad());
 
             // Si el horario seleccionado es igual a la cita pendiente, entonces se terminar el proceso
-            if (citaPendiente != null && 
-                citaPendiente.getHorario().getHorarioId().intValue() == horario.getHorarioId().intValue()) {
+            if (citaPendiente != null &&
+                    citaPendiente.getHorario().getHorarioId().intValue() == horario.getHorarioId().intValue()) {
                 return null;
             }
             // Se verifica que no exista una cita para el horario seleccionado
@@ -104,13 +104,16 @@ public class ReservarCitaAction extends BaseAction{
                             // la semana para la especialidad y el medico seleccionado
                             if (citaPendiente != null) {
                                 citaService.eliminarCita(citaPendiente);
+                                // Se vuelve a cargar el horario para el día afectado
+                                recargarHorario(sesion, citaPendiente.getHorario());
                                 errorMsg = "Se ha eliminado la cita del " +
                                         DateFormatUtils.format(citaPendiente.getHorario().getFechaInicio(), "EEEE dd 'de' MMMM 'del' yyyy, k:mm 'hrs.'") + "<br />";
                             }
                             errorMsg += "La cita ha sido grabada correctamente.";
                             sesion.setAttribute("citasPendientes",
                                     ReservarCitaCommons.cargarCitasPendientes(((Usuario) sesion.getAttribute("usuario")).getPersona()));
-
+                            // Se vuelve a cargar el horario para el día afectado
+                            recargarHorario(sesion, horario);
                             sesion.setAttribute("errorMsg", errorMsg);
                             return SUCCESS;
                         } else {
@@ -134,6 +137,27 @@ public class ReservarCitaAction extends BaseAction{
             request.setAttribute("errorMsg", ex.getMessage());
             return ERROR;
         }
+    }
+
+    private void recargarHorario(HttpSession sesion, Horario horario) {
+        HorarioService horarioService = new HorarioService();
+        List<Horario> horarioDiaSemana = horarioService.getHorariosPorEspecMedicoFecha(horario.getEspecialidad(), horario.getMedico(), horario.getFechaInicio());
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(horario.getFechaInicio());
+        if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)
+            sesion.setAttribute("horarioLunes", horarioDiaSemana);
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY)
+            sesion.setAttribute("horarioMartes", horarioDiaSemana);
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY)
+            sesion.setAttribute("horarioMiercoles", horarioDiaSemana);
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY)
+            sesion.setAttribute("horarioJueves", horarioDiaSemana);
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY)
+            sesion.setAttribute("horarioViernes", horarioDiaSemana);
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
+            sesion.setAttribute("horarioSabado", horarioDiaSemana);
+        else if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+            sesion.setAttribute("horarioDomingo", horarioDiaSemana);
     }
 
     /**
