@@ -41,10 +41,9 @@ public class CitaServiceTest {
         Assert.assertEquals(cita.getPaciente().getPersonaId().intValue(), 1000008);
 
         try {
-            cita = citaService.insertarCita(pacienteService.getPacientePorId(new Integer(1000009)),
-                    medicoService.getMedicoPorId(new Integer(1000005)),
-                    horarioService.getHorarioPorId(new Integer(1000055)),
-                    "RESERVADO", null);
+            boolean insert = citaService.insertarCita(pacienteService.getPacientePorId(new Integer(1000009)),
+                    horarioService.getHorarioPorId(new Integer(1000055)));
+            Assert.assertTrue(insert);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
