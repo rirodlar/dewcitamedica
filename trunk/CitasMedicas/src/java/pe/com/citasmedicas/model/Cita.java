@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 @Table(name="cita", schema="cita_medica")
 public class Cita extends Bean{
 
-    public static final String ESTADO_RESERVADO = "RESERVADO";
+    public static final String ESTADO_PENDIENTE = "PENDIENTE";
     public static final String ESTADO_ATENDIDO = "ATENDIDO";
 
     @Id

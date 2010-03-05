@@ -20,7 +20,7 @@ public class CitaDaoTest {
     public void hibernateTest() {
         try {
             CitaDao citaDao = new CitaDao();
-            /*Cita cita = citaDao.getCitaPorHorario(new Integer(1000034));
+            Cita cita = citaDao.getCitaPorHorario(new Integer(1000034));
             Assert.assertEquals(cita.getCitaId().intValue(), 1000001);
             Assert.assertEquals(cita.getMedico().getApellidoPaterno(), "SALAZAR");
             Assert.assertEquals(cita.getPaciente().getApellidoPaterno(), "TALAVERA");
@@ -50,8 +50,8 @@ public class CitaDaoTest {
             Paciente paciente = pacienteDao.getPacientePorId(new Integer(1000009));
             boolean insert = citaDao.insertarCita(paciente, horario);
             Assert.assertTrue(insert);
-            */
-            Cita cita = citaDao.getCitaPorId(new Integer(1000000));
+
+            cita = citaDao.getCitaPorId(new Integer(1000000));
             boolean delete = citaDao.eliminarCita(cita);
             Assert.assertTrue(delete);
         } catch (HibernateException e) {

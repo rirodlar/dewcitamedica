@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div id="profundidad">&nbsp;Reserva de Citas</div>
-            <div class="xh"><b>Usuario:</b> ${usuario.persona.nombreCompleto}</div>
+            <div class="xh"><b>Usuario:</b> ${usuario.persona.personaId} - ${usuario.persona.nombreCompleto}</div>
             <div id="contenido">
                 <!-- Aqui el contenido de la pagina -->
                 <div class="box_title">
@@ -89,7 +89,7 @@
                                     </label></td>
                                 <td>Semana:
                                     <input name="txtSemana" type="text" id="txtSemana" value="${fechaSemana}" class="x4" style="width:70px" readonly="readonly" />
-                                    <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Venta" align="top" style="cursor:hand"/>
+                                    <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Reserva" align="top" style="cursor:hand" />
                                     <script type="text/javascript">
                                         Calendar.setup({
                                             input : "txtSemana", // Input Id")

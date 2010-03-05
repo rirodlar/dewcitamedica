@@ -272,12 +272,14 @@ public class CitaDao {
                     "and c.horario.especialidad = :especialidadId " +
                     "and c.horario.fechaInicio >= :fechaInicio " +
                     "and c.horario.fechaInicio <= :fechaFin " +
+                    "and c.estado = :estado " +
                     "order by c.horario.fechaInicio asc");
             hqlQuery.setParameter("pacienteId", pacienteId, Hibernate.INTEGER);
             hqlQuery.setParameter("medicoId", medicoId, Hibernate.INTEGER);
             hqlQuery.setParameter("especialidadId", especialidadId, Hibernate.INTEGER);
             hqlQuery.setParameter("fechaInicio", fechaInicio, Hibernate.DATE);
             hqlQuery.setParameter("fechaFin", fechaFin, Hibernate.DATE);
+            hqlQuery.setParameter("estado", Cita.ESTADO_PENDIENTE, Hibernate.STRING);
             cita = (Cita)hqlQuery.uniqueResult();
             htx.commit();
         } catch (HibernateException e) {
@@ -354,7 +356,7 @@ public class CitaDao {
         Cita cita = new Cita();
         cita.setPaciente(paciente);
         cita.setHorario(horario);
-        cita.setEstado(Cita.ESTADO_RESERVADO);
+        cita.setEstado(Cita.ESTADO_PENDIENTE);
 
         Session hs = null;
         Transaction htx = null;

@@ -74,7 +74,6 @@ public class BuscarHorarioAction extends BaseAction {
             } else {
                 cal.add(Calendar.DATE, -6);
             }
-
             // Se recuperan los horarios para el día lunes
             horarioLunes = horarioService.getHorariosPorEspecMedicoFecha(especialidad, medico, cal.getTime());
             // Se establece la cabecera del día lunes
@@ -126,27 +125,13 @@ public class BuscarHorarioAction extends BaseAction {
             List<Horario> horarioEliminar = new ArrayList<Horario>();
             // Se verifica si existe atención para algún día de la semana
             for (Horario atencion : horarioAtencion) {
-                boolean existe = false;
-                existe = existeHorario(atencion, horarioLunes);
-                if (!existe) {
-                    existe = existeHorario(atencion, horarioMartes);
-                }
-                if (!existe) {
-                    existe = existeHorario(atencion, horarioMiercoles);
-                }
-                if (!existe) {
-                    existe = existeHorario(atencion, horarioJueves);
-                }
-                if (!existe) {
-                    existe = existeHorario(atencion, horarioViernes);
-                }
-                if (!existe) {
-                    existe = existeHorario(atencion, horarioSabado);
-                }
-                if (!existe) {
-                    existe = existeHorario(atencion, horarioDomingo);
-                }
-                if (!existe) {
+                if (!existeHorario(atencion, horarioLunes) &&
+                    !existeHorario(atencion, horarioMartes) &&
+                    !existeHorario(atencion, horarioMiercoles) &&
+                    !existeHorario(atencion, horarioJueves) &&
+                    !existeHorario(atencion, horarioViernes) &&
+                    !existeHorario(atencion, horarioSabado) &&
+                    !existeHorario(atencion, horarioDomingo)){
                     horarioEliminar.add(atencion);
                 }
             }
@@ -154,7 +139,6 @@ public class BuscarHorarioAction extends BaseAction {
             for (Horario h : horarioEliminar) {
                 horarioAtencion.remove(h);
             }
-
             sesion.setAttribute("horarioAtencion", horarioAtencion);
             sesion.setAttribute("horarioLunes", horarioLunes);
             sesion.setAttribute("horarioMartes", horarioMartes);
@@ -179,9 +163,9 @@ public class BuscarHorarioAction extends BaseAction {
 
     private boolean existeHorario(Horario atencion, List<Horario> horarios) {
         boolean existe = false;
-        for (Horario domingo : horarios) {
-            if (domingo.getHoraInicio() == atencion.getHoraInicio() &&
-                    domingo.getMinutoInicio() == atencion.getMinutoInicio()) {
+        for (Horario horario : horarios) {
+            if (horario.getHoraInicio() == atencion.getHoraInicio() &&
+                    horario.getMinutoInicio() == atencion.getMinutoInicio()) {
                 existe = true;
                 break;
             }

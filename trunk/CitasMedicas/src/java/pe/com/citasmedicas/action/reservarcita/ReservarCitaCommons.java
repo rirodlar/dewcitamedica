@@ -28,4 +28,8 @@ public class ReservarCitaCommons {
         }
         return citasPendientes;
     }
+
+    public static void buscarHorarioSemana(){
+
+    }
 }
