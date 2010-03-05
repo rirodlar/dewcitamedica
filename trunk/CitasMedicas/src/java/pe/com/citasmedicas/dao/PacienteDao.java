@@ -23,15 +23,16 @@ public class PacienteDao {
             return null;
         }
         Paciente paciente = null;
-        SessionFactory hsf = HibernateUtil.getSessionFactory();
-        Session hs = hsf.getCurrentSession();
+        Session hs = null;
         Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
         try {
+            hs = hsf.getCurrentSession();
             htx = hs.beginTransaction();
             paciente = (Paciente)hs.get(Paciente.class, pacienteId);
             htx.commit();
         } catch (HibernateException e) {
-            if(htx != null){
+            if(htx != null && htx.isActive()){
                 try {
                     htx.rollback();
                 } catch (HibernateException e2) {

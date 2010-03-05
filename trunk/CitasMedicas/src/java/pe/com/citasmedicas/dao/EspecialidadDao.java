@@ -22,16 +22,17 @@ public class EspecialidadDao {
      */
     public List<Especialidad> getEspecialidades() {
         List<Especialidad> especialidades = null;
-        SessionFactory hsf = HibernateUtil.getSessionFactory();
-        Session hs = hsf.getCurrentSession();
+        Session hs = null;
         Transaction htx = null;
-        try {
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
+         try {
+            hs = hsf.getCurrentSession();
             htx = hs.beginTransaction();
             Query hqlQuery = hs.createQuery("from Especialidad e order by e.nombre asc");
             especialidades = hqlQuery.list();
             htx.commit();
         } catch (HibernateException e) {
-            if(htx != null){
+            if(htx != null && htx.isActive()){
                 try {
                     htx.rollback();
                 } catch (HibernateException e2) {
@@ -54,15 +55,16 @@ public class EspecialidadDao {
             return null;
         }
         Especialidad especialidad = null;
-        SessionFactory hsf = HibernateUtil.getSessionFactory();
-        Session hs = hsf.getCurrentSession();
+        Session hs = null;
         Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
         try {
+            hs = hsf.getCurrentSession();
             htx = hs.beginTransaction();
             especialidad = (Especialidad)hs.get(Especialidad.class, especialidadId);
             htx.commit();
         } catch (HibernateException e) {
-            if(htx != null){
+            if(htx != null && htx.isActive()){
                 try {
                     htx.rollback();
                 } catch (HibernateException e2) {

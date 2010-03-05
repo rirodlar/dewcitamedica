@@ -25,17 +25,18 @@ public class UsuarioDao {
             return null;
         }
         Usuario usuario = null;
-        SessionFactory hsf = HibernateUtil.getSessionFactory();
-        Session hs = hsf.getCurrentSession();
+        Session hs = null;
         Transaction htx = null;
+        SessionFactory hsf = HibernateUtil.getSessionFactory();
         try {
+            hs = hsf.getCurrentSession();
             htx = hs.beginTransaction();
             Query hqlQuery = hs.createQuery("from Usuario u where u.username = :username");
             hqlQuery.setParameter("username", username, Hibernate.STRING);
             usuario = (Usuario)hqlQuery.uniqueResult();
             htx.commit();
         } catch (HibernateException e) {
-            if(htx != null){
+            if(htx != null && htx.isActive()){
                 try {
                     htx.rollback();
                 } catch (HibernateException e2) {

@@ -38,15 +38,16 @@ public class Horario extends Bean {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaFin;
 
-    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Medico.class)
-    @JoinColumn(name="personaId")
+    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Medico.class, optional=false)
+    @JoinColumn(name="medicoId")
     private Medico medico;
 
-    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Especialidad.class)
+    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Especialidad.class, optional=false)
     @JoinColumn(name="especialidadId")
     private Especialidad especialidad;
 
-    @OneToOne(mappedBy="horario", optional=false)
+    @OneToOne(targetEntity=pe.com.citasmedicas.model.Cita.class, optional=true)
+    @JoinColumn(name="citaId")
     private Cita cita;
 
     /**

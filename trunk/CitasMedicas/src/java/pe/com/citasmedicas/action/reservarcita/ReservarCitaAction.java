@@ -98,8 +98,7 @@ public class ReservarCitaAction extends BaseAction{
                     today.add(Calendar.DATE, 2);
 
                     if (horario.getFechaInicio().getTime() > today.getTimeInMillis()) {
-                        Cita nuevaCita = citaService.insertarCita(paciente, horario.getMedico(), horario, "PENDIENTE", null);
-                        if (nuevaCita != null) {
+                        if (citaService.insertarCita(paciente, horario)) {
                             // Se verifica que el paciente no posea ninguna cita pendiente durante
                             // la semana para la especialidad y el medico seleccionado
                             if (citaPendiente != null) {
@@ -107,9 +106,6 @@ public class ReservarCitaAction extends BaseAction{
                                 errorMsg = "Se ha eliminado la cita del " +
                                         DateFormatUtils.format(citaPendiente.getHorario().getFechaInicio(), "EEEE dd 'de' MMMM 'del' yyyy, k:mm 'hrs.'") + "<br />";
                             }
-
-                            horario.setCita(nuevaCita);
-                            horarioService.actualizarHorario(horario);
                             errorMsg += "La cita ha sido grabada correctamente.";
                             sesion.setAttribute("citasPendientes",
                                     ReservarCitaCommons.cargarCitasPendientes(((Usuario) sesion.getAttribute("usuario")).getPersona()));

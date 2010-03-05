@@ -34,4 +34,13 @@ public class MedicoService {
     public List<Medico> getMedicosPorEspecialidad(Especialidad especialidad) {
         return medicoDao.getMedicosPorEspecialidad(especialidad);
     }
+
+    /**
+     * Obtiene todas los médicos de una especialidad específica
+     * @param Integer especialidadId
+     * @return List<Medico>
+     */
+    public List<Medico> getMedicosPorEspecialidad(Integer especialidadId) {
+        return medicoDao.getMedicosPorEspecialidad(especialidadId);
+    }
 }

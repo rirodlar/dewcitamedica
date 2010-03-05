@@ -3,6 +3,7 @@ package pe.com.citasmedicas.service;
 import java.util.Date;
 import java.util.List;
 import pe.com.citasmedicas.dao.CitaDao;
+import pe.com.citasmedicas.dao.HorarioDao;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
@@ -17,6 +18,7 @@ import pe.com.citasmedicas.model.Persona;
 public class CitaService {
 
     private CitaDao citaDao;
+    private HorarioDao horarioDao;
 
     public CitaService() {
         citaDao = new CitaDao();
@@ -44,6 +46,17 @@ public class CitaService {
 
     /**
      * Obtiene todos las citas de un médico para una fecha específica
+     * @param Integer medicoId
+     * @param Date fecha
+     * @param boolean validaHora
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPorMedicoFecha(Integer medicoId, Date fecha, boolean validaHora) {
+        return citaDao.getCitasPorMedicoFecha(medicoId, fecha, validaHora);
+    }
+
+    /**
+     * Obtiene todos las citas de un médico para una fecha específica
      * @param Paciente paciente
      * @param Date fecha
      * @param boolean validaHora
@@ -51,6 +64,17 @@ public class CitaService {
      */
     public List<Cita> getCitasPorPacienteFecha(Paciente paciente, Date fecha, boolean validaHora) {
         return citaDao.getCitasPorPacienteFecha(paciente, fecha, validaHora);
+    }
+
+    /**
+     * Obtiene todos las citas de un médico para una fecha específica
+     * @param Integer paciente
+     * @param Date fecha
+     * @param boolean validaHora
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPorPacienteFecha(Integer pacienteId, Date fecha, boolean validaHora) {
+        return citaDao.getCitasPorPacienteFecha(pacienteId, fecha, validaHora);
     }
 
     /**
@@ -63,44 +87,87 @@ public class CitaService {
     }
 
     /**
-     * Obtiene todos las citas pendientes de un paciente
-     * @param Persona persona
-     * @return List<Cita>
+     * Obtiene la cita de un horario específico
+     * @param Integer horarioId
+     * @return Cita
      */
-    public List<Cita> getCitasPendientes(Persona persona) {
-        return citaDao.getCitasPendientes(persona);
+    public Cita getCitaPorHorario(Integer horarioId) {
+        return citaDao.getCitaPorHorario(horarioId);
     }
 
     /**
-     * Obtiene todos las citas pendientes de un paciente para una semana, medico y especialidad
+     * Obtiene todos las citas pendientes de un paciente
+     * @param Persona paciente
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPendientes(Persona paciente) {
+        return citaDao.getCitasPendientes(paciente);
+    }
+
+    /**
+     * Obtiene todos las citas pendientes de un paciente
+     * @param Integer pacienteId
+     * @return List<Cita>
+     */
+    public List<Cita> getCitasPendientes(Integer pacienteId) {
+        return citaDao.getCitasPendientes(pacienteId);
+    }
+
+    /**
+     * Obtiene la cita pendiente de un paciente para una semana, medico y especialidad
      * @param Paciente paciente
-     * @param Date fechaIni
+     * @param Date fechaInicio
      * @param Date fechaFin
      * @param Medico medico
      * @param Especialidad especialidad
-     * @return Cita en la semana (solo puede haber una coincidencia para los parametros ingresados)
+     * @return Cita
      */
-    public Cita getCitaSemPendiente(Paciente paciente, Date fechaIni, Date fechaFin, Medico medico, Especialidad especialidad) {
-        return citaDao.getCitaSemPendiente(paciente, fechaIni, fechaFin, medico, especialidad);
+    public Cita getCitaSemPendiente(Paciente paciente, Date fechaInicio, Date fechaFin, Medico medico, Especialidad especialidad) {
+        return citaDao.getCitaSemPendiente(paciente, fechaInicio, fechaFin, medico, especialidad);
+    }
+
+    /**
+     * Obtiene la cita pendiente de un paciente para una semana, medico y especialidad
+     * @param Integer pacienteId
+     * @param Date fechaInicio
+     * @param Date fechaFin
+     * @param Integer medicoId
+     * @param Integer especialidadId
+     * @return Cita
+     */
+    public Cita getCitaSemPendiente(Integer pacienteId, Date fechaInicio, Date fechaFin, Integer medicoId, Integer especialidadId) {
+        return citaDao.getCitaSemPendiente(pacienteId, fechaInicio, fechaFin, medicoId, especialidadId);
     }
 
     /**
      * Ingresa una cita
      * @param Paciente paciente
-     * @param Medico medico
      * @param Horario horario
-     * @param String estado
-     * @param String diagnostico
-     * @return Cita
+     * @return boolean
      */
-    public Cita insertarCita(Paciente paciente, Medico medico, Horario horario, String estado, String diagnostico) throws Exception{
+    public boolean insertarCita(Paciente paciente, Horario horario) throws Exception{
         // Se valida que no exista una cita en dicho horario
         Cita cita = citaDao.getCitaPorHorario(horario);
         if(cita != null){
             throw new Exception("Ya existe una cita para ese horario.");
         }
-        return citaDao.insertarCita(paciente, medico, horario, estado, diagnostico);
+        return citaDao.insertarCita(paciente, horario);
     }
+
+    /**
+     * Ingresa una cita
+     * @param Paciente paciente
+     * @param Horario horario
+     * @return boolean
+     *//*
+    public boolean insertarCita(Integer pacienteId, Integer horarioId) throws Exception{
+        // Se valida que no exista una cita en dicho horario
+        Cita cita = citaDao.getCitaPorHorario(horario);
+        if(cita != null){
+            throw new Exception("Ya existe una cita para ese horario.");
+        }
+        return citaDao.insertarCita(paciente, horario);
+    }*/
 
      /**
      * Elimina una cita
