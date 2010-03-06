@@ -18,9 +18,9 @@ import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Paciente;
 import pe.com.citasmedicas.model.Usuario;
-import pe.com.citasmedicas.service.CitaService;
-import pe.com.citasmedicas.service.HorarioService;
-import pe.com.citasmedicas.service.PacienteService;
+import pe.com.citasmedicas.service.implement.CitaServiceImpl;
+import pe.com.citasmedicas.service.implement.HorarioServiceImpl;
+import pe.com.citasmedicas.service.implement.PacienteServiceImpl;
 
 /**
  *
@@ -41,9 +41,9 @@ public class ReservarCitaAction extends BaseAction {
     public String execute() throws Exception {
         try {
             // Servicios
-            HorarioService horarioService = new HorarioService();
-            CitaService citaService = new CitaService();
-            PacienteService pacienteService = new PacienteService();
+            HorarioServiceImpl horarioService = new HorarioServiceImpl();
+            CitaServiceImpl citaService = new CitaServiceImpl();
+            PacienteServiceImpl pacienteService = new PacienteServiceImpl();
 
             // Variables
             HttpSession sesion = request.getSession();
@@ -54,7 +54,7 @@ public class ReservarCitaAction extends BaseAction {
             String errorMsg = "";
 
             usuario = (Usuario) sesion.getAttribute("usuario");
-            pacienteService = new PacienteService();
+            pacienteService = new PacienteServiceImpl();
             paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
 
             //Si no es paciente
@@ -140,7 +140,7 @@ public class ReservarCitaAction extends BaseAction {
     }
 
     private void recargarHorario(HttpSession sesion, Horario horario) {
-        HorarioService horarioService = new HorarioService();
+        HorarioServiceImpl horarioService = new HorarioServiceImpl();
         List<Horario> horarioDiaSemana = horarioService.getHorariosPorEspecMedicoFecha(horario.getEspecialidad(), horario.getMedico(), horario.getFechaInicio());
         Calendar cal = new GregorianCalendar();
         cal.setTime(horario.getFechaInicio());

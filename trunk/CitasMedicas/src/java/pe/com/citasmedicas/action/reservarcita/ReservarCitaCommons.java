@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.commons.lang.time.DateFormatUtils;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Persona;
-import pe.com.citasmedicas.service.CitaService;
+import pe.com.citasmedicas.service.implement.CitaServiceImpl;
 
 /**
  *
@@ -14,7 +14,7 @@ import pe.com.citasmedicas.service.CitaService;
 public class ReservarCitaCommons {
 
     public static List<String> cargarCitasPendientes(Persona paciente) {
-        CitaService citaService = new CitaService();
+        CitaServiceImpl citaService = new CitaServiceImpl();
         List<String> citasPendientes = new ArrayList<String>();
         //
         if (paciente != null) {

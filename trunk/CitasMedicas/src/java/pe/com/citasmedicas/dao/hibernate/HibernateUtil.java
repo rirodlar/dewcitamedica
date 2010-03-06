@@ -1,4 +1,4 @@
-package pe.com.citasmedicas.persistence;
+package pe.com.citasmedicas.dao.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;

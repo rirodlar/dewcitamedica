@@ -14,8 +14,8 @@ import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Usuario;
-import pe.com.citasmedicas.service.EspecialidadService;
-import pe.com.citasmedicas.service.MedicoService;
+import pe.com.citasmedicas.service.implement.EspecialidadServiceImpl;
+import pe.com.citasmedicas.service.implement.MedicoServiceImpl;
 
 /**
  *
@@ -32,8 +32,8 @@ public class IniciarReservaAction extends BaseAction{
     public String execute(){
         try{
             // Servicios
-            EspecialidadService especialidadService = new EspecialidadService();
-            MedicoService medicoService = new MedicoService();
+            EspecialidadServiceImpl especialidadService = new EspecialidadServiceImpl();
+            MedicoServiceImpl medicoService = new MedicoServiceImpl();
 
             // Variables
             HttpSession sesion = request.getSession();

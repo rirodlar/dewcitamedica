@@ -1,5 +1,8 @@
 package pe.com.citasmedicas.dao;
 
+import pe.com.citasmedicas.dao.hibernate.PacienteDaoHbn;
+import pe.com.citasmedicas.dao.hibernate.HorarioDaoHbn;
+import pe.com.citasmedicas.dao.hibernate.CitaDaoHbn;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -19,7 +22,7 @@ public class CitaDaoTest {
     @Test
     public void hibernateTest() {
         try {
-            CitaDao citaDao = new CitaDao();
+            CitaDao citaDao = new CitaDaoHbn();
             Cita cita = citaDao.getCitaPorHorario(new Integer(1000034));
             Assert.assertEquals(cita.getCitaId().intValue(), 1000001);
             Assert.assertEquals(cita.getMedico().getApellidoPaterno(), "SALAZAR");
@@ -44,8 +47,8 @@ public class CitaDaoTest {
             citas = citaDao.getCitasPorMedicoFecha(new Integer(1000005), cal.getTime(), true);
             Assert.assertEquals(citas.size(), 1);
 
-            HorarioDao horarioDao = new HorarioDao();
-            PacienteDao pacienteDao = new PacienteDao();
+            HorarioDao horarioDao = new HorarioDaoHbn();
+            PacienteDaoHbn pacienteDao = new PacienteDaoHbn();
             Horario horario = horarioDao.getHorarioPorId(new Integer(1000030));
             Paciente paciente = pacienteDao.getPacientePorId(new Integer(1000009));
             boolean insert = citaDao.insertarCita(paciente, horario);
