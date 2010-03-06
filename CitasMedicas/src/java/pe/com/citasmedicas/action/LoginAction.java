@@ -10,7 +10,7 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 import pe.com.citasmedicas.model.Usuario;
-import pe.com.citasmedicas.service.UsuarioService;
+import pe.com.citasmedicas.service.implement.UsuarioServiceImpl;
 
 /**
  *
@@ -33,7 +33,7 @@ public class LoginAction extends BaseAction {
     public String execute() throws Exception {
         try {
             // Se obtiene el usuario
-            UsuarioService usuarioService = new UsuarioService();
+            UsuarioServiceImpl usuarioService = new UsuarioServiceImpl();
             Usuario usuario = usuarioService.getUsuarioPorUsername(username);
             // Se verifica que exista el usuario y que coincida el password
             if (usuario != null && usuario.getPassword().equals(password)) {

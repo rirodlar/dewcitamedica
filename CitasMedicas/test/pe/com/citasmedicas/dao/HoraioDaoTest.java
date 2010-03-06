@@ -1,5 +1,6 @@
 package pe.com.citasmedicas.dao;
 
+import pe.com.citasmedicas.dao.hibernate.HorarioDaoHbn;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -17,7 +18,7 @@ public class HoraioDaoTest {
     @Test
     public void hibernateTest() {
         try {
-            HorarioDao horarioDao = new HorarioDao();
+            HorarioDao horarioDao = new HorarioDaoHbn();
 
             Horario horario = horarioDao.getHorarioPorId(new Integer(1000004));
             Assert.assertEquals(horario.getHorarioId().intValue(), 1000004);

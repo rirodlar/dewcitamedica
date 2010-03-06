@@ -11,7 +11,7 @@ import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Medico;
-import pe.com.citasmedicas.service.MedicoService;
+import pe.com.citasmedicas.service.implement.MedicoServiceImpl;
 
 /**
  *
@@ -33,7 +33,7 @@ public class CargarMedicosAction extends BaseAction{
     public String execute() throws Exception {
         try{
             // Servicios
-            MedicoService medicoService = new MedicoService();
+            MedicoServiceImpl medicoService = new MedicoServiceImpl();
 
             // Variables
             HttpSession sesion = request.getSession();

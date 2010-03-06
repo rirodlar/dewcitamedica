@@ -19,9 +19,9 @@ import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
-import pe.com.citasmedicas.service.EspecialidadService;
-import pe.com.citasmedicas.service.HorarioService;
-import pe.com.citasmedicas.service.MedicoService;
+import pe.com.citasmedicas.service.implement.EspecialidadServiceImpl;
+import pe.com.citasmedicas.service.implement.HorarioServiceImpl;
+import pe.com.citasmedicas.service.implement.MedicoServiceImpl;
 
 /**
  *
@@ -45,9 +45,9 @@ public class BuscarHorarioAction extends BaseAction {
     public String execute() {
         try {
             // Servicios
-            HorarioService horarioService = new HorarioService();
-            EspecialidadService especialidadService = new EspecialidadService();
-            MedicoService medicoService = new MedicoService();
+            HorarioServiceImpl horarioService = new HorarioServiceImpl();
+            EspecialidadServiceImpl especialidadService = new EspecialidadServiceImpl();
+            MedicoServiceImpl medicoService = new MedicoServiceImpl();
 
             //Variables
             HttpSession sesion = request.getSession();

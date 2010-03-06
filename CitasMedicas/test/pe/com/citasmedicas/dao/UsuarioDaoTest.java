@@ -1,9 +1,9 @@
 package pe.com.citasmedicas.dao;
 
+import pe.com.citasmedicas.dao.hibernate.UsuarioDaoHbn;
 import org.hibernate.HibernateException;
 import org.junit.Assert;
 import org.junit.Test;
-import pe.com.citasmedicas.model.Persona;
 import pe.com.citasmedicas.model.Usuario;
 
 /**
@@ -15,7 +15,7 @@ public class UsuarioDaoTest {
     @Test
     public void hibernateTest() {
         try {
-            UsuarioDao usuarioDao = new UsuarioDao();
+            UsuarioDao usuarioDao = new UsuarioDaoHbn();
             Usuario usuario = usuarioDao.getUsuarioPorUsername("anaTalavera");
             Assert.assertEquals(usuario.getPassword(), "web");
             Assert.assertEquals(usuario.getPersona().getApellidoPaterno(), "TALAVERA");

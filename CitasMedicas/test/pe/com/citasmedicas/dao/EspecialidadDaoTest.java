@@ -4,6 +4,7 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.junit.Assert;
 import org.junit.Test;
+import pe.com.citasmedicas.dao.hibernate.EspecialidadDaoHbn;
 import pe.com.citasmedicas.model.Especialidad;
 
 /**
@@ -15,7 +16,7 @@ public class EspecialidadDaoTest {
     @Test
     public void hibernateTest() {
         try {
-            EspecialidadDao especialidadDao = new EspecialidadDao();
+            EspecialidadDao especialidadDao = new EspecialidadDaoHbn();
             List<Especialidad> especialidades = especialidadDao.getEspecialidades();
             Assert.assertEquals(especialidades.size(), 3);
 
