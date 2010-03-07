@@ -4,7 +4,6 @@ import pe.com.citasmedicas.service.*;
 import java.util.Date;
 import java.util.List;
 import pe.com.citasmedicas.dao.CitaDao;
-import pe.com.citasmedicas.dao.hibernate.CitaDaoHbn;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
@@ -19,10 +18,6 @@ import pe.com.citasmedicas.model.Persona;
 public class CitaServiceImpl implements CitaService {
 
     private CitaDao citaDao;
-
-    public CitaServiceImpl() {
-        citaDao = new CitaDaoHbn();
-    }
 
     /**
      * Obtiene una cita por su id
@@ -170,5 +165,12 @@ public class CitaServiceImpl implements CitaService {
      */
     public boolean actualizarCita(Cita cita) {
         return citaDao.actualizarCita(cita);
+    }
+
+    /**
+     * @param citaDao the citaDao to set
+     */
+    public void setCitaDao(CitaDao citaDao) {
+        this.citaDao = citaDao;
     }
 }

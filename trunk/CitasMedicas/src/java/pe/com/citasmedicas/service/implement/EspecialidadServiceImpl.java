@@ -3,7 +3,6 @@ package pe.com.citasmedicas.service.implement;
 import pe.com.citasmedicas.service.*;
 import java.util.List;
 import pe.com.citasmedicas.dao.EspecialidadDao;
-import pe.com.citasmedicas.dao.hibernate.EspecialidadDaoHbn;
 import pe.com.citasmedicas.model.Especialidad;
 
 /**
@@ -13,10 +12,6 @@ import pe.com.citasmedicas.model.Especialidad;
 public class EspecialidadServiceImpl implements EspecialidadService {
 
     private EspecialidadDao especialidadDao;
-
-    public EspecialidadServiceImpl() {
-        especialidadDao = new EspecialidadDaoHbn();
-    }
 
     /**
      * Obtiene todas las especialidades registradas
@@ -33,5 +28,12 @@ public class EspecialidadServiceImpl implements EspecialidadService {
      */
     public Especialidad getEspecialidadPorId(Integer especialidadId) {
         return especialidadDao.getEspecialidadPorId(especialidadId);
+    }
+
+    /**
+     * @param especialidadDao the especialidadDao to set
+     */
+    public void setEspecialidadDao(EspecialidadDao especialidadDao) {
+        this.especialidadDao = especialidadDao;
     }
 }

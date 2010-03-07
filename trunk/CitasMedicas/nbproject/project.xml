@@ -15,19 +15,11 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
-                    <file>${file.reference.struts2-core-2.0.11.jar}</file>
+                    <file>${file.reference.ognl-2.7.3.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
-                    <file>${file.reference.freemarker-2.3.8.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library>
-                    <file>${file.reference.ognl-2.6.11.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library>
-                    <file>${file.reference.xwork-2.0.4.jar}</file>
+                    <file>${file.reference.struts2-core-2.1.8.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
@@ -51,7 +43,7 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
-                    <file>${file.reference.commons-collections-3.1.jar}</file>
+                    <file>${file.reference.commons-collections-3.2.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
@@ -103,15 +95,35 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
+                    <file>${file.reference.org.springframework.beans-3.0.1.RELEASE.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library>
                     <file>${file.reference.org.springframework.core-3.0.1.RELEASE.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
-                    <file>${file.reference.org.springframework.context-3.0.1.RELEASE.jar}</file>
+                    <file>${file.reference.org.springframework.web-3.0.1.RELEASE.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library>
-                    <file>${file.reference.org.springframework.web-3.0.1.RELEASE.jar}</file>
+                    <file>${file.reference.struts2-spring-plugin-2.1.8.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library>
+                    <file>${file.reference.xwork-core-2.1.6.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library>
+                    <file>${file.reference.freemarker-2.3.15.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library>
+                    <file>${file.reference.struts2-codebehind-plugin-2.1.8.1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library>
+                    <file>${file.reference.commons-fileupload-1.2.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
@@ -124,7 +136,9 @@
             </test-roots>
         </data>
         <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
-            <config-files/>
+            <config-files>
+                <config-file>web/WEB-INF/applicationContext.xml</config-file>
+            </config-files>
             <config-file-groups/>
         </spring-data>
     </configuration>

@@ -3,7 +3,6 @@ package pe.com.citasmedicas.service.implement;
 import pe.com.citasmedicas.service.*;
 import java.util.List;
 import pe.com.citasmedicas.dao.MedicoDao;
-import pe.com.citasmedicas.dao.hibernate.MedicoDaoHbn;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
 
@@ -14,10 +13,6 @@ import pe.com.citasmedicas.model.Medico;
 public class MedicoServiceImpl implements MedicoService {
 
     private MedicoDao medicoDao;
-
-    public MedicoServiceImpl() {
-        medicoDao = new MedicoDaoHbn();
-    }
 
     /**
      * Obtiene un médico por su id
@@ -44,5 +39,12 @@ public class MedicoServiceImpl implements MedicoService {
      */
     public List<Medico> getMedicosPorEspecialidad(Integer especialidadId) {
         return medicoDao.getMedicosPorEspecialidad(especialidadId);
+    }
+
+    /**
+     * @param medicoDao the medicoDao to set
+     */
+    public void setMedicoDao(MedicoDao medicoDao) {
+        this.medicoDao = medicoDao;
     }
 }

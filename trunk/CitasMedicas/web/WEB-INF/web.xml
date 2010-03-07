@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <!--<context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>citasmedicas.root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextClass</param-name>
+        <param-value>
+            org.springframework.config.java.context.JavaConfigWebApplicationContext
+        </param-value>
+    </context-param>-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
@@ -22,14 +32,14 @@
     <listener>
         <listener-class>pe.com.citasmedicas.listener.ContextListener</listener-class>
     </listener>
-    <filter>
+    <!--<filter>
         <filter-name>SecurityFilter</filter-name>
         <filter-class>pe.com.citasmedicas.filter.SecurityFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>/prc/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
