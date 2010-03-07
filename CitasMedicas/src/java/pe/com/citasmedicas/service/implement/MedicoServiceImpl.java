@@ -1,6 +1,6 @@
 package pe.com.citasmedicas.service.implement;
 
-import pe.com.citasmedicas.service.*;
+import pe.com.citasmedicas.service.MedicoService;
 import java.util.List;
 import pe.com.citasmedicas.dao.MedicoDao;
 import pe.com.citasmedicas.model.Especialidad;
