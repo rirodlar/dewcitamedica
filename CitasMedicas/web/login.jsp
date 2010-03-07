@@ -12,7 +12,7 @@
             <div class="loguin_bg">
                 <div class="title_login">
                     <div class="form_login">
-                        <s:form action="login" namespace="/logueo" method="POST" name="frmLogin">
+                        <s:form action="login" namespace="/logeo" method="POST" name="frmLogin">
                             <table border="0" cellpadding="0" cellspacing="0" align="center" width="210px">
                                 <tr>
                                     <td><b>Usuario:</b></td>

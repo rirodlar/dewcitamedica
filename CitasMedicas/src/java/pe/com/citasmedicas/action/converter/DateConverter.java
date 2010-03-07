@@ -1,6 +1,6 @@
 package pe.com.citasmedicas.action.converter;
 
-import com.opensymphony.xwork2.util.TypeConversionException;
+import com.opensymphony.xwork2.conversion.TypeConversionException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

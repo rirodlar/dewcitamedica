@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-           http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
-           http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-autowire="byType">
 
-	<context:component-scan base-package="pe.com.citasmedicas.service" />
-	<context:component-scan base-package="pe.com.citasmedicas.dao" />
+    <bean id="citaDao" class="pe.com.citasmedicas.dao.hibernate.CitaDaoHbn" />
+    <bean id="especialidadDao" class="pe.com.citasmedicas.dao.hibernate.EspecialidadDaoHbn" />
+    <bean id="horarioDao" class="pe.com.citasmedicas.dao.hibernate.HorarioDaoHbn" />
+    <bean id="medicoDao" class="pe.com.citasmedicas.dao.hibernate.MedicoDaoHbn" />
+    <bean id="pacienteDao" class="pe.com.citasmedicas.dao.hibernate.PacienteDaoHbn" />
+    <bean id="usuarioDao" class="pe.com.citasmedicas.dao.hibernate.UsuarioDaoHbn" />
+
+    <bean id="citaService" class="pe.com.citasmedicas.service.implement.CitaServiceImpl">
+        <property name="citaDao" ref="citaDao" />
+    </bean>
+    <bean id="especialidadService" class="pe.com.citasmedicas.service.implement.EspecialidadServiceImpl">
+        <property name="especialidadDao" ref="especialidadDao" />
+    </bean>
+    <bean id="horarioService" class="pe.com.citasmedicas.service.implement.HorarioServiceImpl">
+        <property name="horarioDao" ref="horarioDao" />
+    </bean>
+    <bean id="medicoService" class="pe.com.citasmedicas.service.implement.MedicoServiceImpl">
+        <property name="medicoDao" ref="medicoDao" />
+    </bean>
+    <bean id="pacienteService" class="pe.com.citasmedicas.service.implement.PacienteServiceImpl">
+        <property name="pacienteDao" ref="pacienteDao" />
+    </bean>
+    <bean id="usuarioService" class="pe.com.citasmedicas.service.implement.UsuarioServiceImpl">
+        <property name="usuarioDao" ref="usuarioDao" />
+    </bean>
+
+    <bean id="loginAction" class="pe.com.citasmedicas.action.LoginAction">
+        <property name="usuarioService" ref="usuarioService" />
+    </bean>
+    <bean id="buscarHorarioAction" class="pe.com.citasmedicas.action.reservarcita.BuscarHorarioAction">
+        <property name="horarioService" ref="horarioService" />
+        <property name="especialidadService" ref="especialidadService" />
+        <property name="medicoService" ref="medicoService" />
+    </bean>
+    <bean id="cargarMedicosAction" class="pe.com.citasmedicas.action.reservarcita.CargarMedicosAction">
+        <property name="medicoService" ref="medicoService" />
+    </bean>
+    <bean id="iniciarReservaAction" class="pe.com.citasmedicas.action.reservarcita.IniciarReservaAction">
+        <property name="especialidadService" ref="especialidadService" />
+        <property name="medicoService" ref="medicoService" />
+    </bean>
+    <bean id="reservarCitaAction" class="pe.com.citasmedicas.action.reservarcita.ReservarCitaAction">
+        <property name="horarioService" ref="horarioService" />
+        <property name="citaService" ref="citaService" />
+        <property name="pacienteService" ref="pacienteService" />
+    </bean>
 </beans>
-

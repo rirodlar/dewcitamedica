@@ -1,40 +1,39 @@
 package pe.com.citasmedicas.action.reservarcita;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.Validation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.config.Namespace;
+import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Medico;
-import pe.com.citasmedicas.service.implement.MedicoServiceImpl;
+import pe.com.citasmedicas.service.MedicoService;
 
 /**
  *
  * @author dew - Grupo 04
  */
-@Namespace("/reserva")
+@Namespace(value="/reserva")
+@ParentPackage(value="struts-default")
 @Results({
     @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
     @Result(name="input", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
     @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
 })
-@Validation()
 public class CargarMedicosAction extends BaseAction{
 
     private Integer cboEspecialidad;
     private String txtSemana;
 
+    private MedicoService medicoService;
+
     @Override
     public String execute() throws Exception {
         try{
-            // Servicios
-            MedicoServiceImpl medicoService = new MedicoServiceImpl();
-
             // Variables
             HttpSession sesion = request.getSession();
             
@@ -92,6 +91,13 @@ public class CargarMedicosAction extends BaseAction{
     @RequiredFieldValidator(message = "Por favor, seleccione una especialidad.")
     public void setCboEspecialidad(Integer cboEspecialidad) {
         this.cboEspecialidad = cboEspecialidad;
+    }
+
+    /**
+     * @param medicoService the medicoService to set
+     */
+    public void setMedicoService(MedicoService medicoService) {
+        this.medicoService = medicoService;
     }
 
 

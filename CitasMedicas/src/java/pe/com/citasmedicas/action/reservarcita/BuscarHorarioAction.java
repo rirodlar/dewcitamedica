@@ -3,7 +3,6 @@ package pe.com.citasmedicas.action.reservarcita;
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.Validation;
 import org.apache.struts2.config.Result;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,42 +12,42 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts2.config.Namespace;
+import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
-import pe.com.citasmedicas.service.implement.EspecialidadServiceImpl;
-import pe.com.citasmedicas.service.implement.HorarioServiceImpl;
-import pe.com.citasmedicas.service.implement.MedicoServiceImpl;
+import pe.com.citasmedicas.service.EspecialidadService;
+import pe.com.citasmedicas.service.HorarioService;
+import pe.com.citasmedicas.service.MedicoService;
 
 /**
  *
  * @author dew - Grupo 04
  */
-@Namespace("/reserva")
+@Namespace(value="/reserva")
+@ParentPackage(value="struts-default")
 @Results({
     @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
     @Result(name="input", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
     @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
 })
 @Conversion()
-@Validation()
 public class BuscarHorarioAction extends BaseAction {
 
     private Integer cboEspecialidad;
     private Integer cboMedico;
     private Date txtSemana;
 
+    private HorarioService horarioService;
+    private EspecialidadService especialidadService;
+    private MedicoService medicoService;
+
     @Override
     public String execute() {
         try {
-            // Servicios
-            HorarioServiceImpl horarioService = new HorarioServiceImpl();
-            EspecialidadServiceImpl especialidadService = new EspecialidadServiceImpl();
-            MedicoServiceImpl medicoService = new MedicoServiceImpl();
-
             //Variables
             HttpSession sesion = request.getSession();
             List<String> cabeceraSemana = new ArrayList<String>();
@@ -218,6 +217,27 @@ public class BuscarHorarioAction extends BaseAction {
     @RequiredFieldValidator(message = "Por favor, ingrese una fecha.")
     public void setTxtSemana(Date txtSemana) {
         this.txtSemana = txtSemana;
+    }
+
+    /**
+     * @param horarioService the horarioService to set
+     */
+    public void setHorarioService(HorarioService horarioService) {
+        this.horarioService = horarioService;
+    }
+
+    /**
+     * @param especialidadService the especialidadService to set
+     */
+    public void setEspecialidadService(EspecialidadService especialidadService) {
+        this.especialidadService = especialidadService;
+    }
+
+    /**
+     * @param medicoService the medicoService to set
+     */
+    public void setMedicoService(MedicoService medicoService) {
+        this.medicoService = medicoService;
     }
 
 }

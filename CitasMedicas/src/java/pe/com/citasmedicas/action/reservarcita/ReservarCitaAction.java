@@ -1,7 +1,6 @@
 package pe.com.citasmedicas.action.reservarcita;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
-import com.opensymphony.xwork2.validator.annotations.Validation;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.struts2.config.Namespace;
+import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
@@ -18,33 +18,32 @@ import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Paciente;
 import pe.com.citasmedicas.model.Usuario;
-import pe.com.citasmedicas.service.implement.CitaServiceImpl;
-import pe.com.citasmedicas.service.implement.HorarioServiceImpl;
-import pe.com.citasmedicas.service.implement.PacienteServiceImpl;
+import pe.com.citasmedicas.service.CitaService;
+import pe.com.citasmedicas.service.HorarioService;
+import pe.com.citasmedicas.service.PacienteService;
 
 /**
  *
  * @author dew - Grupo 04
  */
-@Namespace("/reserva")
+@Namespace(value="/reserva")
+@ParentPackage(value="struts-default")
 @Results({
     @Result(name = "success", value = "/prc/reservar_cita.jsp", type = ServletDispatcherResult.class),
     @Result(name = "input", value = "/prc/reservar_cita.jsp", type = ServletDispatcherResult.class),
     @Result(name = "error", value = "/errorPage.jsp", type = ServletDispatcherResult.class)
 })
-@Validation()
 public class ReservarCitaAction extends BaseAction {
 
     private Integer rbtCita;
 
+    private HorarioService horarioService;
+    private CitaService citaService;
+    private PacienteService pacienteService;
+
     @Override
     public String execute() throws Exception {
         try {
-            // Servicios
-            HorarioServiceImpl horarioService = new HorarioServiceImpl();
-            CitaServiceImpl citaService = new CitaServiceImpl();
-            PacienteServiceImpl pacienteService = new PacienteServiceImpl();
-
             // Variables
             HttpSession sesion = request.getSession();
             Usuario usuario = null;
@@ -54,7 +53,6 @@ public class ReservarCitaAction extends BaseAction {
             String errorMsg = "";
 
             usuario = (Usuario) sesion.getAttribute("usuario");
-            pacienteService = new PacienteServiceImpl();
             paciente = pacienteService.getPacientePorId(usuario.getPersona().getPersonaId());
 
             //Si no es paciente
@@ -111,7 +109,7 @@ public class ReservarCitaAction extends BaseAction {
                             }
                             errorMsg += "La cita ha sido grabada correctamente.";
                             sesion.setAttribute("citasPendientes",
-                                    ReservarCitaCommons.cargarCitasPendientes(((Usuario) sesion.getAttribute("usuario")).getPersona()));
+                                    ReservarCitaCommons.cargarCitasPendientes(citaService, ((Usuario) sesion.getAttribute("usuario")).getPersona()));
                             // Se vuelve a cargar el horario para el día afectado
                             recargarHorario(sesion, horario);
                             sesion.setAttribute("errorMsg", errorMsg);
@@ -140,7 +138,6 @@ public class ReservarCitaAction extends BaseAction {
     }
 
     private void recargarHorario(HttpSession sesion, Horario horario) {
-        HorarioServiceImpl horarioService = new HorarioServiceImpl();
         List<Horario> horarioDiaSemana = horarioService.getHorariosPorEspecMedicoFecha(horario.getEspecialidad(), horario.getMedico(), horario.getFechaInicio());
         Calendar cal = new GregorianCalendar();
         cal.setTime(horario.getFechaInicio());
@@ -173,5 +170,26 @@ public class ReservarCitaAction extends BaseAction {
     @RequiredFieldValidator(message = "Por favor, seleccione un médico.")
     public void setRbtCita(Integer rbtCita) {
         this.rbtCita = rbtCita;
+    }
+
+    /**
+     * @param horarioService the horarioService to set
+     */
+    public void setHorarioService(HorarioService horarioService) {
+        this.horarioService = horarioService;
+    }
+
+    /**
+     * @param citaService the citaService to set
+     */
+    public void setCitaService(CitaService citaService) {
+        this.citaService = citaService;
+    }
+
+    /**
+     * @param pacienteService the pacienteService to set
+     */
+    public void setPacienteService(PacienteService pacienteService) {
+        this.pacienteService = pacienteService;
     }
 }
