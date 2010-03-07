@@ -23,7 +23,7 @@ import pe.com.citasmedicas.service.MedicoService;
  * @author dew - Grupo 04
  */
 @Namespace(value="/reserva")
-@ParentPackage(value="struts-default")
+@ParentPackage(value="citaMedica")
 @Results({
     @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
     @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)

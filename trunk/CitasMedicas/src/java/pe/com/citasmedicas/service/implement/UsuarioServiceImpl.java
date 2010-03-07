@@ -1,7 +1,7 @@
 package pe.com.citasmedicas.service.implement;
 
 import pe.com.citasmedicas.dao.UsuarioDao;
-import pe.com.citasmedicas.service.*;
+import pe.com.citasmedicas.service.UsuarioService;
 import pe.com.citasmedicas.model.Usuario;
 
 /**

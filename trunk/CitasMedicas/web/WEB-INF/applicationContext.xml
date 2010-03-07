@@ -30,6 +30,8 @@
         <property name="usuarioDao" ref="usuarioDao" />
     </bean>
 
+    <bean id="autenticacionInterceptor" class="pe.com.citasmedicas.interceptor.AutenticacionInterceptor" />
+
     <bean id="loginAction" class="pe.com.citasmedicas.action.LoginAction">
         <property name="usuarioService" ref="usuarioService" />
     </bean>

@@ -16,11 +16,10 @@ import pe.com.citasmedicas.service.UsuarioService;
  * @author dew - Grupo 04
  */
 @Namespace(value="/logeo")
-@ParentPackage(value="struts-default")
+@ParentPackage(value="citaMedica")
 @Results({
     @Result(name = "success", value = "/home.jsp", type = ServletRedirectResult.class),
-    @Result(name = "input", value = "/login.jsp", type = ServletDispatcherResult.class),
-    @Result(name = "error", value = "/errorPage.jsp", type = ServletDispatcherResult.class)
+    @Result(name = "input", value = "/login.jsp", type = ServletDispatcherResult.class)
 })
 public class LoginAction extends BaseAction {
 
