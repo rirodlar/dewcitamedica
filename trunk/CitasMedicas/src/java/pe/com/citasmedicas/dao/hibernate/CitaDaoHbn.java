@@ -18,11 +18,13 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.Hibernate;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author dew - Grupo 04
  */
+@Repository
 public class CitaDaoHbn implements CitaDao {
 
     /**

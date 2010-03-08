@@ -7,12 +7,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 import pe.com.citasmedicas.model.Usuario;
 
 /**
  *
  * @author dew - Grupo 04
  */
+@Repository
 public class UsuarioDaoHbn implements UsuarioDao {
 
     /**

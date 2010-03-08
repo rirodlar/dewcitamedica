@@ -2,6 +2,8 @@ package pe.com.citasmedicas.service.implement;
 
 import pe.com.citasmedicas.service.MedicoService;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pe.com.citasmedicas.dao.MedicoDao;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
@@ -10,6 +12,7 @@ import pe.com.citasmedicas.model.Medico;
  *
  * @author dew - Grupo 04
  */
+@Service
 public class MedicoServiceImpl implements MedicoService {
 
     private MedicoDao medicoDao;
@@ -44,6 +47,7 @@ public class MedicoServiceImpl implements MedicoService {
     /**
      * @param medicoDao the medicoDao to set
      */
+    @Autowired
     public void setMedicoDao(MedicoDao medicoDao) {
         this.medicoDao = medicoDao;
     }

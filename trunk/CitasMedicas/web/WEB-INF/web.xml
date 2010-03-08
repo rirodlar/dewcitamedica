@@ -9,6 +9,10 @@
         <param-value>
             org.springframework.config.java.context.JavaConfigWebApplicationContext
         </param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>pe.com.citasmedicas.spring.ApplicationConfig</param-value>
     </context-param>-->
     <context-param>
         <param-name>contextConfigLocation</param-name>

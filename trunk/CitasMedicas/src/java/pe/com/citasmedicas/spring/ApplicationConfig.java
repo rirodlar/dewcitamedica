@@ -1,9 +1,9 @@
 package pe.com.citasmedicas.spring;
 
-//import org.springframework.beans.factory.annotation.Autowire;
-//import org.springframework.config.java.annotation.Bean;
-//import org.springframework.config.java.annotation.Configuration;
-//import org.springframework.config.java.support.ConfigurationSupport;
+/*import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.config.java.annotation.Bean;
+import org.springframework.config.java.annotation.Configuration;
+import org.springframework.config.java.plugin.context.ComponentScan;
 import pe.com.citasmedicas.dao.CitaDao;
 import pe.com.citasmedicas.dao.EspecialidadDao;
 import pe.com.citasmedicas.dao.HorarioDao;
@@ -28,71 +28,72 @@ import pe.com.citasmedicas.service.implement.HorarioServiceImpl;
 import pe.com.citasmedicas.service.implement.MedicoServiceImpl;
 import pe.com.citasmedicas.service.implement.PacienteServiceImpl;
 import pe.com.citasmedicas.service.implement.UsuarioServiceImpl;
-
+*/
 /**
  *
  * @author rSaenz
  */
-//@Configuration
+//@Configuration(defaultAutowire=Autowire.BY_TYPE)
+//@ComponentScan("pe.com.citasmedicas.service.implement pe.com.citasmedicas.dao.hibernate")
 public abstract class ApplicationConfig {
-
-    //@Bean
+/*
+    @Bean
     public CitaService citaService() {
         return new CitaServiceImpl();
     }
 
-    //@Bean
+    @Bean
     public EspecialidadService especialidadService() {
         return new EspecialidadServiceImpl();
     }
 
-    //@Bean
+    @Bean
     public HorarioService horarioService() {
         return new HorarioServiceImpl();
     }
 
-    //@Bean
+    @Bean
     public MedicoService medicoService() {
         return new MedicoServiceImpl();
     }
 
-    //@Bean
+    @Bean
     public PacienteService pacienteService() {
         return new PacienteServiceImpl();
     }
 
-    //@Bean
+    @Bean
     public UsuarioService usuarioService() {
         return new UsuarioServiceImpl();
     }
 
-    //@Bean
+    @Bean
     public CitaDao citaDao() {
         return new CitaDaoHbn();
     }
 
-    //@Bean
+    @Bean
     public EspecialidadDao especialidadDao() {
         return new EspecialidadDaoHbn();
     }
 
-    //@Bean
+    @Bean
     public HorarioDao horarioDao() {
         return new HorarioDaoHbn();
     }
 
-    //@Bean
+    @Bean
     public MedicoDao medicoDao() {
         return new MedicoDaoHbn();
     }
 
-    //@Bean
+    @Bean
     public PacienteDao pacienteDao() {
         return new PacienteDaoHbn();
     }
 
-    //@Bean
+    @Bean
     public UsuarioDao usuarioDao() {
         return new UsuarioDaoHbn();
-    }
+    }*/
 }

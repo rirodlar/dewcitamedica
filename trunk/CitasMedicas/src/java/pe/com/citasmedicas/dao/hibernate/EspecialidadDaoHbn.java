@@ -8,12 +8,14 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 import pe.com.citasmedicas.model.Especialidad;
 
 /**
  *
  * @author dew - Grupo 04
  */
+@Repository
 public class EspecialidadDaoHbn implements EspecialidadDao {
 
     /**
