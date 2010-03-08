@@ -3,6 +3,8 @@ package pe.com.citasmedicas.service.implement;
 import pe.com.citasmedicas.service.HorarioService;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pe.com.citasmedicas.dao.HorarioDao;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
@@ -12,6 +14,7 @@ import pe.com.citasmedicas.model.Medico;
  *
  * @author dew - Grupo 04
  */
+@Service
 public class HorarioServiceImpl implements HorarioService {
 
     private HorarioDao horarioDao;
@@ -73,6 +76,7 @@ public class HorarioServiceImpl implements HorarioService {
     /**
      * @param horarioDao the horarioDao to set
      */
+    @Autowired
     public void setHorarioDao(HorarioDao horarioDao) {
         this.horarioDao = horarioDao;
     }

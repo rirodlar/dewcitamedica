@@ -3,6 +3,8 @@ package pe.com.citasmedicas.service.implement;
 import pe.com.citasmedicas.service.CitaService;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pe.com.citasmedicas.dao.CitaDao;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Especialidad;
@@ -15,6 +17,7 @@ import pe.com.citasmedicas.model.Persona;
  *
  * @author dew - Grupo 04
  */
+@Service
 public class CitaServiceImpl implements CitaService {
 
     private CitaDao citaDao;
@@ -170,6 +173,7 @@ public class CitaServiceImpl implements CitaService {
     /**
      * @param citaDao the citaDao to set
      */
+    @Autowired
     public void setCitaDao(CitaDao citaDao) {
         this.citaDao = citaDao;
     }

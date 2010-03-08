@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
 
@@ -16,6 +17,7 @@ import pe.com.citasmedicas.model.Medico;
  *
  * @author dew - Grupo 04
  */
+@Repository
 public class MedicoDaoHbn implements MedicoDao {
 
     /**
