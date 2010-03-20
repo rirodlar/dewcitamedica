@@ -1,4 +1,4 @@
-package pe.com.citasmedicas.action.reservarcita;
+package pe.com.citasmedicas.action.process.reservarcita;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;

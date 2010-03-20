@@ -7,7 +7,13 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd"
        default-autowire="byType">
-    
+
+    <!--xmlns:aop="http://www.springframework.org/schema/aop"
+    ...
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+    -->
+
     <!--<context:annotation-config />
     <context:component-scan base-package="pe.com.citasmedicas.dao.hibernate" />
     <context:component-scan base-package="pe.com.citasmedicas.service.implement" />-->
@@ -38,24 +44,31 @@
         <property name="usuarioDao" ref="usuarioDao" />
     </bean>
 
-    <bean id="autenticacionInterceptor" class="pe.com.citasmedicas.interceptor.AutenticacionInterceptor" />
+    <!--<bean id="autenticacionInterceptorBean" class="pe.com.citasmedicas.interceptor.AutenticacionInterceptor" />
+    
+    <aop:config>
+        <aop:aspect id="autenticacionInterceptor" ref="autenticacionInterceptorBean">
+            <aop:pointcut id="actionPointcut" expression="execution(* pe.com.citasmedicas.action.process..*.*(..))"/>
+            <aop:before pointcut-ref="actionPointcut" method="intercept"/>
+        </aop:aspect>
+    </aop:config>-->
 
     <bean id="loginAction" class="pe.com.citasmedicas.action.LoginAction">
         <property name="usuarioService" ref="usuarioService" />
     </bean>
-    <bean id="buscarHorarioAction" class="pe.com.citasmedicas.action.reservarcita.BuscarHorarioAction">
+    <bean id="buscarHorarioAction" class="pe.com.citasmedicas.action.process.reservarcita.BuscarHorarioAction">
         <property name="horarioService" ref="horarioService" />
         <property name="especialidadService" ref="especialidadService" />
         <property name="medicoService" ref="medicoService" />
     </bean>
-    <bean id="cargarMedicosAction" class="pe.com.citasmedicas.action.reservarcita.CargarMedicosAction">
+    <bean id="cargarMedicosAction" class="pe.com.citasmedicas.action.process.reservarcita.CargarMedicosAction">
         <property name="medicoService" ref="medicoService" />
     </bean>
-    <bean id="iniciarReservaAction" class="pe.com.citasmedicas.action.reservarcita.IniciarReservaAction">
+    <bean id="iniciarReservaAction" class="pe.com.citasmedicas.action.process.reservarcita.IniciarReservaAction">
         <property name="especialidadService" ref="especialidadService" />
         <property name="medicoService" ref="medicoService" />
     </bean>
-    <bean id="reservarCitaAction" class="pe.com.citasmedicas.action.reservarcita.ReservarCitaAction">
+    <bean id="reservarCitaAction" class="pe.com.citasmedicas.action.process.reservarcita.ReservarCitaAction">
         <property name="horarioService" ref="horarioService" />
         <property name="citaService" ref="citaService" />
         <property name="pacienteService" ref="pacienteService" />

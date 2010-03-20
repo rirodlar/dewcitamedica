@@ -1,4 +1,4 @@
-package pe.com.citasmedicas.action.diagnosticar;
+package pe.com.citasmedicas.action.process.diagnosticar;
 
 import pe.com.citasmedicas.action.BaseAction;
 

@@ -1,4 +1,4 @@
-package pe.com.citasmedicas.action.reservarcita;
+package pe.com.citasmedicas.action.process.reservarcita;
 
 import java.util.ArrayList;
 import java.util.List;
