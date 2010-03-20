@@ -1,35 +1,31 @@
 package pe.com.citasmedicas.interceptor;
 
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionInvocation;
-import com.opensymphony.xwork2.interceptor.Interceptor;
-import java.util.Map;
-
 /**
  *
  * @author dew - Grupo 04
  */
-public class AutenticacionInterceptor implements Interceptor {
+public class AutenticacionInterceptor {
 
-    @Override
-    public void destroy() {
-    }
+    public void intercept(){
+        /*HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes()).getRequest();
 
-    @Override
-    public void init() {
-    }
-
-    @Override
-    public String intercept(ActionInvocation invocation) throws Exception {
-        ActionContext ctx = ActionContext.getContext();
-        Map session = ctx.getSession();
-        System.out.println("...interceptor");
-        if (session.get("usuario") == null) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("usuario") == null) {
             System.out.println("...la sesión ha caducado");
-            return "login";
-        } else {
-            System.out.println("...todo ok");
-            return invocation.invoke();
-        }
+            try {
+                request.getRequestDispatcher("/login.jsp").forward(request, null);
+                //response.sendRedirect(response.encodeRedirectURL(destination));
+            } catch (ServletException ex) {
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                Logger.getLogger(AutenticacionInterceptor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+                ex.printStackTrace();
+                Logger.getLogger(AutenticacionInterceptor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //response.sendRedirect(response.encodeRedirectURL(destination));
+        }*/
     }
 }
