@@ -8,16 +8,11 @@
     <constant name="struts.devMode" value="true" />
 
     <package name="citaMedica" namespace="/" extends="struts-default">
-        <!--
         <global-results>
             <result name="login">/login.jsp</result>
-        </global-results>
-        <global-results>
             <result name="logout">/logout.jsp</result>
-        </global-results>
-        <global-results>
             <result name="error">/errorPage.jsp</result>
-        </global-results>-->
+        </global-results>
     </package>
 
     <package name="logeo" namespace="/logeo" extends="citaMedica">

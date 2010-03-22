@@ -14,6 +14,7 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
+import pe.com.citasmedicas.exception.SeguridadException;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Paciente;
@@ -30,8 +31,7 @@ import pe.com.citasmedicas.service.PacienteService;
 @ParentPackage(value="citaMedica")
 @Results({
     @Result(name = "success", value = "/prc/reservar_cita.jsp", type = ServletDispatcherResult.class),
-    @Result(name = "input", value = "/prc/reservar_cita.jsp", type = ServletDispatcherResult.class),
-    @Result(name = "error", value = "/errorPage.jsp", type = ServletDispatcherResult.class)
+    @Result(name = "input", value = "/prc/reservar_cita.jsp", type = ServletDispatcherResult.class)
 })
 public class ReservarCitaAction extends BaseAction {
 
@@ -44,6 +44,7 @@ public class ReservarCitaAction extends BaseAction {
     @Override
     public String execute() throws Exception {
         try {
+            validarAutenticacion(request);
             // Variables
             HttpSession sesion = request.getSession();
             Usuario usuario = null;
@@ -130,6 +131,8 @@ public class ReservarCitaAction extends BaseAction {
                 sesion.setAttribute("errorMsg", "El horario seleccionado no está disponible.");
                 return INPUT;
             }
+        }catch(SeguridadException se){
+            return LOGIN;
         } catch (Exception ex) {
             ex.printStackTrace();
             request.setAttribute("errorMsg", ex.getMessage());
