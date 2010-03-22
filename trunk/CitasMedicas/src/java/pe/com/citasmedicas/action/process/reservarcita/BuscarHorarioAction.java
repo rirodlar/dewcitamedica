@@ -16,6 +16,7 @@ import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
+import pe.com.citasmedicas.exception.SeguridadException;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
@@ -31,8 +32,7 @@ import pe.com.citasmedicas.service.MedicoService;
 @ParentPackage(value="citaMedica")
 @Results({
     @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
-    @Result(name="input", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
-    @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
+    @Result(name="input", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class)
 })
 @Conversion()
 public class BuscarHorarioAction extends BaseAction {
@@ -48,6 +48,7 @@ public class BuscarHorarioAction extends BaseAction {
     @Override
     public String execute() {
         try {
+            validarAutenticacion(request);
             //Variables
             HttpSession sesion = request.getSession();
             List<String> cabeceraSemana = new ArrayList<String>();
@@ -153,7 +154,9 @@ public class BuscarHorarioAction extends BaseAction {
             sesion.setAttribute("filtro", filtro);
             sesion.setAttribute("errorMsg", errorMsg);
             return SUCCESS;
-        } catch (Exception ex) {
+        }catch(SeguridadException se){
+            return LOGIN;
+        }catch (Exception ex) {
             ex.printStackTrace();
             request.setAttribute("errorMsg", ex.getMessage());
             return ERROR;

@@ -16,7 +16,6 @@ import org.apache.struts2.dispatcher.ServletRedirectResult;
  * @author dew - Grupo 04
  */
 @Results({
-    @Result(name="login", value="/login.jsp", type=ServletRedirectResult.class),
     @Result(name="reservar", value="reserva/iniciarReserva", type=ServletActionRedirectResult.class)
 })
 public class HomeAction extends ActionSupport{

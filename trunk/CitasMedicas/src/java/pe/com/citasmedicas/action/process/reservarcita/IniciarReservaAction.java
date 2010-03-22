@@ -11,6 +11,7 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
+import pe.com.citasmedicas.exception.SeguridadException;
 import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Usuario;
@@ -25,8 +26,7 @@ import pe.com.citasmedicas.service.MedicoService;
 @Namespace(value="/reserva")
 @ParentPackage(value="citaMedica")
 @Results({
-    @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class),
-    @Result(name="error", value="/errorPage.jsp", type=ServletDispatcherResult.class)
+    @Result(name="success", value="/prc/reservar_cita.jsp", type=ServletDispatcherResult.class)
 })
 public class IniciarReservaAction extends BaseAction{
 
@@ -37,6 +37,7 @@ public class IniciarReservaAction extends BaseAction{
     @Override
     public String execute(){
         try{
+            validarAutenticacion(request);
             // Variables
             HttpSession sesion = request.getSession();
             List<String> cabeceraSemana = new ArrayList<String>();
@@ -88,6 +89,8 @@ public class IniciarReservaAction extends BaseAction{
             sesion.setAttribute("citasPendientes", 
                     ReservarCitaCommons.cargarCitasPendientes(citaService, ((Usuario) sesion.getAttribute("usuario")).getPersona()));
             return SUCCESS;
+        }catch(SeguridadException se){
+            return LOGIN;
         }catch(Exception ex){
             ex.printStackTrace();
             return ERROR;
