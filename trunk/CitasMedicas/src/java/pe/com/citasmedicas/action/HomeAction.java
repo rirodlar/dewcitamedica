@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletActionRedirectResult;
+import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
 
 /**
@@ -16,7 +17,8 @@ import org.apache.struts2.dispatcher.ServletRedirectResult;
  * @author dew - Grupo 04
  */
 @Results({
-    @Result(name="reservar", value="reserva/iniciarReserva", type=ServletActionRedirectResult.class)
+    @Result(name="reservar", value="reserva/iniciarReserva", type=ServletActionRedirectResult.class),
+    @Result(name="login", value="/login.jsp", type = ServletDispatcherResult.class)
 })
 public class HomeAction extends ActionSupport{
 
