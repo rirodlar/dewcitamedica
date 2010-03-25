@@ -33,7 +33,9 @@ public class HomeAction extends BaseAction{
         if(accion.equals("login"))
             return "login";
         else {
-            HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession(false);
+            if(session == null)
+                return "login";
             Usuario usuario = (Usuario) session.getAttribute("usuario");
             //Validar rol
             if (usuario.getPersona() instanceof Medico){
