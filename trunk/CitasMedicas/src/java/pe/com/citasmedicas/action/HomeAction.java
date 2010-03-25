@@ -6,11 +6,14 @@
 package pe.com.citasmedicas.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import javax.servlet.http.HttpSession;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletActionRedirectResult;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import org.apache.struts2.dispatcher.ServletRedirectResult;
+import pe.com.citasmedicas.model.Medico;
+import pe.com.citasmedicas.model.Usuario;
 
 /**
  *
@@ -18,9 +21,10 @@ import org.apache.struts2.dispatcher.ServletRedirectResult;
  */
 @Results({
     @Result(name="reservar", value="reserva/iniciarReserva", type=ServletActionRedirectResult.class),
+    @Result(name="consultar", value="/prc/consulta.jsp", type=ServletRedirectResult.class),
     @Result(name="login", value="/login.jsp", type = ServletDispatcherResult.class)
 })
-public class HomeAction extends ActionSupport{
+public class HomeAction extends BaseAction{
 
     private String accion;
 
@@ -28,8 +32,18 @@ public class HomeAction extends ActionSupport{
     public String execute() throws Exception {
         if(accion.equals("login"))
             return "login";
-        else
+        else {
+            HttpSession session = request.getSession(true);
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            //Validar rol
+            if (usuario.getPersona() instanceof Medico){
+                System.out.println("medico");
+                return "consultar";
+            }else{
+                System.out.println("paciente");
             return "reservar";
+    }
+        }
     }
 
     /**
