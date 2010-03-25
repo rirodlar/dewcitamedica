@@ -73,4 +73,9 @@
         <property name="citaService" ref="citaService" />
         <property name="pacienteService" ref="pacienteService" />
     </bean>
+    <bean id="consultarCitaAction" class="pe.com.citasmedicas.action.process.consultarcita.ConsultarCitaAction">
+        <property name="horarioService" ref="horarioService" />
+        <property name="citaService" ref="citaService" />
+        <property name="medicoService" ref="medicoService" />
+    </bean>
 </beans>
