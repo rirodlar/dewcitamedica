@@ -13,7 +13,6 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
-import pe.com.citasmedicas.exception.SeguridadException;
 import pe.com.citasmedicas.service.MedicoService;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
