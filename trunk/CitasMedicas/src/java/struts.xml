@@ -25,4 +25,8 @@
         <action name="iniciarReserva" class="iniciarReservaAction"></action>
         <action name="reservarCita" class="reservarCitaAction"></action>
     </package>
+
+    <package name="consulta" namespace="/consulta" extends="citaMedica">
+        <action name="consultarCita" class="consultarCitaAction"></action>
+    </package>
 </struts>

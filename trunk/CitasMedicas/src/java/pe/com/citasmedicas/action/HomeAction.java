@@ -21,7 +21,7 @@ import pe.com.citasmedicas.model.Usuario;
  */
 @Results({
     @Result(name="reservar", value="reserva/iniciarReserva", type=ServletActionRedirectResult.class),
-    @Result(name="consultar", value="/prc/consulta.jsp", type=ServletRedirectResult.class),
+    @Result(name="consultar", value="consulta/consultarCita", type=ServletActionRedirectResult.class),
     @Result(name="login", value="/login.jsp", type = ServletDispatcherResult.class)
 })
 public class HomeAction extends BaseAction{

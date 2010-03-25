@@ -72,7 +72,7 @@ public class HorarioDaoHbn implements HorarioDao {
 
     /**
      * Obtiene todos los horarios de un médico para una especialidad y fecha específica
-     * @param Integer especialidadId
+     * @param Integer especialidadId --> opcional (valor -1)
      * @param Integer medicoId
      * @param Date fecha
      * @return List<Horario>
@@ -85,17 +85,22 @@ public class HorarioDaoHbn implements HorarioDao {
         Session hs = null;
         Transaction htx = null;
         SessionFactory hsf = HibernateUtil.getSessionFactory();
+
+        //Evalua si es parametro opcional
+        String condicionEspecialidad = (especialidadId == -1)? "and h.especialidad = :especialidadId ":"";
+
         try {
             hs = hsf.getCurrentSession();
             htx = hs.beginTransaction();
             Query hqlQuery = hs.createQuery(
                     "select h from Horario h " +
                     "where h.medico = :medicoId " +
-                    "and h.especialidad = :especialidadId " +
+                    condicionEspecialidad +
                     "and cast(h.fechaInicio as date) = :fecha " +
                     "order by h.fechaInicio asc");
             hqlQuery.setParameter("medicoId", medicoId, Hibernate.INTEGER);
-            hqlQuery.setParameter("especialidadId", especialidadId, Hibernate.INTEGER);
+            if (especialidadId == -1)
+                hqlQuery.setParameter("especialidadId", especialidadId, Hibernate.INTEGER);
             hqlQuery.setParameter("fecha", DateUtils.truncate(fecha, Calendar.DATE), Hibernate.DATE);
             horarios = hqlQuery.list();
             htx.commit();
