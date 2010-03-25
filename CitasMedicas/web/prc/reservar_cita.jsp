@@ -12,7 +12,6 @@
         <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar-setup.js'/>"></script>
         <script type="text/javascript" src="<s:url value='/prc/js/reservar_cita.js'/>"></script>
         <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
-        <script type="text/javascript" src="<s:url value='/resources/jss/tools/Utiles.js'/>"></script>
         <script type="text/javascript">
             function cboEspecialidad_onchange () {
                 frmReserva.action = '<s:url value="/reserva/cargarMedicos.action"/>';

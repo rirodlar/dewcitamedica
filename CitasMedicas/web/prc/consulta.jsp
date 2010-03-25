@@ -1,14 +1,17 @@
-﻿<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
+﻿<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<%@ page contentType="text/html; charset=utf-8" language="java" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script language="javascript" type="text/javascript" src="../resources/jss/tools/Utiles.js"></script>
-    <link rel="stylesheet" type="text/css" media="all" href="../resources/css/calendario/calendar-win2k-2.css" />
-    <script type="text/javascript" src="../resources/jss/calendario/calendar.js"></script>
-    <script type="text/javascript" src="../resources/jss/calendario/calendar-es.js"></script>
-    <script type="text/javascript" src="../resources/jss/calendario/calendar-setup.js"></script>
-    <script type="text/javascript" src="js/consulta.js"></script>
-    <link rel="stylesheet" type="text/css" href="../resources/css/style.css" media="screen" />
+        <script language="javascript" type="text/javascript" src="<s:url value='/resources/jss/tools/Utiles.js'/>"></script>
+        <link rel="stylesheet" type="text/css" media="all" href="<s:url value='/resources/css/calendario/calendar-win2k-2.css'/>" />
+        <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar-es.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar-setup.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/prc/js/consulta.js'/>"></script>
+        <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
     <![endif]-->
@@ -51,8 +54,8 @@
       	<table width="840px" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <td width="100%">Semana:
-                	<input name="txtSemana" type="text" id="txtSemana" value="02/02/2010" class="x4" style="width:70px" />
-                    <IMG src="../resources/img/cdp.gif" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Venta" align="top" style="cursor:hand"/>
+                	<input name="txtSemana" type="text" id="txtSemana" value="${fechaSemana}" class="x4" style="width:70px" />
+                    <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Venta" align="top" style="cursor:hand"/>
 					<script type="text/javascript">
                           Calendar.setup({
                           input : "txtSemana", // Input Id")
@@ -70,64 +73,134 @@
           <table class="x1h" cellspacing="0" cellpadding="0" width="840px" border="0">
             <tr>
               <th class="x4j" width="91" scope="col">Hora</th>
-              <th class="x4j" width="107" scope="col">Lun 01</th>
-              <th class="x4j" width="107" scope="col">Mar 02</th>
-              <th class="x4j" width="107" scope="col">Mie 03</th>
-              <th class="x4j" width="107" scope="col">Jue 04</th>
-              <th class="x4j" width="107" scope="col">Vie 05</th>
-              <th class="x4j" width="107" scope="col">Sab 06</th>
-              <th class="x4j" width="107" scope="col">Dom 07</th>
+              	<c:forEach var="diaSemana" items="${cabeceraSemana}">
+                    <th class="x4j" width="107" scope="col">${diaSemana}</th>
+                </c:forEach>
             </tr>
+            <c:forEach var="atencion" items="${horarioAtencion}" varStatus="i">
             <tr>
-              <td class="x4x">09:00 - 09:20</td>
-              <td class="x4x">--</td>
-              <td class="x4x"><a href="diagnostico.jsp" class="enlace" title="Ver detalle">La Rosa Flores, Claribel</a></td>
-              <td class="x4x">--</td>
-              <td class="x4x">--</td>
-              <td class="x4x">--</td>
-              <td class="x4x">--</td>
-              <td class="x4x">--</td>
+              <td class="x4x">${atencion.rango}</td>
+              <td class="x4x">
+              	<c:forEach var="lunes" items="${horarioLunes}">
+                	<c:if test="${atencion.horaInicio == lunes.horaInicio && atencion.minutoInicio == lunes.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:when test="${lunes.cita == null}"> -- </c:when>
+                        <c:otherwise> <!-- Si existe cita -->
+                        	<c:choose>
+                                <c:when test="${lunes.cita.estado=='PENDIENTE'}">
+                                    <a href="#" title="${lunes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" title="${lunes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                     </c:if>
+                 </c:forEach>
+              </td>
+              <td class="x4x">
+              	<c:forEach var="martes" items="${horarioMartes}">
+                	<c:if test="${atencion.horaInicio == martes.horaInicio && atencion.minutoInicio == martes.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:when test="${martes.cita == null}"> -- </c:when>
+                        <c:otherwise> <!-- Si existe cita -->
+                        	<c:choose>
+                                <c:when test="${martes.cita.estado=='PENDIENTE'}">
+                                    <a href="#" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                     </c:if>
+                 </c:forEach>
+              </td>
+              <td class="x4x">
+              	<c:forEach var="miercoles" items="${horarioMiercoles}">
+                	<c:if test="${atencion.horaInicio == miercoles.horaInicio && atencion.minutoInicio == miercoles.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:when test="${miercoles.cita == null}"> -- </c:when>
+                        <c:otherwise> <!-- Si existe cita -->
+                        	<c:choose>
+                                <c:when test="${miercoles.cita.estado=='PENDIENTE'}">
+                                    <a href="#" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                     </c:if>
+                 </c:forEach>
+              </td>
+              <td class="x4x">
+              	<c:forEach var="jueves" items="${horarioJueves}">
+                	<c:if test="${atencion.horaInicio == jueves.horaInicio && atencion.minutoInicio == jueves.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:when test="${jueves.cita == null}"> -- </c:when>
+                        <c:otherwise> <!-- Si existe cita -->
+                        	<c:choose>
+                                <c:when test="${jueves.cita.estado=='PENDIENTE'}">
+                                    <a href="#" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                     </c:if>
+                 </c:forEach>
+              </td>
+              <td class="x4x">
+              	<c:forEach var="viernes" items="${horarioViernes}">
+                	<c:if test="${atencion.horaInicio == viernes.horaInicio && atencion.minutoInicio == viernes.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:when test="${viernes.cita == null}"> -- </c:when>
+                        <c:otherwise> <!-- Si existe cita -->
+                        	<c:choose>
+                                <c:when test="${viernes.cita.estado=='PENDIENTE'}">
+                                    <a href="#" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                     </c:if>
+                 </c:forEach>
+              </td>
+              <td class="x4x">
+              	<c:forEach var="sabado" items="${horarioSabado}">
+                	<c:if test="${atencion.horaInicio == sabado.horaInicio && atencion.minutoInicio == sabado.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:when test="${sabado.cita == null}"> -- </c:when>
+                        <c:otherwise> <!-- Si existe cita -->
+                        	<c:choose>
+                                <c:when test="${sabado.cita.estado=='PENDIENTE'}">
+                                    <a href="#" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                     </c:if>
+                 </c:forEach>
+              </td>
+              <td class="x4x">
+              	<c:forEach var="domingo" items="${horarioDomingo}">
+                	<c:if test="${atencion.horaInicio == domingo.horaInicio && atencion.minutoInicio == domingo.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:when test="${domingo.cita == null}"> -- </c:when>
+                        <c:otherwise> <!-- Si existe cita -->
+                        	<c:choose>
+                                <c:when test="${domingo.cita.estado=='PENDIENTE'}">
+                                    <a href="#" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:otherwise>
+                     </c:if>
+                 </c:forEach>
+              </td>
              </tr>
-             <tr>
-              <td class="x4x">09:20 - 09:40</td>
-               <td class="x4x">--</td>
-               <td class="x4x">--</td>
-               <td class="x4x">--</td>
-               <td class="x4x"><a href="#" class="enlace" title="Ver detalle">Apolinario Cárdenas, Isabel</a></td>
-               <td class="x4x">--</td>
-               <td class="x4x">--</td>
-               <td class="x4x">--</td>
-              </tr>
-              <tr>
-               <td class="x4x">09:40 - 10:00</td>
-               	<td class="x4x">--</td>
-              	<td class="x4x">--</td>
-                <td class="x4x">--</td>
-                <td class="x4x">--</td>
-                <td class="x4x"><a href="#" class="enlace" title="Ver detalle">C&aacute;ceres Flores, Rosa</a></td>
-                <td class="x4x">--</td>
-                <td class="x4x">--</td>
-              </tr>
-              <tr>
-               <td class="x4x">10:00 - 10:20</td>
-               <td class="x4x">--</td>
-              	<td class="x4x">--</td>
-                <td class="x4x">--</td>
-                <td class="x4x">--</td>
-                <td class="x4x"><a href="#" class="enlace" title="Ver detalle">Vilca Melendez, Arturo</a></td>
-                <td class="x4x">--</td>
-                <td class="x4x">--</td>
-              </tr>
-              <tr>
-               <td class="x4x">10:20 - 10:40</td>
-               <td class="x4x">--</td>
-              	<td class="x4x">--</td>
-                <td class="x4x">--</td>
-                <td class="x4x">--</td>
-                <td class="x4x"><a href="#" class="enlace" title="Ver detalle">Herrera Coyoche, Augusta</a></td>
-                <td class="x4x">--</td>
-                <td class="x4x">--</td>
-              </tr>
+             </c:forEach>
           </table>
         </div>
   
