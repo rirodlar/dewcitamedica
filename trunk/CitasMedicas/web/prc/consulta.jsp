@@ -12,6 +12,16 @@
         <script type="text/javascript" src="<s:url value='/resources/jss/calendario/calendar-setup.js'/>"></script>
         <script type="text/javascript" src="<s:url value='/prc/js/consulta.js'/>"></script>
         <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
+        <script type="text/javascript">
+            function btnVerHorario_onclick () {
+                frmConsulta.action = '<s:url value="/consulta/consultarCita.action"/>'
+                frmConsulta.submit();
+            }
+            function cerrarSesion() {
+                frmConsulta.action = '<s:url value="/login/logout.action"/>'
+                frmConsulta.submit();
+            }
+        </script>
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
     <![endif]-->
@@ -51,6 +61,9 @@
       <div class="caja_contenido">
         <p>Por favor, seleccione la cita de la que desea ver el detalle.</p>
         <br/>
+        <s:form action="" method="POST" name="frmConsulta">
+            <s:hidden name="__ACTION" />
+            <s:hidden name="__ARGUMENT" />
       	<table width="840px" border="0" cellpadding="0" cellspacing="0">
             <tr>
                 <td width="100%">Semana:
@@ -65,10 +78,11 @@
                     </script>
                 </td>
                 <td width="1%">
-                	<input type="button" name="btnBuscar" id="btnBuscar" class="x7g" value="Ver Horario" style="BACKGROUND-IMAGE: url(../resources/img/btn-bg1.gif)" />
+                	<input type="button" name="btnBuscar" id="btnBuscar" class="x7g" value="Ver Horario" onclick="javascript:btnVerHorario_onclick()" style="BACKGROUND-IMAGE: url(../resources/img/btn-bg1.gif)" />
                 </td>
             </tr>
         </table>
+        </s:form>
         <br/>
           <table class="x1h" cellspacing="0" cellpadding="0" width="840px" border="0">
             <tr>
