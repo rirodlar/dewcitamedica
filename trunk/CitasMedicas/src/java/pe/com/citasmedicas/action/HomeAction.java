@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pe.com.citasmedicas.action;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -20,31 +19,35 @@ import pe.com.citasmedicas.model.Usuario;
  * @author dew - Grupo 04
  */
 @Results({
-    @Result(name="reservar", value="reserva/iniciarReserva", type=ServletActionRedirectResult.class),
-    @Result(name="consultar", value="consulta/consultarCita", type=ServletActionRedirectResult.class),
-    @Result(name="login", value="/login.jsp", type = ServletDispatcherResult.class)
+    @Result(name = "reservar", value = "reserva/iniciarReserva", type = ServletActionRedirectResult.class),
+    @Result(name = "consultar", value = "consulta/consultarCita", type = ServletActionRedirectResult.class),
+    @Result(name = "login", value = "/login.jsp", type = ServletDispatcherResult.class)
 })
-public class HomeAction extends BaseAction{
+public class HomeAction extends BaseAction {
 
     private String accion;
 
     @Override
     public String execute() throws Exception {
-        if(accion.equals("login"))
+        if (accion.equals("login")) {
             return "login";
-        else {
+        } else {
             HttpSession session = request.getSession(false);
-            if(session == null)
+            if (session == null) {
                 return "login";
+            }
             Usuario usuario = (Usuario) session.getAttribute("usuario");
+            if (usuario == null) {
+                return "login";
+            }
             //Validar rol
-            if (usuario.getPersona() instanceof Medico){
+            if (usuario.getPersona() instanceof Medico) {
                 System.out.println("medico");
                 return "consultar";
-            }else{
+            } else {
                 System.out.println("paciente");
-            return "reservar";
-    }
+                return "reservar";
+            }
         }
     }
 
