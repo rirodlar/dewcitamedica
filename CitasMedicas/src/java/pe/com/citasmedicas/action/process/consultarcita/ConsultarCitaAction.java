@@ -1,5 +1,8 @@
 package pe.com.citasmedicas.action.process.consultarcita;
 
+import com.opensymphony.xwork2.conversion.annotations.Conversion;
+import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,25 +16,27 @@ import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
+import pe.com.citasmedicas.exception.SeguridadException;
 import pe.com.citasmedicas.service.MedicoService;
 import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Usuario;
 import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.HorarioService;
+
 /**
  *
  * @author dew - Grupo 04
  */
-@Namespace(value="/consulta")
-@ParentPackage(value="citaMedica")
+@Namespace(value = "/consulta")
+@ParentPackage(value = "citaMedica")
 @Results({
-    @Result(name="success", value="/prc/consulta.jsp", type=ServletDispatcherResult.class)
+    @Result(name = "success", value = "/prc/consulta.jsp", type = ServletDispatcherResult.class)
 })
+@Conversion()
 public class ConsultarCitaAction extends BaseAction {
 
     private Date txtSemana;
-    
     private HorarioService horarioService;
     private CitaService citaService;
     private MedicoService medicoService;
@@ -61,8 +66,10 @@ public class ConsultarCitaAction extends BaseAction {
             //Recuperar horarios (cabecera y contenido)
             Calendar cal = new GregorianCalendar();
 
-            if (txtSemana == null) txtSemana = new Date();
-            
+            if (txtSemana == null) {
+                txtSemana = new Date();
+            }
+
             cal.setTime(txtSemana);
             if (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
                 cal.add(Calendar.DATE, -1 * (cal.get(Calendar.DAY_OF_WEEK) - 2));
@@ -103,8 +110,8 @@ public class ConsultarCitaAction extends BaseAction {
             horarioDomingo = horarioService.getHorariosPorEspecMedicoFecha(-1, medico.getPersonaId(), cal.getTime());
             // Se establece la cabecera del día domingo
             cabeceraSemana.add(DateFormatUtils.format(cal.getTime(), "EEE dd/MM"));
-            
-// Se recuperan los horarios de atención
+
+            // Se recuperan los horarios de atención
             // Primero se recupera el horario de atención del instituto
             List<Horario> horarioAtencion = horarioService.getHorarioAtencion();
             // Se crea un arreglo con los candidatos a eliminar
@@ -112,12 +119,12 @@ public class ConsultarCitaAction extends BaseAction {
             // Se verifica si existe atención para algún día de la semana
             for (Horario atencion : horarioAtencion) {
                 if (!existeHorario(atencion, horarioLunes) &&
-                    !existeHorario(atencion, horarioMartes) &&
-                    !existeHorario(atencion, horarioMiercoles) &&
-                    !existeHorario(atencion, horarioJueves) &&
-                    !existeHorario(atencion, horarioViernes) &&
-                    !existeHorario(atencion, horarioSabado) &&
-                    !existeHorario(atencion, horarioDomingo)){
+                        !existeHorario(atencion, horarioMartes) &&
+                        !existeHorario(atencion, horarioMiercoles) &&
+                        !existeHorario(atencion, horarioJueves) &&
+                        !existeHorario(atencion, horarioViernes) &&
+                        !existeHorario(atencion, horarioSabado) &&
+                        !existeHorario(atencion, horarioDomingo)) {
                     horarioEliminar.add(atencion);
                 }
             }
@@ -138,6 +145,8 @@ public class ConsultarCitaAction extends BaseAction {
             sesion.setAttribute("errorMsg", errorMsg);
 
             return SUCCESS;
+        } catch (SeguridadException se) {
+            return LOGIN;
         } catch (Exception ex) {
             ex.printStackTrace();
             request.setAttribute("errorMsg", ex.getMessage());
@@ -157,10 +166,19 @@ public class ConsultarCitaAction extends BaseAction {
         return existe;
     }
 
+    /**
+     * @return the txtSemana
+     */
+    @TypeConversion(converter = "pe.com.citasmedicas.action.converter.DateConverter")
     public Date getTxtSemana() {
         return txtSemana;
     }
 
+    /**
+     * @param txtSemana the txtSemana to set
+     */
+    @TypeConversion(converter = "pe.com.citasmedicas.action.converter.DateConverter")
+    //@RequiredFieldValidator(message = "Por favor, ingrese una fecha.")
     public void setTxtSemana(Date txtSemana) {
         this.txtSemana = txtSemana;
     }
@@ -188,5 +206,4 @@ public class ConsultarCitaAction extends BaseAction {
     public void setHorarioService(HorarioService horarioService) {
         this.horarioService = horarioService;
     }
-
 }

@@ -36,7 +36,7 @@
    
             <div class="top_menu">
             <div style="width:90px;float:left;margin:0 3px 0 3px;">&nbsp;</div>
-            <a href="../loguin.jsp" class="login">Salir</a>
+            <a href="../login.jsp" class="login">Salir</a>
             </div>
         
             <div id="menu">
