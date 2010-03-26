@@ -25,7 +25,7 @@
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
     <![endif]-->
-<title>Medical Theme Css Template</title>
+<title>Consulta de Citas</title>
 </head>
 <body class="principal">
 <div id="main_container">
@@ -94,12 +94,10 @@
             <c:forEach var="atencion" items="${horarioAtencion}" varStatus="i">
             <tr>
               <td class="x4x">${atencion.rango}</td>
-              <td class="x4x">
+              <td class="x4x" align="center">
               	<c:forEach var="lunes" items="${horarioLunes}">
                 	<c:if test="${atencion.horaInicio == lunes.horaInicio && atencion.minutoInicio == lunes.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:choose>
-                    	<c:when test="${lunes.cita == null}"> -- </c:when>
-                        <c:otherwise> <!-- Si existe cita -->
+                    	<c:if test="${lunes.cita != null}"><!-- Si existe cita -->
                             <c:choose>
                                 <c:when test="${lunes.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${lunes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -108,17 +106,14 @@
                                     <a href="#" title="${lunes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                        </c:choose>
+                        </c:if>
                      </c:if>
                  </c:forEach>
               </td>
-              <td class="x4x">
+              <td class="x4x" align="center">
               	<c:forEach var="martes" items="${horarioMartes}">
                 	<c:if test="${atencion.horaInicio == martes.horaInicio && atencion.minutoInicio == martes.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:choose>
-                            <c:when test="${martes.cita == null}"> -- </c:when>
-                            <c:otherwise> <!-- Si existe cita -->
+                    	<c:if test="${martes.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${martes.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -127,17 +122,14 @@
                                     <a href="#" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                        </c:choose>
+                        </c:if>
                      </c:if>
                  </c:forEach>
               </td>
-              <td class="x4x">
+              <td class="x4x" align="center">
               	<c:forEach var="miercoles" items="${horarioMiercoles}">
                 	<c:if test="${atencion.horaInicio == miercoles.horaInicio && atencion.minutoInicio == miercoles.minutoInicio}"> <!-- Si existe horario -->
-                        <c:choose>
-                    	<c:when test="${miercoles.cita == null}"> -- </c:when>
-                        <c:otherwise> <!-- Si existe cita -->
+                    	<c:if test="${miercoles.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${miercoles.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -146,17 +138,14 @@
                                     <a href="#" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                        </c:choose>
+                        </c:if>
                      </c:if>
                  </c:forEach>
               </td>
-              <td class="x4x">
+              <td class="x4x" align="center">
               	<c:forEach var="jueves" items="${horarioJueves}">
                 	<c:if test="${atencion.horaInicio == jueves.horaInicio && atencion.minutoInicio == jueves.minutoInicio}"> <!-- Si existe horario -->
-                        <c:choose>
-                        <c:when test="${jueves.cita == null}"> -- </c:when>
-                        <c:otherwise> <!-- Si existe cita -->
+                    	<c:if test="${jueves.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${jueves.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -165,17 +154,14 @@
                                     <a href="#" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                        </c:choose>
+                        </c:if>
                      </c:if>
                  </c:forEach>
               </td>
-              <td class="x4x">
+              <td class="x4x" align="center">
               	<c:forEach var="viernes" items="${horarioViernes}">
                 	<c:if test="${atencion.horaInicio == viernes.horaInicio && atencion.minutoInicio == viernes.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:choose>
-                        <c:when test="${viernes.cita == null}"> -- </c:when>
-                        <c:otherwise> <!-- Si existe cita -->
+                    	<c:if test="${viernes.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${viernes.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -184,17 +170,14 @@
                                     <a href="#" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                        </c:choose>
+                        </c:if>
                      </c:if>
                  </c:forEach>
               </td>
-              <td class="x4x">
+              <td class="x4x" align="center">
               	<c:forEach var="sabado" items="${horarioSabado}">
                 	<c:if test="${atencion.horaInicio == sabado.horaInicio && atencion.minutoInicio == sabado.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:choose>
-                        <c:when test="${sabado.cita == null}"> -- </c:when>
-                        <c:otherwise> <!-- Si existe cita -->
+                    	<c:if test="${sabado.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${sabado.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -203,17 +186,14 @@
                                     <a href="#" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                        </c:choose>
+                        </c:if>
                      </c:if>
                  </c:forEach>
               </td>
-              <td class="x4x">
+              <td class="x4x" align="center">
               	<c:forEach var="domingo" items="${horarioDomingo}">
                 	<c:if test="${atencion.horaInicio == domingo.horaInicio && atencion.minutoInicio == domingo.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:choose>
-                        <c:when test="${domingo.cita == null}"> -- </c:when>
-                        <c:otherwise> <!-- Si existe cita -->
+                    	<c:if test="${domingo.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${domingo.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -222,8 +202,7 @@
                                     <a href="#" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
-                        </c:otherwise>
-                        </c:choose>
+                        </c:if>
                      </c:if>
                  </c:forEach>
               </td>
