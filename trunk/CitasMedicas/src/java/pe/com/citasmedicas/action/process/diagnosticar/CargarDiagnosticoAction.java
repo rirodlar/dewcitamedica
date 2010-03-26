@@ -18,13 +18,14 @@ import pe.com.citasmedicas.service.CitaService;
     @Result(name = "success", value = "/prc/diagnostico.jsp", type = ServletDispatcherResult.class)
 })
 @Conversion()
-public class DiagnosticarAction extends BaseAction{
-
+public class CargarDiagnosticoAction extends BaseAction {
+    
     private CitaService citaService;
 
     @Override
     public String execute() {
         try {
+            System.out.println("param: " + request.getAttribute("txtCitaSelect"));
             return SUCCESS;
         } catch (Exception ex) {
             ex.printStackTrace();
