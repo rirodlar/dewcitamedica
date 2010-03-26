@@ -133,12 +133,12 @@
             </td>
             <td><b>Fec. pr&oacute;xima cita:</b>
               <input type="text" name="txtProximaCita" id="txtProximaCita" class="x4" style="width:70px" readonly="readonly" />
-              <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Reserva" align="top" style="cursor:hand" />
+              <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgProximaCita" id="imgProximaCita" width="19" height="24" border="0" alt="Buscar Fecha Cita" align="top" style="cursor:hand" />
 				<script type="text/javascript">
                     Calendar.setup({
-                        input : "txtSemana", // Input Id")
+                        input : "txtProximaCita", // Input Id")
                         ifFormat : "%d/%m/%Y", // Date format");
-                        button : "imgFechaDesde" // Button Id");
+                        button : "imgProximaCita" // Button Id");
                     });
                 </script>
              </td>
