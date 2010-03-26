@@ -1,10 +1,8 @@
 package pe.com.citasmedicas.model;
 
 import java.util.Date;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,10 +38,6 @@ public class Cita extends Bean{
     @ManyToOne(targetEntity=pe.com.citasmedicas.model.Paciente.class, optional=false)
     @JoinColumn(name="pacienteId")
     private Paciente paciente;
-
-    @ManyToOne(targetEntity=pe.com.citasmedicas.model.Medico.class, optional=true)
-    @JoinColumn(name="medicoId")
-    private Medico medico;
 
     @OneToOne(targetEntity=pe.com.citasmedicas.model.Horario.class, optional=false)
     @JoinColumn(name="horarioId")
@@ -119,20 +113,6 @@ public class Cita extends Bean{
      */
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
-    }
-
-    /**
-     * @return the medico
-     */
-    public Medico getMedico() {
-        return medico;
-    }
-
-    /**
-     * @param medico the medico to set
-     */
-    public void setMedico(Medico medico) {
-        this.medico = medico;
     }
 
     /**
