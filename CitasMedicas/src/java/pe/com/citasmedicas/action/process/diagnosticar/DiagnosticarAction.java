@@ -13,6 +13,7 @@ import org.apache.struts2.dispatcher.ServletDispatcherResult;
 import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.service.CitaService;
+
 /**
  *
  * @author dew - Grupo 04
@@ -24,10 +25,10 @@ import pe.com.citasmedicas.service.CitaService;
     @Result(name = "input", value = "/prc/diagnostico.jsp", type = ServletDispatcherResult.class)
 })
 @Conversion()
-public class DiagnosticarAction extends BaseAction{
+public class DiagnosticarAction extends BaseAction {
 
     private CitaService citaService;
-    private double txtPeso;
+    private Double txtPeso;
     private Integer txtEstatura;
     private String txtSintomas;
     private String txtDiagnostico;
@@ -54,9 +55,9 @@ public class DiagnosticarAction extends BaseAction{
             cita.setObservaciones(txtObservaciones);
             cita.setFechaProximaCita(txtProximaCita);
 
-            if (citaService.actualizarCita(cita))
+            if (citaService.actualizarCita(cita)) {
                 return SUCCESS;
-            else{
+            } else {
                 request.setAttribute("errorMsg", "No se pudo actualizar cita");
                 return ERROR;
             }
@@ -107,18 +108,18 @@ public class DiagnosticarAction extends BaseAction{
         this.txtObservaciones = txtObservaciones;
     }
 
-    public double getTxtPeso() {
+    public Double getTxtPeso() {
         return txtPeso;
     }
 
-    public void setTxtPeso(double txtPeso) {
+    public void setTxtPeso(Double txtPeso) {
         this.txtPeso = txtPeso;
     }
 
     /**
      * @return the txtSemana
      */
-    @TypeConversion(converter="pe.com.citasmedicas.action.converter.DateConverter")
+    @TypeConversion(converter = "pe.com.citasmedicas.action.converter.DateConverter")
     public Date getTxtProximaCita() {
         return txtProximaCita;
     }
@@ -126,8 +127,8 @@ public class DiagnosticarAction extends BaseAction{
     /**
      * @param txtSemana the txtSemana to set
      */
-    @TypeConversion(converter="pe.com.citasmedicas.action.converter.DateConverter")
-    @RequiredFieldValidator(message = "Por favor, ingrese una fecha.")
+    @TypeConversion(converter = "pe.com.citasmedicas.action.converter.DateConverter")
+    //@RequiredFieldValidator(message = "Por favor, ingrese una fecha.")
     public void setTxtProximaCita(Date txtProximaCita) {
         this.txtProximaCita = txtProximaCita;
     }
