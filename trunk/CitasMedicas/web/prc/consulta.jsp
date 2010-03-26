@@ -97,9 +97,10 @@
               <td class="x4x">
               	<c:forEach var="lunes" items="${horarioLunes}">
                 	<c:if test="${atencion.horaInicio == lunes.horaInicio && atencion.minutoInicio == lunes.minutoInicio}"> <!-- Si existe horario -->
+                    	<c:choose>
                     	<c:when test="${lunes.cita == null}"> -- </c:when>
                         <c:otherwise> <!-- Si existe cita -->
-                        	<c:choose>
+                            <c:choose>
                                 <c:when test="${lunes.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${lunes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:when>
@@ -108,14 +109,16 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
+                        </c:choose>
                      </c:if>
                  </c:forEach>
               </td>
               <td class="x4x">
               	<c:forEach var="martes" items="${horarioMartes}">
                 	<c:if test="${atencion.horaInicio == martes.horaInicio && atencion.minutoInicio == martes.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:when test="${martes.cita == null}"> -- </c:when>
-                        <c:otherwise> <!-- Si existe cita -->
+                    	<c:choose>
+                            <c:when test="${martes.cita == null}"> -- </c:when>
+                            <c:otherwise> <!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${martes.cita.estado=='PENDIENTE'}">
                                     <a href="#" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
@@ -125,12 +128,14 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
+                        </c:choose>
                      </c:if>
                  </c:forEach>
               </td>
               <td class="x4x">
               	<c:forEach var="miercoles" items="${horarioMiercoles}">
                 	<c:if test="${atencion.horaInicio == miercoles.horaInicio && atencion.minutoInicio == miercoles.minutoInicio}"> <!-- Si existe horario -->
+                        <c:choose>
                     	<c:when test="${miercoles.cita == null}"> -- </c:when>
                         <c:otherwise> <!-- Si existe cita -->
                         	<c:choose>
@@ -142,13 +147,15 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
+                        </c:choose>
                      </c:if>
                  </c:forEach>
               </td>
               <td class="x4x">
               	<c:forEach var="jueves" items="${horarioJueves}">
                 	<c:if test="${atencion.horaInicio == jueves.horaInicio && atencion.minutoInicio == jueves.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:when test="${jueves.cita == null}"> -- </c:when>
+                        <c:choose>
+                        <c:when test="${jueves.cita == null}"> -- </c:when>
                         <c:otherwise> <!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${jueves.cita.estado=='PENDIENTE'}">
@@ -159,13 +166,15 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
+                        </c:choose>
                      </c:if>
                  </c:forEach>
               </td>
               <td class="x4x">
               	<c:forEach var="viernes" items="${horarioViernes}">
                 	<c:if test="${atencion.horaInicio == viernes.horaInicio && atencion.minutoInicio == viernes.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:when test="${viernes.cita == null}"> -- </c:when>
+                    	<c:choose>
+                        <c:when test="${viernes.cita == null}"> -- </c:when>
                         <c:otherwise> <!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${viernes.cita.estado=='PENDIENTE'}">
@@ -176,13 +185,15 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
+                        </c:choose>
                      </c:if>
                  </c:forEach>
               </td>
               <td class="x4x">
               	<c:forEach var="sabado" items="${horarioSabado}">
                 	<c:if test="${atencion.horaInicio == sabado.horaInicio && atencion.minutoInicio == sabado.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:when test="${sabado.cita == null}"> -- </c:when>
+                    	<c:choose>
+                        <c:when test="${sabado.cita == null}"> -- </c:when>
                         <c:otherwise> <!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${sabado.cita.estado=='PENDIENTE'}">
@@ -193,13 +204,15 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
+                        </c:choose>
                      </c:if>
                  </c:forEach>
               </td>
               <td class="x4x">
               	<c:forEach var="domingo" items="${horarioDomingo}">
                 	<c:if test="${atencion.horaInicio == domingo.horaInicio && atencion.minutoInicio == domingo.minutoInicio}"> <!-- Si existe horario -->
-                    	<c:when test="${domingo.cita == null}"> -- </c:when>
+                    	<c:choose>
+                        <c:when test="${domingo.cita == null}"> -- </c:when>
                         <c:otherwise> <!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${domingo.cita.estado=='PENDIENTE'}">
@@ -210,6 +223,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:otherwise>
+                        </c:choose>
                      </c:if>
                  </c:forEach>
               </td>
