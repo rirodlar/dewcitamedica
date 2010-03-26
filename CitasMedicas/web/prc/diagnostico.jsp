@@ -22,6 +22,10 @@
                 frmDiagnostico.action = '<s:url value="/login/logout.action"/>'
                 frmDiagnostico.submit();
             }
+	    function lnkConsultarCita_onclick () {
+                frmDiagnostico.action = '<s:url value="/consulta/consultarCita.action"/>';
+                frmDiagnostico.submit();
+            }
         </script>
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
@@ -37,7 +41,7 @@
    
             <div class="top_menu">
             <div style="width:90px;float:left;margin:0 3px 0 3px;">&nbsp;</div>
-            <a href="../loguin.jsp" class="login">Salir</a>
+            <a href="javascript:cerrarSesion()" class="login">Salir</a>
             </div>
         
             <div id="menu">
@@ -51,7 +55,7 @@
         
         </div>
     </div>
-    <div id="profundidad">&nbsp;<a href="consulta.jsp" class="enlace">Consulta de Citas</a> &gt; Diagn&oacute;stico</div>
+    <div id="profundidad">&nbsp;<a href="javascript:lnkConsultarCita_onclick()" class="enlace">Consulta de Citas</a> &gt; Diagn&oacute;stico</div>
     
     <div id="contenido">
     <!-- Aqui el contenido de la pagina -->
@@ -68,7 +72,7 @@
             <td colspan="3" align="center"><table width="840px" align="left" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td colspan="3" align="center"><span class="titulo">"${cita.paciente.nombreCompleto}"</span></td>
-                <td width="115" rowspan="6"><img src="../resources/img/foto_carnet.jpg" width="112" height="129" /></td>
+                <td width="115" rowspan="6"><img src="../resources/img/foto_carnetx.jpg" width="112" height="129" /></td>
               </tr>
               <tr>
                 <td width="420">&nbsp;</td>
