@@ -80,12 +80,12 @@
                 <td width="233">&nbsp;</td>
               </tr>
               <tr>
-                <td align="left"><b>Fec. Nac.:</b> <s:date name="cita.paciente.fechaNacimiento" format="d 'de' MMMM 'de' yyyy" /></td>
+                <td align="left"><b>Fec. Nac.:</b> ${cita.paciente.fechaNacimientoFormat}</td>
                 <td align="left"><b>Peso:</b> </td>
                 <td align="left"><input type="text" name="txtPeso" id="txtPeso" class="x4" style="width:150px" value="${cita.paciente.peso}" /></td>
               </tr>
               <tr>
-                <td align="left"><b>Edad:</b> 30 años</td>
+                <td align="left"><b>Edad:</b> ${cita.paciente.edad} años</td>
                 <td align="left"><b>Estatura:</b> </td>
                 <td align="left"><input type="text" name="txtEstatura" id="txtEstatura" class="x4" style="width:150px" value="${cita.paciente.estatura}" /></td>
               </tr>
@@ -106,8 +106,8 @@
             <td width="420"><b>Especialidad:</b> ${cita.horario.especialidad.nombre}</td>
           </tr>
           <tr>
-            <td><b>Fecha Cita:</b> Martes 02 de Febrero</td>
-            <td><b>Hora Cita:</b> 15:00</td>
+            <td><b>Fecha Cita:</b> ${cita.horario.fechaInicioFormat}</td>
+            <td><b>Hora Cita:</b> ${horaCita}</td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -136,7 +136,7 @@
             <td><b>Observaciones: </b><input type="text" name="txtObservaciones" id="txtObservaciones" class="x4" style="width:260px" value="${cita.observaciones}" />
             </td>
             <td><b>Fec. pr&oacute;xima cita:</b>
-              <input type="text" name="txtProximaCita" id="txtProximaCita" class="x4" style="width:70px" readonly="readonly" />
+              <input type="text" name="txtProximaCita" id="txtProximaCita" class="x4" style="width:70px" readonly="readonly" value="${cita.fechaProximaCitaFormat}" />
               <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgProximaCita" id="imgProximaCita" width="19" height="24" border="0" alt="Buscar Fecha Cita" align="top" style="cursor:hand" />
 				<script type="text/javascript">
                     Calendar.setup({
