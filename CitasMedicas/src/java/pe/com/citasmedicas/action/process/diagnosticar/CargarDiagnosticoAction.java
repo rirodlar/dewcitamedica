@@ -2,7 +2,9 @@ package pe.com.citasmedicas.action.process.diagnosticar;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
+import java.util.Calendar;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts2.config.Namespace;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
@@ -30,15 +32,18 @@ public class CargarDiagnosticoAction extends BaseAction {
     public String execute() {
         try {
             Cita cita = null;
+            String horaCita = new String();
 
             validarAutenticacion(request);
             // Variables
             HttpSession sesion = request.getSession();
 
+            horaCita = DateFormatUtils.format(Calendar.getInstance(), "HH:mm");
             //Obtener cita seleccionada
             cita = citaService.getCitaPorId(txtCitaSelect);
 
             sesion.setAttribute("cita", cita);
+            sesion.setAttribute("horaCita", horaCita);
 
             return SUCCESS;
         } catch (Exception ex) {

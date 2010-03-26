@@ -1,6 +1,10 @@
 package pe.com.citasmedicas.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -99,6 +103,27 @@ public class Persona extends Bean {
      */
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    /**
+     * @return fecha nacimiento formateada
+     */
+    public String getFechaNacimientoFormat(){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(fechaNacimiento);
+    }
+
+    /**
+     * @return edad
+     */
+    public int getEdad(){
+
+        Calendar cal1 = new GregorianCalendar();
+        cal1.setTimeInMillis(this.fechaNacimiento.getTime());
+        Calendar cal2 = new GregorianCalendar();
+        cal2.setTimeInMillis(new Date().getTime());
+
+        return cal2.get(Calendar.YEAR) - cal1.get(Calendar.YEAR);
     }
 
     /**
