@@ -122,10 +122,10 @@
                     	<c:if test="${martes.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${martes.cita.estado=='PENDIENTE'}">
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${martes.cita.citaId})" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${martes.cita.citaId})" title="${martes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
@@ -138,10 +138,10 @@
                     	<c:if test="${miercoles.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${miercoles.cita.estado=='PENDIENTE'}">
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${miercoles.cita.citaId})" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${miercoles.cita.citaId})" title="${miercoles.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
@@ -154,10 +154,10 @@
                     	<c:if test="${jueves.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${jueves.cita.estado=='PENDIENTE'}">
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${jueves.cita.citaId})" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${jueves.cita.citaId})" title="${jueves.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
@@ -170,10 +170,10 @@
                     	<c:if test="${viernes.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${viernes.cita.estado=='PENDIENTE'}">
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${viernes.cita.citaId})" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${viernes.cita.citaId})" title="${viernes.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
@@ -186,10 +186,10 @@
                     	<c:if test="${sabado.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${sabado.cita.estado=='PENDIENTE'}">
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${sabado.cita.citaId})" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${sabado.cita.citaId})" title="${sabado.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
@@ -202,10 +202,10 @@
                     	<c:if test="${domingo.cita != null}"><!-- Si existe cita -->
                         	<c:choose>
                                 <c:when test="${domingo.cita.estado=='PENDIENTE'}">
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${domingo.cita.citaId})" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/write_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="javascript:lnkRegistrarDiagnostico(${lunes.cita.citaId})" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
+                                    <a href="javascript:lnkRegistrarDiagnostico(${domingo.cita.citaId})" title="${domingo.cita.paciente.nombreCompleto}"><img src="<s:url value='/resources/img/view_enabled.gif'/>" border="0" width="16" height="16" /></a>
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
