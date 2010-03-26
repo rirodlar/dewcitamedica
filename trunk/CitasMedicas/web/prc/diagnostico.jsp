@@ -80,7 +80,7 @@
                 <td width="233">&nbsp;</td>
               </tr>
               <tr>
-                <td align="left"><b>Fec. Nac.:</b> 15/03/1979</td>
+                <td align="left"><b>Fec. Nac.:</b> <s:date name="cita.paciente.fechaNacimiento" format="d 'de' MMMM 'de' yyyy" /></td>
                 <td align="left"><b>Peso:</b> </td>
                 <td align="left"><input type="text" name="txtPeso" id="txtPeso" class="x4" style="width:150px" value="${cita.paciente.peso}" /></td>
               </tr>
