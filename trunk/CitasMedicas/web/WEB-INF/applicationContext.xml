@@ -78,4 +78,10 @@
         <property name="citaService" ref="citaService" />
         <property name="medicoService" ref="medicoService" />
     </bean>
+    <bean id="cargarDiagnosticoAction" class="pe.com.citasmedicas.action.process.diagnosticar.CargarDiagnosticoAction">
+        <property name="citaService" ref="citaService" />
+    </bean>
+    <bean id="diagnosticarAction" class="pe.com.citasmedicas.action.process.diagnosticar.DiagnosticarAction">
+        <property name="citaService" ref="citaService" />
+    </bean>
 </beans>
