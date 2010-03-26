@@ -1,4 +1,4 @@
-﻿CREATE SCHEMA `cita_medica`;
+CREATE SCHEMA `cita_medica`;
 
 
 CREATE TABLE  `cita_medica`.`especialidad` (
@@ -52,7 +52,6 @@ CREATE TABLE  `cita_medica`.`cita` (
   `citaId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pacienteId` int(10) unsigned NOT NULL,
   `horarioId` int(10) unsigned NOT NULL,
-  `medicoId` int(10) unsigned COMMENT 'Medico que atiende la cita',
   `estado` varchar(13) NOT NULL DEFAULT 'RESERVADO',
   `sintoma` varchar(250) DEFAULT NULL,
   `diagnostico` varchar(45) DEFAULT NULL,
@@ -62,10 +61,8 @@ CREATE TABLE  `cita_medica`.`cita` (
   `observaciones` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`citaId`),
   KEY `FK_cita_paciente` (`pacienteId`),
-  KEY `FK_cita_medico` (`medicoId`),
   KEY `FK_cita_horario` (`horarioId`),
   CONSTRAINT `FK_cita_horario` FOREIGN KEY (`horarioId`) REFERENCES `horario` (`horarioId`),
-  CONSTRAINT `FK_cita_medico` FOREIGN KEY (`medicoId`) REFERENCES `persona` (`personaId`),
   CONSTRAINT `FK_cita_paciente` FOREIGN KEY (`pacienteId`) REFERENCES `persona` (`personaId`)
 );
 

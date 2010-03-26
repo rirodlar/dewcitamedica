@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
