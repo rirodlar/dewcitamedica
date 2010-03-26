@@ -29,4 +29,9 @@
     <package name="consulta" namespace="/consulta" extends="citaMedica">
         <action name="consultarCita" class="consultarCitaAction"></action>
     </package>
+
+    <package name="diagnostico" namespace="/diagnostico" extends="citaMedica">
+        <action name="cargarDiagnostico" class="cargarDiagnosticoAction"></action>
+        <action name="registrarDiagnostico" class="diagnosticarAction"></action>
+    </package>
 </struts>
