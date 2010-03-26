@@ -13,10 +13,20 @@
     <script type="text/javascript" src="<s:url value='/prc/js/diagnostico.js'/>"></script>
     <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
     <script type="text/javascript" src="<s:url value='/resources/jss/tools/Utiles.js'/>"></script>
+        <script type="text/javascript">
+            function btnGuardar_onclick () {
+                frmDiagnostico.action = '<s:url value="/diagnostico/registrarDiagnostico.action"/>';
+                frmDiagnostico.submit();
+            }
+            function cerrarSesion() {
+                frmDiagnostico.action = '<s:url value="/login/logout.action"/>'
+                frmDiagnostico.submit();
+            }
+        </script>
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
     <![endif]-->
-<title>Medical Theme Css Template</title>
+<title>Registrar Diagnostico</title>
 </head>
 <body class="principal">
 <div id="main_container">
@@ -52,64 +62,75 @@
       <div class="caja_contenido">
         <p>Por favor, registre los datos necesarios para la cita realizada.</p>
         <br/>
+        <s:form action="" method="POST" name="frmDiagnostico">
       	<table width="840px" border="0" cellpadding="0" cellspacing="0">
           <tr>
-            <td colspan="4" align="center"><table width="840px" align="left" border="0" cellpadding="0" cellspacing="0">
+            <td colspan="3" align="center"><table width="840px" align="left" border="0" cellpadding="0" cellspacing="0">
               <tr>
-                <td width="728" align="center"><span class="titulo">La Rosa Flores, Claribel</span></td>
-                <td width="112" rowspan="6"><img src="../resources/img/foto_carnet.jpg" width="112" height="129" /></td>
+                <td colspan="3" align="center"><span class="titulo">"${cita.paciente.nombreCompleto}"</span></td>
+                <td width="115" rowspan="6"><img src="../resources/img/foto_carnet.jpg" width="112" height="129" /></td>
+              </tr>
+              <tr>
+                <td width="420">&nbsp;</td>
+                <td width="72">&nbsp;</td>
+                <td width="233">&nbsp;</td>
+              </tr>
+              <tr>
+                <td align="left"><b>Fec. Nac.:</b> 15/03/1979</td>
+                <td align="left"><b>Peso:</b> </td>
+                <td align="left"><input type="text" name="txtPeso" id="txtPeso" class="x4" style="width:150px" value="${cita.paciente.peso}" /></td>
+              </tr>
+              <tr>
+                <td align="left"><b>Edad:</b> 30 años</td>
+                <td align="left"><b>Estatura:</b> </td>
+                <td align="left"><input type="text" name="txtEstatura" id="txtEstatura" class="x4" style="width:150px" value="${cita.paciente.estatura}" /></td>
+              </tr>
+              <tr>
+                <td align="left"><b>Tipo de Sangre:</b> O+</td>
+                <td align="left">&nbsp;</td>
+                <td align="left">&nbsp;</td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td><b>Fec. Nac.:</b> 15/03/1979</td>
-              </tr>
-              <tr>
-                <td><b>Edad:</b> 30 años</td>
-              </tr>
-              <tr>
-                <td><b>Tipo de Sangre:</b> O+</td>
-              </tr>
-              <tr>
+                <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
             </table></td>
           </tr>
           <tr>
-            <td><b>Médico:</b> Paredes Horacio, Alfredo</td>
-            <td>&nbsp;</td>
-            <td><b>Especialidad:</b> Cardiología</td>
+            <td width="420"><b>Médico:</b> ${cita.medico.nombreCompleto}</td>
+            <td width="420"><b>Especialidad:</b> ${cita.horario.especialidad.nombre}</td>
           </tr>
           <tr>
             <td><b>Fecha Cita:</b> Martes 02 de Febrero</td>
-            <td>&nbsp;</td>
             <td><b>Hora Cita:</b> 15:00</td>
           </tr>
           <tr>
-            <td><b>S&iacute;ntomas:</b></td>
             <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><b>S&iacute;ntomas:</b></td>
             <td><b>Diagnóstico:</b></td>
           </tr>
           <tr>
-            <td><textarea name="txtS&iacute;ntomas" id="txtSintomas" cols="100" rows="3" class="x4" style="width:350px">Tos constante.</textarea></td>
-            <td>&nbsp;</td>
-            <td><textarea name="txtDiagnostico" id="txtDiagnostico" cols="100" rows="3" class="x4" style="width:350px">Consulta para despistaje.</textarea></td>
+            <td><textarea name="txtSintomas" id="txtSintomas" cols="100" rows="3" class="x4" style="width:350px">${cita.sintoma}</textarea></td>
+            <td><textarea name="txtDiagnostico" id="txtDiagnostico" cols="100" rows="3" class="x4" style="width:350px">${cita.diagnostico}</textarea></td>
           </tr>
           <tr>
             <td><b>Receta:</b></td>
-            <td>&nbsp;</td>
             <td><b>An&aacute;lisis:</b></td>
           </tr>
           <tr>
-            <td><textarea name="txtS&iacute;ntomas" id="txtSintomas" cols="100" rows="3" class="x4" style="width:350px">Pastillas</textarea></td>
-            <td>&nbsp;</td>
-            <td><textarea name="txtDiagnostico" id="txtDiagnostico" cols="100" rows="3" class="x4" style="width:350px">Radiografia</textarea></td>
+            <td><textarea name="txtReceta" id="txtReceta" cols="100" rows="3" class="x4" style="width:350px">${cita.receta}</textarea></td>
+            <td><textarea name="txtAnalisis" id="txtAnalisis" cols="100" rows="3" class="x4" style="width:350px">${cita.analisis}</textarea></td>
           </tr>
           <tr>
-            <td colspan="4">&nbsp;</td>
+            <td colspan="3">&nbsp;</td>
           </tr>
           <tr>
+            <td><b>Observaciones: </b><input type="text" name="txtObservaciones" id="txtObservaciones" class="x4" style="width:260px" value="${cita.observaciones}" />
+            </td>
             <td><b>Fec. pr&oacute;xima cita:</b>
               <input type="text" name="txtProximaCita" id="txtProximaCita" class="x4" style="width:70px" readonly="readonly" />
               <IMG src="<s:url value='/resources/img/cdp.gif'/>" name="imgFechaDesde" id="imgFechaDesde" width="19" height="24" border="0" alt="Buscar Fecha de Reserva" align="top" style="cursor:hand" />
@@ -120,19 +141,17 @@
                         button : "imgFechaDesde" // Button Id");
                     });
                 </script>
-            </td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
+             </td>
           </tr>
           <tr>
-            <td colspan="4">&nbsp;</td>
+            <td colspan="3">&nbsp;</td>
           </tr>
           <tr>
-            <td colspan="4"><input type="button" name="btnGuardar" id="btnGuardar" class="x7g" value="Guardar" style="BACKGROUND-IMAGE: url(../resources/img/btn-bg1.gif)" /></td>
+            <td colspan="3"><input type="button" name="btnGuardar" id="btnGuardar" class="x7g" value="Guardar" style="BACKGROUND-IMAGE: url(../resources/img/btn-bg1.gif)" onclick="javascript:btnGuardar_onclick()" /></td>
           </tr>
         </table>
-
-        </div>
+		</s:form>
+      </div>
   
     </div>     
             
