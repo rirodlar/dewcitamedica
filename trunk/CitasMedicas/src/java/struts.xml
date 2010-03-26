@@ -32,6 +32,6 @@
 
     <package name="diagnostico" namespace="/diagnostico" extends="citaMedica">
         <action name="cargarDiagnostico" class="cargarDiagnosticoAction"></action>
-        <action name="registrarDiagnostico" class="diagnosticarAction"></action>
+        <action name="diagnosticar" class="diagnosticarAction"></action>
     </package>
 </struts>

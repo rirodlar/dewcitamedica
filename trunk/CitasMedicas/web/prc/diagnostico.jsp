@@ -15,7 +15,7 @@
     <script type="text/javascript" src="<s:url value='/resources/jss/tools/Utiles.js'/>"></script>
         <script type="text/javascript">
             function btnGuardar_onclick () {
-                frmDiagnostico.action = '<s:url value="/diagnostico/registrarDiagnostico.action"/>';
+                frmDiagnostico.action = '<s:url value="/diagnostico/diagnosticar.action"/>';
                 frmDiagnostico.submit();
             }
             function cerrarSesion() {
@@ -98,7 +98,7 @@
             </table></td>
           </tr>
           <tr>
-            <td width="420"><b>Médico:</b> ${cita.medico.nombreCompleto}</td>
+            <td width="420"><b>Médico:</b> ${cita.horario.medico.nombreCompleto}</td>
             <td width="420"><b>Especialidad:</b> ${cita.horario.especialidad.nombre}</td>
           </tr>
           <tr>
