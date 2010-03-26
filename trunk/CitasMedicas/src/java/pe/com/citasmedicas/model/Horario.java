@@ -1,5 +1,7 @@
 package pe.com.citasmedicas.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
@@ -177,6 +179,14 @@ public class Horario extends Bean {
         Formatter formatter = new Formatter(Locale.getDefault());
         formatter.format("%1$tH:%1$tM - %2$tH:%2$tM", getFechaInicio(), getFechaFin());
         return formatter.toString();
+    }
+
+    /**
+     * @return el fecha inicio formateada
+     */
+    public String getFechaInicioFormat(){
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        return df.format(fechaInicio);
     }
 
     @Override

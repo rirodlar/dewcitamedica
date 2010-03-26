@@ -1,5 +1,7 @@
 package pe.com.citasmedicas.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -197,6 +199,17 @@ public class Cita extends Bean{
      */
     public void setFechaProximaCita(Date fechaProximaCita) {
         this.fechaProximaCita = fechaProximaCita;
+    }
+
+    /**
+     * @return el fecha proxima cita formateada
+     */
+    public String getFechaProximaCitaFormat(){
+        if (this.fechaProximaCita != null){
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            return df.format(this.fechaProximaCita);
+        }
+        else return "";
     }
 }
 
