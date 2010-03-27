@@ -54,6 +54,7 @@ public class DiagnosticarAction extends BaseAction {
             cita.setAnalisis(txtAnalisis);
             cita.setObservaciones(txtObservaciones);
             cita.setFechaProximaCita(txtProximaCita);
+            cita.setEstado(cita.ESTADO_ATENDIDO);
 
             if (citaService.actualizarCita(cita)) {
                 return SUCCESS;
