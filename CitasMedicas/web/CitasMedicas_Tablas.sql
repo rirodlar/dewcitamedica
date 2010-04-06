@@ -18,6 +18,7 @@ CREATE TABLE  `cita_medica`.`persona` (
   `peso` double DEFAULT NULL COMMENT 'Peso del paciente en kilogramos',
   `estatura` int(10) unsigned DEFAULT NULL COMMENT 'Estatura del paciente en centimetros',
   `nroColegiatura` varchar(5) DEFAULT NULL,
+  `rutaFoto` varchar(25) DEFAULT NULL,
   `tipo` varchar(1) NOT NULL DEFAULT 'P' COMMENT 'Indica si es paciente (P) o medico (M)',
   PRIMARY KEY (`personaId`)
 );
