@@ -4,8 +4,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
         <title>Ingreso al sistema</title>
-        <link href="<s:url value='/resources/css/style.css'/>" rel="stylesheet" type="text/css" media="screen"/>
+        <style type="text/css">
+<!--
+.errorMessage {
+    FONT-SIZE: x-small; COLOR: #C40000; FONT-FAMILY: Arial, Helvetica, sans-serif;
+}
+.label {
+    font-weight: bold;
+}
+-->
+</style>
     </head>
     <body class="principal">
         <div id="main_loguin">
@@ -15,19 +25,14 @@
                         <s:form action="login" namespace="/logeo" method="POST" name="frmLogin">
                             <table border="0" cellpadding="0" cellspacing="0" align="center" width="210px">
                                 <tr>
-                                    <td><b>Usuario:</b></td>
-                                    <td>&nbsp;</td>
-                                    <td><s:textfield name="username" cssClass="x4" cssStyle="width:150px" /></td>
+                                    <td>&nbsp;<s:textfield label="Usuario" name="username" cssClass="x4" cssStyle="width:150px" /></td>
                                 </tr>
                                 <tr><td colspan="3">&nbsp;</td></tr>
                                 <tr>
-                                    <td><b>Password:</b></td>
-                                    <td>&nbsp;</td>
-                                    <td><s:password name="password" cssClass="x4" cssStyle="width:150px" /></td>
+                                    <td>&nbsp;<s:password label="Password" name="password" cssClass="x4" cssStyle="width:150px" /></td>
                                 </tr>
                                 <tr><td colspan="3">&nbsp;</td></tr>
                                 <tr>
-                                    <td align="center">&nbsp;</td>
                                     <td align="center">&nbsp;</td>
                                     <td align="left"><s:submit name="btnEnviar" value="Enviar" cssClass="x7g" cssStyle="BACKGROUND-IMAGE: url(resources/img/btn-bg1.gif)" /></td>
                                 </tr>
