@@ -25,7 +25,7 @@ public class SeguridadFilter implements Filter {
         String uri = request.getRequestURI();
         if (!uri.endsWith("login.jsp") && !uri.endsWith("logout.jsp") &&
                 !uri.endsWith("home.jsp") && !uri.endsWith("errorPage.jsp") &&
-                !uri.contains("/resources/")) {
+                !uri.contains("/resources/") && !uri.endsWith("/CitasMedicas/")) {
             if (!SeguridadUtil.estaAutenticado(request)) {
                 System.out.println("la sesión ha caducado");
                 response.sendRedirect(request.getContextPath() + "/logeo/login.action");
