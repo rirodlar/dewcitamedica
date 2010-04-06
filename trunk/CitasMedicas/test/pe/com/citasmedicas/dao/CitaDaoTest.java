@@ -25,7 +25,6 @@ public class CitaDaoTest {
             CitaDao citaDao = new CitaDaoHbn();
             Cita cita = citaDao.getCitaPorHorario(new Integer(1000034));
             Assert.assertEquals(cita.getCitaId().intValue(), 1000001);
-            Assert.assertEquals(cita.getMedico().getApellidoPaterno(), "SALAZAR");
             Assert.assertEquals(cita.getPaciente().getApellidoPaterno(), "TALAVERA");
 
             List<Cita> citas = citaDao.getCitasPendientes(new Integer(1000010));
