@@ -21,17 +21,25 @@ public class SeguridadFilter implements Filter {
     public void doFilter(ServletRequest _request, ServletResponse _response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) _request;
         HttpServletResponse response = (HttpServletResponse) _response;
-        if (!SeguridadUtil.estaAutenticado(request)) {
-            System.out.println("la sesión ha caducado");
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
-            return;
+        System.out.println("FILTER -> " + request.getRequestURI());
+        String uri = request.getRequestURI();
+        if (!uri.endsWith("login.jsp") && !uri.endsWith("logout.jsp") &&
+                !uri.endsWith("home.jsp") && !uri.endsWith("errorPage.jsp") &&
+                !uri.contains("/resources/")) {
+            if (!SeguridadUtil.estaAutenticado(request)) {
+                System.out.println("la sesión ha caducado");
+                response.sendRedirect(request.getContextPath() + "/logeo/login.action");
+                return;
+            }
         }
         chain.doFilter(request, response);
     }
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }
