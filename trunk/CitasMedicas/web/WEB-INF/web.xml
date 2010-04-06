@@ -35,16 +35,16 @@
     </filter>
     <filter-mapping>
         <filter-name>struts2</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>*.action</url-pattern>
     </filter-mapping>
-    <!--<filter>
+    <filter>
         <filter-name>autenticacion</filter-name>
         <filter-class>pe.com.citasmedicas.filter.SeguridadFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>autenticacion</filter-name>
-        <url-regexp>/prc/*\.jsp</url-regexp>
-    </filter-mapping>-->
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
     <listener>
         <listener-class>pe.com.citasmedicas.listener.ContextListener</listener-class>
     </listener>

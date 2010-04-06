@@ -12,7 +12,7 @@
                 frmHome.submit();
             }
             function login () {
-                frmHome.accion.value = 'login';
+                frmHome.accion.value = '<%=request.getContextPath()%>/login.jsp';
                 frmHome.submit();
             }
         </script>
@@ -118,9 +118,9 @@
                 </div>
                 <div class="clear"></div>
             </div>
-            <s:form action="home" method="POST" name="frmHome">
-                <s:hidden name="accion" />
-            </s:form>
+            <form action="home.action" method="POST" name="frmHome">
+                <input type="hidden" name="accion" />
+            </form>
             <div id="footer">
                 <div class="copyright">
                     <img src="resources/img/footer_logo.gif" alt="" title="" />
