@@ -4,13 +4,11 @@
  */
 package pe.com.citasmedicas.action;
 
-import com.opensymphony.xwork2.ActionSupport;
 import javax.servlet.http.HttpSession;
 import org.apache.struts2.config.Result;
 import org.apache.struts2.config.Results;
 import org.apache.struts2.dispatcher.ServletActionRedirectResult;
 import org.apache.struts2.dispatcher.ServletDispatcherResult;
-import org.apache.struts2.dispatcher.ServletRedirectResult;
 import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Usuario;
 
@@ -29,25 +27,21 @@ public class HomeAction extends BaseAction {
 
     @Override
     public String execute() throws Exception {
-        if (accion.equals("login")) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
             return "login";
+        }
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario == null) {
+            return "login";
+        }
+        //Validar rol
+        if (usuario.getPersona() instanceof Medico) {
+            System.out.println("medico");
+            return "consultar";
         } else {
-            HttpSession session = request.getSession(false);
-            if (session == null) {
-                return "login";
-            }
-            Usuario usuario = (Usuario) session.getAttribute("usuario");
-            if (usuario == null) {
-                return "login";
-            }
-            //Validar rol
-            if (usuario.getPersona() instanceof Medico) {
-                System.out.println("medico");
-                return "consultar";
-            } else {
-                System.out.println("paciente");
-                return "reservar";
-            }
+            System.out.println("paciente");
+            return "reservar";
         }
     }
 
