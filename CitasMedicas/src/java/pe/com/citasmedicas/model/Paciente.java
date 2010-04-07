@@ -18,6 +18,9 @@ public class Paciente extends Persona{
     @Column(name="estatura", nullable=false)
     private Integer estatura;
 
+    @Column(name="rutaFoto", nullable=true, length=25)
+    private String rutaFoto;
+
     /**
      * @return the peso
      */
@@ -44,6 +47,20 @@ public class Paciente extends Persona{
      */
     public void setEstatura(Integer estatura) {
         this.estatura = estatura;
+    }
+
+    /**
+     * @return the rutaFoto
+     */
+    public String getRutaFoto() {
+        return rutaFoto;
+    }
+
+    /**
+     * @param rutaFoto the rutaFoto to set
+     */
+    public void setRutaFoto(String rutaFoto) {
+        this.rutaFoto = rutaFoto;
     }
 }
 
