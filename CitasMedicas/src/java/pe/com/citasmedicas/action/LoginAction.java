@@ -28,6 +28,11 @@ public class LoginAction extends BaseAction {
 
     private UsuarioService usuarioService;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return
+     * @throws Exception
+     */
     @Override
     public String execute() throws Exception {
         try {
@@ -55,6 +60,7 @@ public class LoginAction extends BaseAction {
     }
 
     /**
+     * Obtiene el nombre del usuario
      * @return the username
      */
     public String getUsername() {
@@ -62,6 +68,7 @@ public class LoginAction extends BaseAction {
     }
 
     /**
+     * Establece el nombre del usuario ingresado validando si se ingresó nulo
      * @param username the username to set
      */
     @RequiredStringValidator(message = "Por favor, ingrese su nombre de usuario.", trim = true)
@@ -70,6 +77,7 @@ public class LoginAction extends BaseAction {
     }
 
     /**
+     * Obtiene la clave ingresada por el usuario
      * @return the password
      */
     public String getPassword() {
@@ -77,6 +85,7 @@ public class LoginAction extends BaseAction {
     }
 
     /**
+     * Establece la clave validando si es nula
      * @param password the password to set
      */
     @RequiredStringValidator(message = "Por favor, ingrese su contraseña.", trim = true)
@@ -85,6 +94,7 @@ public class LoginAction extends BaseAction {
     }
 
     /**
+     * Establece el servicio que maneja los métodos concernientes a la clase Usuario
      * @param usuarioService the usuarioService to set
      */
     public void setUsuarioService(UsuarioService usuarioService) {
