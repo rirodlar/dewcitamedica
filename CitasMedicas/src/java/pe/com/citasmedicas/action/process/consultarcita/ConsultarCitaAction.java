@@ -2,7 +2,6 @@ package pe.com.citasmedicas.action.process.consultarcita;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
-import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +24,7 @@ import pe.com.citasmedicas.service.CitaService;
 import pe.com.citasmedicas.service.HorarioService;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados por la funcionalidad Consultar Cita
  * @author dew - Grupo 04
  */
 @Namespace(value = "/consulta")
@@ -41,6 +40,10 @@ public class ConsultarCitaAction extends BaseAction {
     private CitaService citaService;
     private MedicoService medicoService;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return resultado de la accion
+     */
     @Override
     public String execute() {
         try {
@@ -183,26 +186,50 @@ public class ConsultarCitaAction extends BaseAction {
         this.txtSemana = txtSemana;
     }
 
+    /**
+     * Obtiene el servicio que maneja los médicos
+     * @return servicio
+     */
     public MedicoService getMedicoService() {
         return medicoService;
     }
 
+    /**
+     * Establece el servicio que maneja los médicos
+     * @param medicoService servicio
+     */
     public void setMedicoService(MedicoService medicoService) {
         this.medicoService = medicoService;
     }
 
+    /**
+     * Obtiene el servicio que maneja las citas
+     * @return servicio
+     */
     public CitaService getCitaService() {
         return citaService;
     }
 
+    /**
+     * Establece el servicio que maneja las citas
+     * @param citaService servicio
+     */
     public void setCitaService(CitaService citaService) {
         this.citaService = citaService;
     }
 
+    /**
+     * Obtiene el servicio que maneja los horarios
+     * @return servicio
+     */
     public HorarioService getHorarioService() {
         return horarioService;
     }
 
+    /**
+     * Establece el servicio que maneja los horarios
+     * @param horarioService servicio
+     */
     public void setHorarioService(HorarioService horarioService) {
         this.horarioService = horarioService;
     }
