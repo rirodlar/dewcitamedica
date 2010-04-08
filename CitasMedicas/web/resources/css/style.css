@@ -360,3 +360,6 @@ font-size:16px;
 float:center;
 font-weight:bold;
 }
+span.error{
+color:#C40000;
+}
