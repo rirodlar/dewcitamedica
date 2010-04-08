@@ -13,7 +13,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Medical clinic - Error</title>
         <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
-        <!--<link rel="stylesheet" type="text/css" href="resources/css/style.css" media="screen" />-->
     </head>
     <body class="principal">
         <div id="main_loguin">
