@@ -12,7 +12,7 @@ import pe.com.citasmedicas.model.Usuario;
 import pe.com.citasmedicas.service.UsuarioService;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados la pantalla Login
  * @author dew - Grupo 04
  */
 @Namespace(value="/logeo")
