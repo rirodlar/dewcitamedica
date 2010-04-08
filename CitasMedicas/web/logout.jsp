@@ -5,15 +5,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Medical clinic - Logout</title>
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css" media="screen" />
+        <link rel="stylesheet" type="text/css" href="<s:url value='/resources/css/style.css'/>" media="screen" />
     </head>
     <body class="principal">
         <div id="main_loguin">
             <div class="loguin_bg">
             	<div style="padding-left:30px; float:left; width:162px">
-                    <a href="home.jsp"><img src="resources/img/logo.png" alt="" title="" width="162" height="54" border="0" /></a>
+                    <a href="home.jsp"><img src="<s:url value='/resources/img/logo.png' />" alt="" title="" width="162" height="54" border="0" /></a>
                 </div>
-                <div style="float:right; padding-right:30px;"><img src="resources/img/d001.gif" width="165" height="230" /></div>
+                <div style="float:right; padding-right:30px;"><img src="<s:url value='/resources/img/d001.gif' />" width="165" height="230" /></div>
                 <div style="padding-left:30px; padding-top:90px; text-align:center"><span class="msg01">Gracias por utilizar nuestros servicios...</span></div>
 			</div>
             <div id="footer_loguin">&copy; Medical Clinic 2008. All Rights Reserved</div>
