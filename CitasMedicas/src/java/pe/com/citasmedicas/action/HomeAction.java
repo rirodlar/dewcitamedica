@@ -13,7 +13,7 @@ import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.model.Usuario;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados la pantalla Home
  * @author dew - Grupo 04
  */
 @Results({
@@ -25,6 +25,11 @@ public class HomeAction extends BaseAction {
 
     private String accion;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return
+     * @throws Exception
+     */
     @Override
     public String execute() throws Exception {
         HttpSession session = request.getSession(false);
@@ -46,6 +51,7 @@ public class HomeAction extends BaseAction {
     }
 
     /**
+     * Obtiene la acción solicitada
      * @return the accion
      */
     public String getAccion() {
@@ -53,6 +59,7 @@ public class HomeAction extends BaseAction {
     }
 
     /**
+     * Retorna la acción solicitada
      * @param accion the accion to set
      */
     public void setAccion(String accion) {
