@@ -27,7 +27,7 @@ public class HomeAction extends BaseAction {
 
     /**
      * Método encargado de ejecutar la acción solicitada
-     * @return
+     * @return resultado de la accion
      * @throws Exception
      */
     @Override
