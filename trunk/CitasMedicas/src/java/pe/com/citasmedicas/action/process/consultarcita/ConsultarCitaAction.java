@@ -157,6 +157,12 @@ public class ConsultarCitaAction extends BaseAction {
         }
     }
 
+    /**
+     * Método que valida la existencia de un horario en la lista de horarios
+     * @param atencion Horario de atención de la institución
+     * @param horarios Horarios del médico para un día específico
+     * @return indicador verdadero o falso
+     */
     private boolean existeHorario(Horario atencion, List<Horario> horarios) {
         boolean existe = false;
         for (Horario horario : horarios) {
@@ -170,6 +176,7 @@ public class ConsultarCitaAction extends BaseAction {
     }
 
     /**
+     * Obtiene la fecha de la semana y la convierte a Date
      * @return the txtSemana
      */
     @TypeConversion(converter = "pe.com.citasmedicas.action.converter.DateConverter")
@@ -178,6 +185,7 @@ public class ConsultarCitaAction extends BaseAction {
     }
 
     /**
+     * Establece la fecha de la semana
      * @param txtSemana the txtSemana to set
      */
     @TypeConversion(converter = "pe.com.citasmedicas.action.converter.DateConverter")

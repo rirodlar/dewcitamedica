@@ -1,7 +1,6 @@
 package pe.com.citasmedicas.action.process.diagnosticar;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
-import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import java.util.Calendar;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -14,7 +13,7 @@ import pe.com.citasmedicas.action.BaseAction;
 import pe.com.citasmedicas.model.Cita;
 import pe.com.citasmedicas.service.CitaService;
 /**
- *
+ * Esta clase contiene los métodos utilizados por la funcionalidad Cargar Diagnóstico
  * @author dew - Grupo 04
  */
 @Namespace(value = "/diagnostico")
@@ -28,6 +27,10 @@ public class CargarDiagnosticoAction extends BaseAction {
     private CitaService citaService;
     private Integer txtCitaSelect;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return resultado de la accion
+     */
     @Override
     public String execute() {
         try {
@@ -53,18 +56,34 @@ public class CargarDiagnosticoAction extends BaseAction {
         }
     }
 
+    /**
+     * Obtiene el servicio que maneja las Citas
+     * @return citaService servicio
+     */
     public CitaService getCitaService() {
         return citaService;
     }
 
+    /**
+     * Establece el servicio que maneja las citas
+     * @param citaService
+     */
     public void setCitaService(CitaService citaService) {
         this.citaService = citaService;
     }
 
+    /**
+     * Obtiene la cita seleccionada
+     * @return txtCitaSelect Id de la cita
+     */
     public Integer getTxtCitaSelect() {
         return txtCitaSelect;
     }
     
+    /**
+     * Establece la cita seleccionada
+     * @param txtCitaSelect Id de la cita
+     */
     public void setTxtCitaSelect(Integer txtCitaSelect) {
         this.txtCitaSelect = txtCitaSelect;
     }
