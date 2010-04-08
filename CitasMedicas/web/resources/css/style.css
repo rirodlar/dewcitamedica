@@ -353,3 +353,10 @@ margin:auto;
 /*FONT-SIZE: xx-small; COLOR: #426ca7; FONT-FAMILY: Tahoma,Arial,Helvetica,Geneva,sans-serif*/
 FONT-SIZE: x-small; COLOR: #C40000; FONT-FAMILY: Arial, Helvetica, sans-serif;
 }
+/*Mensajes*/
+.msg01{
+color:#3b5564;
+font-size:16px;
+float:center;
+font-weight:bold;
+}
