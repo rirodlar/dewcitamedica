@@ -7,15 +7,15 @@ import pe.com.citasmedicas.filter.SeguridadUtil;
 import pe.com.citasmedicas.exception.SeguridadException;
 
 /**
- * @author dew - Grupo 04
  * Action base del cual extienden los demás Action
+ * @author dew - Grupo 04
  */
 public class BaseAction extends ActionSupport implements ServletRequestAware{
     
     protected HttpServletRequest request;
 
     /**
-     * Establece el request a la clase
+     * Establece el request
      * @param request
      */
     @Override
