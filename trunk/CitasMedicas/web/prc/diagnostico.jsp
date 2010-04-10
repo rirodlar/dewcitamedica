@@ -19,7 +19,7 @@
                 frmDiagnostico.submit();
             }
             function cerrarSesion() {
-                frmDiagnostico.action = '<s:url value="/login/logout.action"/>'
+                frmDiagnostico.action = '<s:url value="/logeo/logout.action"/>'
                 frmDiagnostico.submit();
             }
 	    function lnkConsultarCita_onclick () {

@@ -20,13 +20,18 @@ public class SeguridadFilter implements Filter {
     public void doFilter(ServletRequest _request, ServletResponse _response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) _request;
         HttpServletResponse response = (HttpServletResponse) _response;
-        System.out.println("FILTER -> " + request.getRequestURI());
         String uri = request.getRequestURI();
-        if (!uri.endsWith("login.jsp") && !uri.endsWith("logout.jsp") && !uri.endsWith("action") &&
+        if(uri.endsWith(".jsp") && uri.contains("/prc/")){
+            System.out.println("FILTER IF -> " + request.getRequestURI());
+            request.setAttribute("errorMsg", "La página a la que usted quiere acceder no existe.");
+            response.sendRedirect(request.getContextPath() + "/errorPage.jsp?errorMsg=La página a la que usted quiere acceder no existe.");
+            return;
+        }
+        else if (!uri.endsWith("login.jsp") && !uri.endsWith("logout.jsp") && 
                 !uri.endsWith("home.jsp") && !uri.endsWith("errorPage.jsp") &&
                 !uri.contains("/resources/") && !uri.endsWith("/CitasMedicas/")) {
+            System.out.println("FILTER ELSE -> " + request.getRequestURI());
             if (!SeguridadUtil.estaAutenticado(request)) {
-                System.out.println("la sesión ha caducado");
                 response.sendRedirect(request.getContextPath() + "/logeo/login.action");
                 return;
             }
