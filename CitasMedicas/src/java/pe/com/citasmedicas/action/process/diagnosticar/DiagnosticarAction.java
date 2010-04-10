@@ -61,9 +61,10 @@ public class DiagnosticarAction extends BaseAction {
             cita.setEstado(Cita.ESTADO_ATENDIDO);
 
             if (citaService.actualizarCita(cita)) {
+                request.setAttribute("successMsg", "El diagnostico ha sido guardado satisfactoriamente.");
                 return SUCCESS;
             } else {
-                request.setAttribute("errorMsg", "No se pudo actualizar cita");
+                request.setAttribute("errorMsg", "No se pudo actualizar el diagnostico.");
                 return ERROR;
             }
         } catch (Exception ex) {
