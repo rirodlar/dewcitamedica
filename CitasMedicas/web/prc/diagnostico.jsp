@@ -154,7 +154,14 @@
             <td colspan="3"><input type="button" name="btnGuardar" id="btnGuardar" class="x7g" value="Guardar" style="BACKGROUND-IMAGE: url(../resources/img/btn-bg1.gif)" onclick="javascript:btnGuardar_onclick()" /></td>
           </tr>
         </table>
-		</s:form>
+        <p/>
+        <c:if test="${errorMsg != null}">
+            <span class="x2o">${errorMsg}</span><br />
+        </c:if>
+        <c:if test="${successMsg != null}">
+            <span class="confirm">${successMsg}</span><br />
+        </c:if>
+	</s:form>
       </div>
   
     </div>     
