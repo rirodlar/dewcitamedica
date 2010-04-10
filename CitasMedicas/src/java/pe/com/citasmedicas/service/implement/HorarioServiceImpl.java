@@ -11,7 +11,7 @@ import pe.com.citasmedicas.model.Horario;
 import pe.com.citasmedicas.model.Medico;
 
 /**
- *
+ * Esta clase contiene los métodos de servicio implementados
  * @author dew - Grupo 04
  */
 @Service
@@ -21,54 +21,51 @@ public class HorarioServiceImpl implements HorarioService {
 
     /**
      * Obtiene un horario por su id
-     * @param Integer horarioId
      * @return Horario
      */
+    @Override
     public Horario getHorarioPorId(Integer horarioId) {
         return horarioDao.getHorarioPorId(horarioId);
     }
 
     /**
      * Obtiene todos los horarios de un médico para una especialidad y fecha específica
-     * @param Especialidad especialidad
-     * @param Medico medico
-     * @param Date fecha
      * @return List<Horario>
      */
+    @Override
     public List<Horario> getHorariosPorEspecMedicoFecha(Especialidad especialidad, Medico medico, Date fecha) {
         return horarioDao.getHorariosPorEspecMedicoFecha(especialidad, medico, fecha);
     }
 
     /**
      * Obtiene todos los horarios de un médico para una especialidad y fecha específica
-     * @param Integer especialidadId
-     * @param Integer medicoId
-     * @param Date fecha
      * @return List<Horario>
      */
+    @Override
     public List<Horario> getHorariosPorEspecMedicoFecha(Integer especialidadId, Integer medicoId, Date fecha) {
         return horarioDao.getHorariosPorEspecMedicoFecha(especialidadId, medicoId, fecha);
     }
 
 
+    @Override
     public List<Horario> getHorarioAtencion() {
         return horarioDao.getHorarioAtencion();
     }
 
     /**
      * Elimina un horario
-     * @param Horario horario
      * @return boolean
      */
+    @Override
     public boolean eliminarHorario(Horario horario) {
         return horarioDao.eliminarHorario(horario);
     }
 
     /**
      * Actualiza un horario
-     * @param Horario horario
      * @return boolean
      */
+    @Override
     public boolean actualizarHorario(Horario horario) {
         return horarioDao.actualizarHorario(horario);
     }

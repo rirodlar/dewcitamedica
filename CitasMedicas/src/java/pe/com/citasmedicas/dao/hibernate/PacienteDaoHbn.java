@@ -9,17 +9,18 @@ import org.springframework.stereotype.Repository;
 import pe.com.citasmedicas.model.Paciente;
 
 /**
- *
+ * Esta clase contiene los métodos de persistencia implementados
  * @author dew - Grupo 04
  */
 @Repository
 public class PacienteDaoHbn implements PacienteDao {
 
-     /**
+    /**
      * Obtiene un Paciente por su Id
-     * @param Integer pacienteId
-     * @return Paciente
+     * @param pacienteId identificador del paciente
+     * @return Paciente datos del paciente
      */
+    @Override
     public Paciente getPacientePorId(Integer pacienteId) {
         if (pacienteId == null) {
             return null;

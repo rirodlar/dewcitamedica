@@ -7,7 +7,7 @@ import pe.com.citasmedicas.service.PacienteService;
 import pe.com.citasmedicas.model.Paciente;
 
 /**
- *
+ * Esta clase contiene los métodos de servicio implementados
  * @author dew - Grupo 04
  */
 @Service
@@ -17,9 +17,9 @@ public class PacienteServiceImpl implements PacienteService {
 
     /**
      * Obtiene un Paciente por su Id
-     * @param Integer pacienteId
      * @return Paciente
      */
+    @Override
     public Paciente getPacientePorId(Integer pacienteId) {
         return pacienteDao.getPacientePorId(pacienteId);
     }

@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
- *
+ * Esta clase contiene los métodos de persistencia implementados
  * @author dew - Grupo 04
  */
 public class HibernateUtil {
@@ -19,10 +19,17 @@ public class HibernateUtil {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public static SessionFactory getSessionFactory(){
         return sessionFactory;
     }
 
+    /**
+     *
+     */
     public static void shutdown(){
         getSessionFactory().close();
     }

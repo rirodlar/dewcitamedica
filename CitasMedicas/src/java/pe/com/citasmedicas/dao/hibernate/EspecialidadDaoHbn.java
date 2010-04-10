@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import pe.com.citasmedicas.model.Especialidad;
 
 /**
- *
+ * Esta clase contiene los métodos de persistencia implementados
  * @author dew - Grupo 04
  */
 @Repository
@@ -20,8 +20,9 @@ public class EspecialidadDaoHbn implements EspecialidadDao {
 
     /**
      * Obtiene todas las especialidades registradas
-     * @return List<Especialidad>
+     * @return List<Especialidad> lista de especialidad
      */
+    @Override
     public List<Especialidad> getEspecialidades() {
         List<Especialidad> especialidades = null;
         Session hs = null;
@@ -49,9 +50,10 @@ public class EspecialidadDaoHbn implements EspecialidadDao {
 
     /**
      * Obtiene una especialidad por su id
-     * @param Integer especialidadId
-     * @return Especialidad
+     * @param especialidadId identificador de especialidad
+     * @return Especialidad datos de la especialidad
      */
+    @Override
     public Especialidad getEspecialidadPorId(Integer especialidadId) {
         if (especialidadId == null) {
             return null;

@@ -8,7 +8,7 @@ import pe.com.citasmedicas.dao.EspecialidadDao;
 import pe.com.citasmedicas.model.Especialidad;
 
 /**
- *
+ * Esta clase contiene los métodos de servicio implementados
  * @author dew - Grupo 04
  */
 @Service
@@ -20,15 +20,16 @@ public class EspecialidadServiceImpl implements EspecialidadService {
      * Obtiene todas las especialidades registradas
      * @return List<Especialidad>
      */
+    @Override
     public List<Especialidad> getEspecialidades() {
         return especialidadDao.getEspecialidades();
     }
 
     /**
      * Obtiene una especialidad por su id
-     * @param Integer especialidadId
      * @return Especialidad
      */
+    @Override
     public Especialidad getEspecialidadPorId(Integer especialidadId) {
         return especialidadDao.getEspecialidadPorId(especialidadId);
     }

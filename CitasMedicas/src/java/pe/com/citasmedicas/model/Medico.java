@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
 /**
- *
+ * Hace referencia a un medico que brinda atencion en la clinica
  * @author dew - Grupo 04
  */
 @Entity

@@ -14,7 +14,7 @@ import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
 
 /**
- *
+ * Esta clase contiene los métodos de persistencia implementados
  * @author dew - Grupo 04
  */
 @Repository
@@ -22,9 +22,10 @@ public class MedicoDaoHbn implements MedicoDao {
 
     /**
      * Obtiene un médico por su id
-     * @param Integer medicoId
-     * @return Medico
+     * @param medicoId identificador del medico
+     * @return Medico datos del medico
      */
+    @Override
     public Medico getMedicoPorId(Integer medicoId) {
         if (medicoId == null) {
             return null;
@@ -53,9 +54,10 @@ public class MedicoDaoHbn implements MedicoDao {
 
     /**
      * Obtiene todas los médicos de una especialidad específica
-     * @param Especialidad especialidad
-     * @return List<Medico>
+     * @param especialidad datos de la especialidad
+     * @return List<Medico> lista de medicos encontrados
      */
+    @Override
     public List<Medico> getMedicosPorEspecialidad(Especialidad especialidad) {
         if(especialidad == null){
             return new ArrayList<Medico>();
@@ -65,9 +67,10 @@ public class MedicoDaoHbn implements MedicoDao {
 
     /**
      * Obtiene todas los médicos de una especialidad específica
-     * @param Integer especialidadId
-     * @return List<Medico>
+     * @param especialidadId identificador de la especialidad
+     * @return List<Medico> lista de medicos
      */
+    @Override
     public List<Medico> getMedicosPorEspecialidad(Integer especialidadId) {
         if (especialidadId == null) {
             return null;

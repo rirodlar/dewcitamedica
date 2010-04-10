@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import pe.com.citasmedicas.model.Usuario;
 
 /**
- *
+ * Esta clase contiene los métodos de persistencia implementados
  * @author dew - Grupo 04
  */
 @Repository
@@ -19,9 +19,10 @@ public class UsuarioDaoHbn implements UsuarioDao {
 
     /**
      * Obtiene un usuario por su username
-     * @param String username
-     * @return Usuario
+     * @param username nombre de usuario
+     * @return Usuario datos del usuario
      */
+    @Override
     public Usuario getUsuarioPorUsername(String username) {
         if (username == null) {
             return null;
