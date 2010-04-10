@@ -20,7 +20,7 @@ import pe.com.citasmedicas.service.EspecialidadService;
 import pe.com.citasmedicas.service.MedicoService;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados por la funcionalidad Iniciar Reserva
  * @author dew - Grupo 04
  */
 @Namespace(value="/reserva")
@@ -34,6 +34,10 @@ public class IniciarReservaAction extends BaseAction{
     private MedicoService medicoService;
     private CitaService citaService;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return resultado de la accion
+     */
     @Override
     public String execute(){
         try{
@@ -98,21 +102,24 @@ public class IniciarReservaAction extends BaseAction{
     }
 
     /**
-     * @param especialidadService the especialidadService to set
+     * Establecer el servicio que maneja las especialidades
+     * @param especialidadService servicio a establecer
      */
     public void setEspecialidadService(EspecialidadService especialidadService) {
         this.especialidadService = especialidadService;
     }
 
     /**
-     * @param medicoService the medicoService to set
+     * Establecer el servicio que maneja los medicos
+     * @param medicoService servicio a establecer
      */
     public void setMedicoService(MedicoService medicoService) {
         this.medicoService = medicoService;
     }
 
     /**
-     * @param citaService the citaService to set
+     * Establecer el servicio que maneja las citas
+     * @param citaService servicio a establecer
      */
     public void setCitaService(CitaService citaService) {
         this.citaService = citaService;
