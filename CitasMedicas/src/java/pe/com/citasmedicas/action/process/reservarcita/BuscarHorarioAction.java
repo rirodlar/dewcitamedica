@@ -25,7 +25,7 @@ import pe.com.citasmedicas.service.HorarioService;
 import pe.com.citasmedicas.service.MedicoService;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados por la funcionalidad Buscar Horario en Reservar Cita
  * @author dew - Grupo 04
  */
 @Namespace(value="/reserva")
