@@ -1,0 +1,13 @@
+pe.com.citasmedicas.action
+pe.com.citasmedicas.action.converter
+pe.com.citasmedicas.action.process.consultarcita
+pe.com.citasmedicas.action.process.diagnosticar
+pe.com.citasmedicas.action.process.reservarcita
+pe.com.citasmedicas.dao
+pe.com.citasmedicas.dao.hibernate
+pe.com.citasmedicas.exception
+pe.com.citasmedicas.filter
+pe.com.citasmedicas.listener
+pe.com.citasmedicas.model
+pe.com.citasmedicas.service
+pe.com.citasmedicas.service.implement
