@@ -72,7 +72,7 @@
             <td colspan="3" align="center"><table width="840px" align="left" border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td colspan="3" align="center"><span class="titulo">"${cita.paciente.nombreCompleto}"</span></td>
-                <td width="115" rowspan="6"><img src="../resources/img/foto_carnetx.jpg" width="112" height="129" /></td>
+                <td width="115" rowspan="6"><img src="../resources/img/fotos/${cita.paciente.rutaFoto}" width="112" height="129" /></td>
               </tr>
               <tr>
                 <td width="420">&nbsp;</td>
