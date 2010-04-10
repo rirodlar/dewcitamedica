@@ -43,7 +43,7 @@
     </filter>
     <filter-mapping>
         <filter-name>autenticacion</filter-name>
-        <url-pattern>*</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
     </filter-mapping>
     <listener>
         <listener-class>pe.com.citasmedicas.listener.ContextListener</listener-class>

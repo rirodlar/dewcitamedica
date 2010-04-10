@@ -22,7 +22,7 @@
                 frmReserva.submit();
             }
             function cerrarSesion() {
-                frmReserva.action = '<s:url value="/login/logout.action"/>'
+                frmReserva.action = '<s:url value="/logeo/logout.action"/>'
                 frmReserva.submit();
             }
         </script>

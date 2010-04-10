@@ -18,7 +18,7 @@
                 frmConsulta.submit();
             }
             function cerrarSesion() {
-                frmConsulta.action = '<s:url value="/login/logout.action"/>'
+                frmConsulta.action = '<s:url value="/logeo/logout.action"/>'
                 frmConsulta.submit();
             }
 			function lnkRegistrarDiagnostico( citaId ) {

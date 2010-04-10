@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.struts2.config.Namespace;
 import org.apache.struts2.config.ParentPackage;
 import org.apache.struts2.config.Result;
@@ -69,6 +70,10 @@ public class ConsultarCitaAction extends BaseAction {
             //Recuperar horarios (cabecera y contenido)
             Calendar cal = new GregorianCalendar();
 
+            String fechaSemana = (String) sesion.getAttribute("fechaSemana");
+            if (fechaSemana != null && txtSemana == null) {
+                txtSemana = DateUtils.parseDate(fechaSemana, new String[]{"dd/MM/yyyy"});
+            }
             if (txtSemana == null) {
                 txtSemana = new Date();
             }
