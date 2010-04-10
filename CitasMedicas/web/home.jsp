@@ -12,7 +12,7 @@
                 frmHome.submit();
             }
             function login () {
-                frmHome.accion.value = '<%=request.getContextPath()%>/login.jsp';
+                frmHome.accion.value = 'login';
                 frmHome.submit();
             }
         </script>

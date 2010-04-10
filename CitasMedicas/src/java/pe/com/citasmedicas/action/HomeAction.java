@@ -32,6 +32,9 @@ public class HomeAction extends BaseAction {
      */
     @Override
     public String execute() throws Exception {
+        if(accion != null && accion.equals("login")){
+            return "login";
+        }
         HttpSession session = request.getSession(false);
         if (session == null) {
             return "login";

@@ -9,7 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,7 +22,7 @@ public class SeguridadFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) _response;
         System.out.println("FILTER -> " + request.getRequestURI());
         String uri = request.getRequestURI();
-        if (!uri.endsWith("login.jsp") && !uri.endsWith("logout.jsp") &&
+        if (!uri.endsWith("login.jsp") && !uri.endsWith("logout.jsp") && !uri.endsWith("action") &&
                 !uri.endsWith("home.jsp") && !uri.endsWith("errorPage.jsp") &&
                 !uri.contains("/resources/") && !uri.endsWith("/CitasMedicas/")) {
             if (!SeguridadUtil.estaAutenticado(request)) {
