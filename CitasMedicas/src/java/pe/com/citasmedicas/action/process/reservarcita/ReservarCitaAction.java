@@ -24,7 +24,7 @@ import pe.com.citasmedicas.service.HorarioService;
 import pe.com.citasmedicas.service.PacienteService;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados por la funcionalidad Reservar Cita
  * @author dew - Grupo 04
  */
 @Namespace(value="/reserva")
@@ -41,6 +41,10 @@ public class ReservarCitaAction extends BaseAction {
     private CitaService citaService;
     private PacienteService pacienteService;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return resultado de la accion
+     */
     @Override
     public String execute() throws Exception {
         try {
@@ -140,6 +144,11 @@ public class ReservarCitaAction extends BaseAction {
         }
     }
 
+    /**
+     * Metodo encargado de volver a recuperar los datos de un horario
+     * @param sesion Sesion del usuario
+     * @param horario Datos del horario a buscar
+     */
     private void recargarHorario(HttpSession sesion, Horario horario) {
         List<Horario> horarioDiaSemana = horarioService.getHorariosPorEspecMedicoFecha(horario.getEspecialidad(), horario.getMedico(), horario.getFechaInicio());
         Calendar cal = new GregorianCalendar();
@@ -161,14 +170,16 @@ public class ReservarCitaAction extends BaseAction {
     }
 
     /**
-     * @return the rbtCita
+     * Obtener el identificador de la cita
+     * @return rbtCita Id de la cita
      */
     public Integer getRbtCita() {
         return rbtCita;
     }
 
     /**
-     * @param rbtCita the rbtCita to set
+     * Establece el identificador de la cita
+     * @param rbtCita Id de cita a establecer
      */
     @RequiredFieldValidator(message = "Por favor, seleccione un médico.")
     public void setRbtCita(Integer rbtCita) {
@@ -176,21 +187,24 @@ public class ReservarCitaAction extends BaseAction {
     }
 
     /**
-     * @param horarioService the horarioService to set
+     * Establece el servicio que maneja los horarios
+     * @param horarioService servicio a establecer
      */
     public void setHorarioService(HorarioService horarioService) {
         this.horarioService = horarioService;
     }
 
     /**
-     * @param citaService the citaService to set
+     * Establece el servicio que maneja las citas
+     * @param citaService servicio a establecer
      */
     public void setCitaService(CitaService citaService) {
         this.citaService = citaService;
     }
 
     /**
-     * @param pacienteService the pacienteService to set
+     * Establece el servicio que maneja los pacientes
+     * @param pacienteService servicio a establecer
      */
     public void setPacienteService(PacienteService pacienteService) {
         this.pacienteService = pacienteService;

@@ -8,7 +8,7 @@ import pe.com.citasmedicas.model.Persona;
 import pe.com.citasmedicas.service.CitaService;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados por la funcionalidad comun a las acciones de Reserva de Citas
  * @author dew - Grupo 04
  */
 public class ReservarCitaCommons {

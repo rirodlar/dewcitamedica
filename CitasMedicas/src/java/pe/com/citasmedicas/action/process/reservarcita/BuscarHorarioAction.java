@@ -45,6 +45,10 @@ public class BuscarHorarioAction extends BaseAction {
     private EspecialidadService especialidadService;
     private MedicoService medicoService;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return resultado de la accion
+     */
     @Override
     public String execute() {
         try {
@@ -163,6 +167,12 @@ public class BuscarHorarioAction extends BaseAction {
         }
     }
 
+    /**
+     * Método que valida la existencia de un horario en la lista de horarios
+     * @param atencion Horario de atención de la institución
+     * @param horarios Horarios del médico para un día específico
+     * @return indicador verdadero o falso
+     */
     private boolean existeHorario(Horario atencion, List<Horario> horarios) {
         boolean existe = false;
         for (Horario horario : horarios) {
@@ -176,14 +186,16 @@ public class BuscarHorarioAction extends BaseAction {
     }
 
     /**
-     * @return the cboEspecialidad
+     * Obtiene el identificador de la especialidad del medico
+     * @return cboEspecialidad identificador de especialidad
      */
     public Integer getCboEspecialidad() {
         return cboEspecialidad;
     }
 
     /**
-     * @param cboEspecialidad the cboEspecialidad to set
+     * Establece el identificador de la especialidad del medico validando la seleccion de una opcion
+     * @param cboEspecialidad identificador a establecer
      */
     @RequiredFieldValidator(message = "Por favor, seleccione una especialidad.")
     public void setCboEspecialidad(Integer cboEspecialidad) {
@@ -191,14 +203,16 @@ public class BuscarHorarioAction extends BaseAction {
     }
 
     /**
-     * @return the cboMedico
+     * Obtiene el identificador del medico
+     * @return cboMedico identificador del medico
      */
     public Integer getCboMedico() {
         return cboMedico;
     }
 
     /**
-     * @param cboMedico the cboMedico to set
+     * Establece el identificador del medico validando seleccion de una opcion
+     * @param cboMedico identificador del medico
      */
     @RequiredFieldValidator(message = "Por favor, seleccione un médico.")
     public void setCboMedico(Integer cboMedico) {
@@ -206,7 +220,8 @@ public class BuscarHorarioAction extends BaseAction {
     }
 
     /**
-     * @return the txtSemana
+     * Obtiene la fecha de la semana seleccionada
+     * @return txtSemana Fecha de la semana
      */
     @TypeConversion(converter="pe.com.citasmedicas.action.converter.DateConverter")
     public Date getTxtSemana() {
@@ -214,7 +229,8 @@ public class BuscarHorarioAction extends BaseAction {
     }
 
     /**
-     * @param txtSemana the txtSemana to set
+     * Establece la fecha de la semana seleccionada
+     * @param txtSemana Fecha de la semana seleccionada
      */
     @TypeConversion(converter="pe.com.citasmedicas.action.converter.DateConverter")
     @RequiredFieldValidator(message = "Por favor, ingrese una fecha.")
@@ -223,21 +239,24 @@ public class BuscarHorarioAction extends BaseAction {
     }
 
     /**
-     * @param horarioService the horarioService to set
+     * Establece el servicio que maneja los horarios de atencion
+     * @param horarioService servicio a establecer
      */
     public void setHorarioService(HorarioService horarioService) {
         this.horarioService = horarioService;
     }
 
     /**
-     * @param especialidadService the especialidadService to set
+     * Establece el servicio que maneja las especialidades de un medico
+     * @param especialidadService servicio a establecer
      */
     public void setEspecialidadService(EspecialidadService especialidadService) {
         this.especialidadService = especialidadService;
     }
 
     /**
-     * @param medicoService the medicoService to set
+     * Establece el servicio que maneja los medicos
+     * @param medicoService servicio a establecer
      */
     public void setMedicoService(MedicoService medicoService) {
         this.medicoService = medicoService;

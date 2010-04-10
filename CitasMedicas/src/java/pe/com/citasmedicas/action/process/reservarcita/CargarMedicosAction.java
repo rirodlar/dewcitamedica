@@ -15,7 +15,7 @@ import pe.com.citasmedicas.model.Medico;
 import pe.com.citasmedicas.service.MedicoService;
 
 /**
- *
+ * Esta clase contiene los métodos utilizados por la funcionalidad Cargar Medicos en Reserva
  * @author dew - Grupo 04
  */
 @Namespace(value="/reserva")
@@ -31,6 +31,10 @@ public class CargarMedicosAction extends BaseAction{
 
     private MedicoService medicoService;
 
+    /**
+     * Método encargado de ejecutar la acción solicitada
+     * @return resultado de la accion
+     */
     @Override
     public String execute() throws Exception {
         try{
@@ -67,6 +71,7 @@ public class CargarMedicosAction extends BaseAction{
     }
 
     /**
+     * Obtiene la fecha de la semana y la convierte a Date
      * @return the txtSemana
      */
     public String getTxtSemana() {
@@ -74,6 +79,7 @@ public class CargarMedicosAction extends BaseAction{
     }
 
     /**
+     * Establece la fecha de la semana
      * @param txtSemana the txtSemana to set
      */
     public void setTxtSemana(String txtSemana) {
@@ -81,14 +87,16 @@ public class CargarMedicosAction extends BaseAction{
     }
 
     /**
-     * @return the cboEspecialidad
+     * Obtiene el id de la especialidad del medico
+     * @return cboEspecialidad id de especialidad
      */
     public Integer getCboEspecialidad() {
         return cboEspecialidad;
     }
 
     /**
-     * @param cboEspecialidad the cboEspecialidad to set
+     * Establece la especialidad medico
+     * @param cboEspecialidad Id de la especialidad
      */
     @RequiredFieldValidator(message = "Por favor, seleccione una especialidad.")
     public void setCboEspecialidad(Integer cboEspecialidad) {
@@ -96,7 +104,8 @@ public class CargarMedicosAction extends BaseAction{
     }
 
     /**
-     * @param medicoService the medicoService to set
+     * Establece el servicio que maneja los medicos
+     * @param medicoService servicio a establecer
      */
     public void setMedicoService(MedicoService medicoService) {
         this.medicoService = medicoService;
