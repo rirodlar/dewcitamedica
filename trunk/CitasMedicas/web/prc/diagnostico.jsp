@@ -56,7 +56,7 @@
         </div>
     </div>
     <div id="profundidad">&nbsp;<a href="javascript:lnkConsultarCita_onclick()" class="enlace">Consulta de Citas</a> &gt; Diagn&oacute;stico</div>
-    <div class="xh"><b>Usuario:</b> ${usuario.persona.personaId} - ${usuario.persona.nombreCompleto}</div>
+    <div class="xh"><b>Usuario:</b> ${usuario.persona.nombreCompleto}</div>
     <div id="contenido">
     <!-- Aqui el contenido de la pagina -->
     		<div class="box_title">

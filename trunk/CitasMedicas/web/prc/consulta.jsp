@@ -21,11 +21,11 @@
                 frmConsulta.action = '<s:url value="/logeo/logout.action"/>'
                 frmConsulta.submit();
             }
-			function lnkRegistrarDiagnostico( citaId ) {
+            function lnkRegistrarDiagnostico( citaId ) {
 				frmConsulta.txtCitaSelect.value = citaId;
                 frmConsulta.action = '<s:url value="/diagnostico/cargarDiagnostico.action"/>'
                 frmConsulta.submit();
-			}
+            }
         </script>
     <!--[if IE 6]>
     <link rel="stylesheet" type="text/css" href="../resources/css/iecss.css" />
@@ -41,7 +41,7 @@
    
             <div class="top_menu">
             <div style="width:90px;float:left;margin:0 3px 0 3px;">&nbsp;</div>
-            <a href="../login.jsp" class="login">Salir</a>
+            <a href="javascript:cerrarSesion();" class="login">Salir</a>
             </div>
         
             <div id="menu">
