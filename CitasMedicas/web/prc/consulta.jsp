@@ -56,7 +56,7 @@
         </div>
     </div>
     <div id="profundidad">&nbsp;Consulta de Citas</div>
-    
+    <div class="xh"><b>Usuario:</b> ${usuario.persona.personaId} - ${usuario.persona.nombreCompleto}</div>
     <div id="contenido">
     <!-- Aqui el contenido de la pagina -->
     		<div class="box_title">
@@ -214,6 +214,11 @@
               </td>
              </tr>
              </c:forEach>
+            <c:if test="${empty horarioAtencion}">
+             <tr>
+                 <td class="x4x" colspan="8">No hay registros a mostrar.</td>
+             </tr>
+            </c:if>
           </table>
         </div>
   
