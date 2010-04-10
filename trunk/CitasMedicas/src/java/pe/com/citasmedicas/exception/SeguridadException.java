@@ -5,8 +5,8 @@
 package pe.com.citasmedicas.exception;
 
 /**
- *
- * @author rSaenz
+ * Excepcion se genera cuando se viola la seguridad
+ * @author dew - Grupo 04
  */
 public class SeguridadException extends Exception {
 

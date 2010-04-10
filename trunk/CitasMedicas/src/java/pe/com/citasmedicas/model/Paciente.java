@@ -5,7 +5,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- *
+ * Hace referencia a un paciente que es atendido en la clinica
  * @author dew - Grupo 04
  */
 @Entity

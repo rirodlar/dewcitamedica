@@ -20,7 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Hace referencia a un horario de atencion
  * @author dew - Grupo 04
  */
 @Entity

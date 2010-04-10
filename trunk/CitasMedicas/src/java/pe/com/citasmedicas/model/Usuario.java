@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- *
+ * Hace referencia al usuario de sistema
  * @author dew - Grupo 04
  */
 @Entity

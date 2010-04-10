@@ -16,14 +16,20 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Hace referencia a una cita de atencion
  * @author dew - Grupo 04
  */
 @Entity
 @Table(name="cita", schema="cita_medica")
 public class Cita extends Bean{
 
+    /**
+     * 
+     */
     public static final String ESTADO_PENDIENTE = "PENDIENTE";
+    /**
+     *
+     */
     public static final String ESTADO_ATENDIDO = "ATENDIDO";
 
     @Id

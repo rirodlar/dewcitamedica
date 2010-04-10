@@ -19,7 +19,7 @@ import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 /**
- *
+ * Esta clase contiene los métodos de persistencia implementados
  * @author dew - Grupo 04
  */
 @Repository
@@ -27,9 +27,10 @@ public class HorarioDaoHbn implements HorarioDao {
 
     /**
      * Obtiene un horario por su id
-     * @param Integer horarioId
-     * @return Horario
+     * @param horarioId identificador del horario
+     * @return Horario datos del horario
      */
+    @Override
     public Horario getHorarioPorId(Integer horarioId) {
         if (horarioId == null) {
             return null;
@@ -58,11 +59,12 @@ public class HorarioDaoHbn implements HorarioDao {
 
     /**
      * Obtiene todos los horarios de un médico para una especialidad y fecha específica
-     * @param Especialidad especialidad
-     * @param Medico medico
-     * @param Date fecha
-     * @return List<Horario>
+     * @param especialidad datos de la especialidad
+     * @param medico datos del medico
+     * @param fecha Fecha del horario
+     * @return List<Horario> lista de horarios encontrados
      */
+    @Override
     public List<Horario> getHorariosPorEspecMedicoFecha(Especialidad especialidad, Medico medico, Date fecha) {
         if (especialidad == null || medico == null) {
             return new ArrayList<Horario>();
@@ -72,11 +74,12 @@ public class HorarioDaoHbn implements HorarioDao {
 
     /**
      * Obtiene todos los horarios de un médico para una especialidad y fecha específica
-     * @param Integer especialidadId --> opcional (valor -1)
-     * @param Integer medicoId
-     * @param Date fecha
-     * @return List<Horario>
+     * @param especialidadId identificador de la especialidad
+     * @param medicoId identificador del medico
+     * @param fecha fecha del horario
+     * @return List<Horario> lista de horarios encontrados
      */
+    @Override
     public List<Horario> getHorariosPorEspecMedicoFecha(Integer especialidadId, Integer medicoId, Date fecha) {
         if (especialidadId == null || medicoId == null || fecha == null) {
             return new ArrayList<Horario>();
@@ -118,6 +121,11 @@ public class HorarioDaoHbn implements HorarioDao {
         return horarios;
     }
 
+    /**
+     * Obtiene el horario de atencion
+     * @return lista de horarios
+     */
+    @Override
     public List<Horario> getHorarioAtencion() {
         List<Horario> horarioAtencion = (List<Horario>) ((ArrayList<Horario>) CargaData.HORARIO_ATENCION).clone();
         return horarioAtencion;
@@ -125,9 +133,10 @@ public class HorarioDaoHbn implements HorarioDao {
 
     /**
      * Elimina un horario
-     * @param Horario horario
-     * @return boolean
+     * @param horario datos del horario
+     * @return boolean Condicion de actualizacion -> true=exito/false=fracaso
      */
+    @Override
     public boolean eliminarHorario(Horario horario) {
         if (horario == null) {
             return false;
@@ -156,9 +165,10 @@ public class HorarioDaoHbn implements HorarioDao {
 
     /**
      * Actualiza un horario
-     * @param Horario horario
-     * @return boolean
+     * @param horario datos del horario
+     * @return boolean Condicion de actualizacion -> true=exito/false=fracaso
      */
+    @Override
     public boolean actualizarHorario(Horario horario) {
         if (horario == null) {
             return false;

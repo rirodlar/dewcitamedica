@@ -21,7 +21,7 @@ import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
 /**
- *
+ * Esta clase contiene los métodos de persistencia implementados
  * @author dew - Grupo 04
  */
 @Repository
@@ -29,9 +29,10 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene una cita por su id
-     * @param Integer citaId
-     * @return Cita
+     * @param citaId Id de la cita a buscar
+     * @return Cita obtenida por el id
      */
+    @Override
     public Cita getCitaPorId(Integer citaId) {
         if (citaId == null) {
             return null;
@@ -62,11 +63,12 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene todos las citas de un médico para una fecha específica
-     * @param Medico medico
-     * @param Date fecha
-     * @param boolean validaHora
-     * @return List<Cita>
+     * @param medico datos del medico
+     * @param fecha Fecha de la cita a buscar
+     * @param validaHora condicion de validacion de fecha por fragmento hora
+     * @return List<Cita> lista de citas obtenidas
      */
+    @Override
     public List<Cita> getCitasPorMedicoFecha(Medico medico, Date fecha, boolean validaHora) {
         if(medico == null){
             return new ArrayList<Cita>();
@@ -76,11 +78,12 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene todos las citas de un médico para una fecha específica
-     * @param Integer medicoId
-     * @param Date fecha
-     * @param boolean validaHora
-     * @return List<Cita>
+     * @param medicoId Identificador del medico
+     * @param validaHora condicion de validacion de fecha por fragmento hora
+     * @param fecha Fecha de la cita a buscar
+     * @return List<Cita> lista de citas obtenidas
      */
+    @Override
     public List<Cita> getCitasPorMedicoFecha(Integer medicoId, Date fecha, boolean validaHora) {
         if (medicoId == null || fecha == null) {
             return new ArrayList<Cita>();
@@ -124,11 +127,12 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene todos las citas de un paciente para una fecha específica
-     * @param Paciente paciente
-     * @param Date fecha
-     * @param boolean validaHora
-     * @return List<Cita>
+     * @param paciente datos del paciente
+     * @param fecha Fecha de la cita a buscar
+     * @param validaHora condicion de validacion de fecha por fragmento hora
+     * @return List<Cita> lista de citas obtenidas
      */
+    @Override
     public List<Cita> getCitasPorPacienteFecha(Paciente paciente, Date fecha, boolean validaHora) {
         if(paciente == null){
             return new ArrayList<Cita>();
@@ -138,11 +142,12 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene todos las citas de un paciente para una fecha específica
-     * @param Integer pacienteId
-     * @param Date fecha
-     * @param boolean validaHora
-     * @return List<Cita>
+     * @param pacienteId Identificador del paciente
+     * @param fecha Fecha de la cita a buscar
+     * @param validaHora condicion de validacion de fecha por fragmento hora
+     * @return List<Cita> lista de citas obtenidas
      */
+    @Override
     public List<Cita> getCitasPorPacienteFecha(Integer pacienteId, Date fecha, boolean validaHora) {
         if (pacienteId == null || fecha == null) {
             return new ArrayList<Cita>();
@@ -186,9 +191,10 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene todos las citas pendientes de un paciente
-     * @param Persona paciente
-     * @return List<Cita>
+     * @param paciente datos del paciente
+     * @return List<Cita> lista de citas pendientes
      */
+    @Override
     public List<Cita> getCitasPendientes(Persona paciente) {
         if (paciente == null) {
             return new ArrayList<Cita>();
@@ -198,9 +204,10 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene todos las citas pendientes de un paciente
-     * @param Integer pacienteId
-     * @return List<Cita>
+     * @param pacienteId identificador del paciente
+     * @return List<Cita> lista de citas pendientes
      */
+    @Override
     public List<Cita> getCitasPendientes(Integer pacienteId) {
         if (pacienteId == null) {
             return new ArrayList<Cita>();
@@ -234,13 +241,14 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene la cita pendiente de un paciente para una semana, medico y especialidad
-     * @param Paciente paciente
-     * @param Date fechaInicio
-     * @param Date fechaFin
-     * @param Medico medico
-     * @param Especialidad especialidad
+     * @param paciente datos del paciente
+     * @param fechaInicio fecha de inicio de la cita
+     * @param fechaFin fecha de fin de la cita
+     * @param especialidad datos de la especialidad medica
+     * @param medico datos del medico
      * @return Cita en la semana
      */
+    @Override
     public Cita getCitaSemPendiente(Paciente paciente, Date fechaInicio, Date fechaFin, Medico medico, Especialidad especialidad) {
         if(paciente == null || medico == null || especialidad == null){
             return null;
@@ -250,13 +258,14 @@ public class CitaDaoHbn implements CitaDao {
     
     /**
      * Obtiene la cita pendiente de un paciente para una semana, medico y especialidad
-     * @param Integer pacienteId
-     * @param Date fechaInicio
-     * @param Date fechaFin
-     * @param Integer medicoId
-     * @param Integer especialidadId
+     * @param pacienteId Id del paciente
+     * @param fechaInicio fecha de inicio de la cita
+     * @param fechaFin fecha de fin de la cita
+     * @param medicoId Identificador del medico
+     * @param especialidadId Identificador de la especialidad
      * @return Cita en la semana
      */
+    @Override
     public Cita getCitaSemPendiente(Integer pacienteId, Date fechaInicio, Date fechaFin, Integer medicoId, Integer especialidadId) {
         if (pacienteId == null || fechaInicio == null || fechaFin == null || medicoId == null || especialidadId == null) {
             return null;
@@ -299,9 +308,10 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene la cita de un horario específico
-     * @param Horario horario
-     * @return Cita
+     * @param horario Horario a buscar
+     * @return Cita correspndiente al horario
      */
+    @Override
     public Cita getCitaPorHorario(Horario horario) {
         if(horario == null){
             return null;
@@ -311,9 +321,10 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Obtiene la cita de un horario específico
-     * @param Integer horarioId
-     * @return Cita
+     * @param horarioId Id del horario a buscar
+     * @return Cita correspondiente al horario
      */
+    @Override
     public Cita getCitaPorHorario(Integer horarioId) {
         if (horarioId == null) {
             return null;
@@ -344,13 +355,11 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Ingresa una cita
-     * @param Paciente paciente
-     * @param Medico medico
-     * @param Horario horario
-     * @param String estado
-     * @param String diagnostico
-     * @return Cita
+     * @param paciente datos del paciente
+     * @param horario datos del horario
+     * @return boolean Condicion de actualizacion -> true=exito/false=fracaso
      */
+    @Override
     public boolean insertarCita(Paciente paciente, Horario horario) {
         if(paciente == null || horario == null){
             return false;
@@ -389,9 +398,10 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Elimina una cita
-     * @param Cita cita
-     * @return boolean
+     * @param cita Cita a eliminar
+     * @return boolean Condicion de actualizacion -> true=exito/false=fracaso
      */
+    @Override
     public boolean eliminarCita(Cita cita) {
         if (cita == null) {
             return false;
@@ -425,9 +435,10 @@ public class CitaDaoHbn implements CitaDao {
 
     /**
      * Actualiza una cita
-     * @param Cita cita
-     * @return boolean
+     * @param cita Cita a actualizar
+     * @return boolean Condicion de actualizacion -> true=exito/false=fracaso
      */
+    @Override
     public boolean actualizarCita(Cita cita) {
         if (cita == null) {
             return false;

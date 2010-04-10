@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
- *
+ * Hace referencia a una especialidad perteneciente a un medico
  * @author dew - Grupo 04
  */
 @Entity

@@ -6,13 +6,19 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
- *
+ * Cargar data inicial para el aplicativo
  * @author dew - Grupo 04
  */
 public class CargaData {
 
+    /**
+     * Inicializa los horarios de atencion
+     */
     public static List<Horario> HORARIO_ATENCION = null;
 
+    /**
+     * Carga horarios de atencion de la clinica
+     */
     public static void inicializar() {
         // Horarios de atención de la clinica
         HORARIO_ATENCION = new ArrayList<Horario>();
@@ -38,6 +44,10 @@ public class CargaData {
         }
     }
 
+    /**
+     * 
+     * @param arg
+     */
     public static void main(String arg[]){
         CargaData.inicializar();
         for(Horario h : CargaData.HORARIO_ATENCION){

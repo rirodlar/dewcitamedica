@@ -9,14 +9,14 @@ import java.util.List;
 import pe.com.citasmedicas.model.Especialidad;
 
 /**
- *
- * @author rSaenz
+ * Esta clase contiene los métodos a ser implementados por las clases de servicio
+ * @author dew - Grupo 04
  */
 public interface EspecialidadService {
 
     /**
      * Obtiene una especialidad por su id
-     * @param Integer especialidadId
+     * @param especialidadId 
      * @return Especialidad
      */
     Especialidad getEspecialidadPorId(Integer especialidadId);

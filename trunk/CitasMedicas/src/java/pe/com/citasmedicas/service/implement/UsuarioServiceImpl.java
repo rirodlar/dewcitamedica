@@ -7,7 +7,7 @@ import pe.com.citasmedicas.service.UsuarioService;
 import pe.com.citasmedicas.model.Usuario;
 
 /**
- *
+ * Esta clase contiene los métodos de servicio implementados
  * @author dew - Grupo 04
  */
 @Service
@@ -17,9 +17,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
      /**
      * Obtiene un usuario por su username
-     * @param String username
      * @return Usuario
      */
+    @Override
     public Usuario getUsuarioPorUsername(String username) {
         return usuarioDao.getUsuarioPorUsername(username);
     }

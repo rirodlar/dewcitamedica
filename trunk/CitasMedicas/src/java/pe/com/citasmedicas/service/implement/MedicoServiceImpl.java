@@ -9,7 +9,7 @@ import pe.com.citasmedicas.model.Especialidad;
 import pe.com.citasmedicas.model.Medico;
 
 /**
- *
+ * Esta clase contiene los métodos de servicio implementados
  * @author dew - Grupo 04
  */
 @Service
@@ -19,27 +19,27 @@ public class MedicoServiceImpl implements MedicoService {
 
     /**
      * Obtiene un médico por su id
-     * @param Integer medicoId
      * @return Medico
      */
+    @Override
     public Medico getMedicoPorId(Integer medicoId) {
         return medicoDao.getMedicoPorId(medicoId);
     }
 
     /**
      * Obtiene todas los médicos de una especialidad específica
-     * @param Especialidad especialidad
      * @return List<Medico>
      */
+    @Override
     public List<Medico> getMedicosPorEspecialidad(Especialidad especialidad) {
         return medicoDao.getMedicosPorEspecialidad(especialidad);
     }
 
     /**
      * Obtiene todas los médicos de una especialidad específica
-     * @param Integer especialidadId
      * @return List<Medico>
      */
+    @Override
     public List<Medico> getMedicosPorEspecialidad(Integer especialidadId) {
         return medicoDao.getMedicosPorEspecialidad(especialidadId);
     }
