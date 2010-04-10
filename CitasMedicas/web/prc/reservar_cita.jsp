@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div id="profundidad">&nbsp;Reserva de Citas</div>
-            <div class="xh"><b>Usuario:</b> ${usuario.persona.personaId} - ${usuario.persona.nombreCompleto}</div>
+            <div class="xh"><b>Usuario:</b> ${usuario.persona.nombreCompleto}</div>
             <div id="contenido">
                 <!-- Aqui el contenido de la pagina -->
                 <div class="box_title">
